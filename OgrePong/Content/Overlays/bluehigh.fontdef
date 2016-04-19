@@ -1,0 +1,23 @@
+Myfon
+{
+    type truetype
+	source bluehigh.ttf
+	size 60
+}
+
+
+Myf
+{
+    type truetype
+	source bluehigh.ttf
+	size 8
+	resolution 72
+}
+
+MyFont
+{
+    type         truetype
+    source         arial.ttf
+    size         16
+    resolution     90
+}

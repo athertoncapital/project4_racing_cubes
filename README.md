@@ -1,7 +1,9 @@
 # project4_racing_cubes
 
 History:
+
 April 23, 2016.
+
 Made the Mobius strip, derived and tested the Normal vectors, and attached all the racing cubes on the racing track. (William)
 
 TODO:

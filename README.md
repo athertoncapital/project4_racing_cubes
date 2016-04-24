@@ -1,6 +1,6 @@
 # project4_racing_cubes
 
-April 23: Made the Mobius strip, derive the Normal vectors, and attach all the racing cubes onthe track. (William)
+April 23: Made the Mobius strip, derived and tested the Normal vectors, and attached all the racing cubes on the track. (William)
 
 TODO:
 Make a sun, sky, gound, or some planets and stars (like in the outer space).

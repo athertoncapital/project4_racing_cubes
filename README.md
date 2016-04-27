@@ -2,10 +2,6 @@
 
 History:
 
-April 27,2016
-Added a background of space (space.jpg)
-For now, code is in the beginning of the Tank Constructor but will be moved to its own function
-
 April 23, 2016.
 
 Made the Mobius strip, derived and tested the Normal vectors, and attached all the racing cubes on the racing track. (William)
@@ -20,6 +16,10 @@ Added a rear view mirror and connect to output image functions.
 
 Will start to work on adding AI.
 (William)
+
+Added a background of space (space.jpg)
+For now, code is in the beginning of the Tank Constructor but will be moved to its own function
+(Enrique)
 
 TODO:
 We need more arts to decorate the scene!

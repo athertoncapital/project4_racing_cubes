@@ -19,6 +19,8 @@ Will start to work on adding AI.
 
 Added a background of space (space.jpg)
 For now, code is in the beginning of the Tank Constructor but will be moved to its own function
+
+Added a sun object placed at an arbitrary point in space
 (Enrique)
 
 TODO:

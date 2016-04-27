@@ -31,6 +31,8 @@ public:
 	MovingObject *mObj4;
 	MovingObject *mObj5;
 	MovingObject *mObj6;
+
+    MovingObject *mSunObj;
 	void Tank::Think(const Ogre::Real& mTime);
     MovingObject *mCrossHair;
 

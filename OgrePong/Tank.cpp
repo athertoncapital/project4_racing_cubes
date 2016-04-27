@@ -505,6 +505,10 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	mObj5 = new MovingObject(mSceneManager, "XYZ_Function.002.mesh", NULL);
     mObj5->ent1->getSubEntity(0)->setMaterialName("Examples/Rockwall");
 
+    mSunObj = new MovingObject(mSceneManager,"Icosphere.mesh",NULL);
+    mSunObj->setPosition(Ogre::Vector3(1500, 2000, -700));
+    mSunObj->setScale(Ogre::Vector3(500, 500, 500));
+
     mCrossHair = new MovingObject(mSceneManager, "Crosshair.mesh", NULL);
     mCrossHair->setScale(Ogre::Vector3(0.5F,1,1));
 	mObj1->setScale(Ogre::Vector3(1.1F,1.1F,1.1F));

@@ -51,12 +51,17 @@ PongCamera::capture(){
 
    Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();
 
-   renderTexture->addViewport(mRenderCamera);
+   renderTexture->addViewport(mRenderCamera,0);
+   //renderTexture->addViewport(mRenderCamera,1);
    int count = renderTexture->getNumViewports();
    
    renderTexture->getViewport(0)->setClearEveryFrame(true);
    renderTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
    renderTexture->getViewport(0)->setOverlaysEnabled(true);
+
+   //renderTexture->getViewport(1)->setClearEveryFrame(true);
+   //renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
+   //renderTexture->getViewport(1)->setOverlaysEnabled(true);
 
    renderTexture->update();
 	string ID = "RoomRender";

@@ -57,7 +57,7 @@ protected:
     //   decides where the camera should be, and then makes calls to the rendering camera
     //   to move the camera
 	void createCamera(void);
-
+	void createRearCamera(void);
 	void createViewports(void);
 
     // The FrameListener is what receives callbacks from the rendering loop to handle 
@@ -72,10 +72,12 @@ protected:
 	InputHandler *mInputHandler;
 	World *mWorld;
     PongCamera *mPongCamera;
+	PongCamera *mPongCameraRear;
 	PongManager *mPongMag;
 
     Ogre::Root *mRoot;
     Ogre::Camera* mCamera;
+	Ogre::Camera* mRCamera;
     Ogre::SceneManager* mSceneMgr;
     Ogre::RenderWindow* mWindow;
     Ogre::String mResourcePath;

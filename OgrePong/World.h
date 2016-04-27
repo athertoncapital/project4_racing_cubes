@@ -30,6 +30,16 @@ class AIManager;
 class World
 {
 public:
+	float U_u;
+	float U_v;
+	float AI_0_u;
+	float AI_0_v;
+	float AI_1_u;
+	float AI_1_v;
+	float AI_2_u;
+	float AI_2_v;
+	Ogre::Camera* mCamera;
+	Ogre::Camera* mRCamera;
 	Ogre::Vector3 World::Normal(float u, float v);
 	Ogre::Vector3 World::Tangent(float u, float v);
 	Ogre::Vector3 World::Binormal(float u, float v);
@@ -79,7 +89,7 @@ public:
     //void Think(float mTime);
 	void yawTank(InputHandler *mInputHandler, const Ogre::Real& mTime);
 	void fly_or_dive_Tank(InputHandler *mInputHandler, const Ogre::Real& mTime);
-	void addCamera(PongCamera *c) { mCamera = c; }
+	
 	void addTank(Tank *t) {mTank = t; }
 	void addProjectile(ProjectileManager *pm) { mProjectileManager = pm; }
 	void setIterator();
@@ -146,7 +156,7 @@ protected:
 	
 	Ogre::SceneManager *mSceneManager;
 	InputHandler *mInputHandler;
-	PongCamera *mCamera;
+	
 	Tank *mTank;
 	
 	

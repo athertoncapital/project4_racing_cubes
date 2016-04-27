@@ -29,7 +29,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	mSpin = 1000;
 	/* Create 1 user tank */
 	createUserTank();
-	mWorld->SceneManager()->getSceneNode("U")->setPosition(0,0,0);
+	mWorld->SceneManager()->getSceneNode("U")->setPosition(100,100,100);
 	Ogre::Vector3 vUser=mWorld->SceneManager()->getSceneNode("U")->getPosition();
 	//mWorld->Hpoint_y=mMainNode->getPosition().y;
 	//mWorld->Hpoint_z=mMainNode->getPosition().z;
@@ -49,7 +49,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank0");
 	eTankNode->setPosition(mWorld->spawnPoints[0]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 
 	Ogre::Vector3 XBasis = Ogre::Vector3(-1,0, 0);
     Ogre::Vector3 YBasis = Ogre::Vector3(0,-1 ,0);
@@ -75,7 +75,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank1");
 	eTankNode->setPosition(mWorld->spawnPoints[1]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	/*XBasis = Ogre::Vector3(-1,0, 0);
     YBasis = Ogre::Vector3(0,-1 ,0);
     ZBasis = Ogre::Vector3(0,0,1);
@@ -99,7 +99,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank2");
 	eTankNode->setPosition(mWorld->spawnPoints[2]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -118,7 +118,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank3");
 	eTankNode->setPosition(mWorld->spawnPoints[3]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -131,7 +131,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank4");
 	eTankNode->setPosition(mWorld->spawnPoints[4]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -143,7 +143,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank5");
 	eTankNode->setPosition(mWorld->spawnPoints[5]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -155,7 +155,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank6");
 	eTankNode->setPosition(mWorld->spawnPoints[6]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -167,7 +167,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank7");
 	eTankNode->setPosition(mWorld->spawnPoints[7]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -179,7 +179,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank8");
 	eTankNode->setPosition(mWorld->spawnPoints[8]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -191,7 +191,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank9");
 	eTankNode->setPosition(mWorld->spawnPoints[9]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -203,7 +203,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank10");
 	eTankNode->setPosition(mWorld->spawnPoints[10]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -215,7 +215,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank11");
 	eTankNode->setPosition(mWorld->spawnPoints[11]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -228,7 +228,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank12");
 	eTankNode->setPosition(mWorld->spawnPoints[12]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -240,7 +240,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank13");
 	eTankNode->setPosition(mWorld->spawnPoints[13]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -252,7 +252,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank14");
 	eTankNode->setPosition(mWorld->spawnPoints[14]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -264,7 +264,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank15");
 	eTankNode->setPosition(mWorld->spawnPoints[15]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -276,7 +276,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank16");
 	eTankNode->setPosition(mWorld->spawnPoints[16]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -288,7 +288,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank17");
 	eTankNode->setPosition(mWorld->spawnPoints[17]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -300,7 +300,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank18");
 	eTankNode->setPosition(mWorld->spawnPoints[18]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -312,7 +312,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank19");
 	eTankNode->setPosition(mWorld->spawnPoints[19]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
@@ -324,15 +324,141 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank20");
 	eTankNode->setPosition(mWorld->spawnPoints[20]);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(20, 20, 20);
+	eTankNode->scale(10, 10, 10);
 	node->eTankNode = eTankNode;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
-	time=mWorld->t;
 	mWorld->Push(node);
-	/*for (int i = 10; i < 50; i++) {
-		createEnemyshell(i);
-	}*/
+
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube1","Penguin.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube1");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	eTankNode->setPosition(1000*cos(1)+1000*cos(1/2)*cos(1)*(1/3),1000*sin(1)+1000*cos(1/2)*sin(1)*(1/3),1000*sin(1/2)*(1/3));
+	eTankNode->translate(Normal(1, 1/3)*30);
+	eTankNode->setOrientation(Orientation(Binormal(1, 1/3),Normal(1, 1/3),Tangent(1,1/3)));
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube2","Penguin.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube2");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	eTankNode->setPosition(1000*cos(80)+1000*cos(1/2)*cos(80)*(1/3),1000*sin(80)+1000*cos(1/2)*sin(80)*(1/3),1000*sin(1/2)*(1/3));
+	eTankNode->translate(Normal(80, 1/3)*30);
+	eTankNode->setOrientation(Orientation(Binormal(80, 1/3),Normal(80, 1/3),Tangent(80,1/3)));
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube3","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube3");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	float u =40;
+	float v =0.3;
+	eTankNode->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	eTankNode->translate(Normal(u, v)*30);
+	eTankNode->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube4","Sphere.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube4");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	u =30;
+	v =0.2;
+	eTankNode->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	eTankNode->translate(Normal(u, v)*30);
+	eTankNode->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube5","ogrehead.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube5");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	u =20;
+	v =0.1;
+	eTankNode->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	eTankNode->translate(Normal(u, v)*30);
+	eTankNode->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("StaticCube6","Penguin.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube6");
+	//eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(1, 1, 1);
+	node->eTankNode = eTankNode;
+	node->eAABB = &tank->getWorldBoundingBox();
+	node->destroyed = false;
+	mWorld->Push(node);
+	eTankNode->setPosition(1000*cos(10)+1000*cos(1/2)*cos(10)*(1/3),1000*sin(10)+1000*cos(1/2)*sin(10)*(1/3),1000*sin(1/2)*(1/3));
+	eTankNode->translate(Normal(10, 1/3)*30);
+	eTankNode->setOrientation(Orientation(Binormal(10, 1/3),Normal(10, 1/3),Tangent(10,1/3)));
+
+	for(int s=7;s<17;s++)
+	{
+	string ID = "StaticCube";
+	string Result;          // string which will contain the result  
+	ostringstream convert;
+	convert << s;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+
+	node = new Node();
+	if(rand()%3==0)
+	tank = SceneManager()->createEntity(ID,"ogrehead.mesh");
+	else if(s%3==1)
+	tank = SceneManager()->createEntity(ID,"tudorhouse.mesh");
+	else
+	tank = SceneManager()->createEntity(ID,"XYZ_Function.001.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode(ID);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(0.3f, 0.3f, 0.3f);
+	//node->eTankNode = eTankNode;
+	//node->eAABB = &tank->getWorldBoundingBox();
+	//node->destroyed = false;
+	//mWorld->Push(node);
+	//u =s%180;
+	u=s;
+	if(rand()%2==0)
+	v =(rand()%10)/100.0f-0.1;
+	else
+		v =-(rand()%10)/100.0f-0.1;
+	eTankNode->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	eTankNode->translate(Normal(u, v)*5);
+	eTankNode->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+	}
+
+
+	//for (int i = 0; i < 500; i++) {
+		//createEnemyshell(i);
+	//}
 	/*for (int i = 0; i < 5; i++) {
 		createsatellite(i);
 	}*/
@@ -348,7 +474,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
     mObj3 = new MovingObject(mSceneManager, "MyCube.mesh", mObj2);
 	mObj4 = new MovingObject(mSceneManager, "MyCube.mesh", NULL);
 	//mObj5 = new MovingObject(mSceneManager, "Ground.mesh", NULL);
-	mObj5 = new MovingObject(mSceneManager, "XYZ_Function.mesh", NULL);
+	mObj5 = new MovingObject(mSceneManager, "XYZ_Function.002.mesh", NULL);
 
     mCrossHair = new MovingObject(mSceneManager, "Crosshair.mesh", NULL);
     mCrossHair->setScale(Ogre::Vector3(0.5F,1,1));
@@ -396,6 +522,7 @@ Tank::attachCamera(void)
 {
 	mCameraNode = mMainNode->createChildSceneNode();
 	mCameraNode->attachObject(mCamera->getCamera());
+	mCameraNode->attachObject(mCameraR->getCamera());
 }
 void Tank::Think(const Ogre::Real& mTime)
 {
@@ -403,6 +530,48 @@ void Tank::Think(const Ogre::Real& mTime)
     mObj2->pitch(Ogre::Radian(0.6f * mTime));
     mObj3->roll(Ogre::Radian(0.5f * mTime));
 	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
+
+
+	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	if(k%10==0){
+	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().createManual(
+         "MainRenderTarget", 
+         Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+         Ogre::TextureType::TEX_TYPE_2D, 
+         680,
+         480,
+		 20,
+		 0,
+		 Ogre::PixelFormat::PF_R8G8B8,
+	     Ogre::TextureUsage::TU_RENDERTARGET);
+
+   Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();
+
+   renderTexture->addViewport(mCamera->getCamera(),0);
+   renderTexture->addViewport(mCameraR->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
+   int count = renderTexture->getNumViewports();
+   
+   renderTexture->getViewport(0)->setClearEveryFrame(true);
+   renderTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
+   renderTexture->getViewport(0)->setOverlaysEnabled(true);
+
+   renderTexture->getViewport(1)->setClearEveryFrame(true);
+   renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
+   renderTexture->getViewport(1)->setOverlaysEnabled(true);
+
+   renderTexture->update();
+	string ID = "RoomRender";
+	string exd = ".png";
+	string Result;          // string which will contain the result  
+	ostringstream convert;
+	convert << k;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+	ID.append(exd);
+   // Now save the contents
+   renderTexture->writeContentsToFile(ID);
+	}
+
 }
 
 /* Creates user tank entity and node */
@@ -414,8 +583,8 @@ Tank::createUserTank(void)
 	//mTankNode = mMainNode->createChildSceneNode("U");
 	//mTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
 	mTankNode->attachObject(tankEntity);
-	mTankNode->scale(2,2,2);
-	mTankNode->setPosition(0,0,0);
+	mTankNode->scale(10,10,10);
+	mTankNode->setPosition(100,100,100);
 	 //mWorld->mHumanPlayer=mTankNode;
 	/* DEBUGGING PURPOSES */
 	mTankNode->showBoundingBox(false);
@@ -455,12 +624,14 @@ Tank::createEnemyTank(int i)
 	eTankNode->scale(20, 20, 20);
 	
 	node->eTankNode = eTankNode;
-	node->eAABB = &tank->getWorldBoundingBox();
-	node->destroyed = false;
+	//node->eAABB = &tank->getWorldBoundingBox();
+	//node->destroyed = false;
 
 	/* DEBUGGING PURPOSES */
-	node->eTankNode->showBoundingBox(false);
-	Ogre::Real time=mWorld->t;
+	//node->eTankNode->showBoundingBox(false);
+	//Ogre::Real time=mWorld->t;
+
+
 	//Ogre::SceneNode* sceneNode = getSceneNode();
 	//eTankNode->translate((1,0,0) * getSpeed() * time *0.001);
 	//eTankNode->roll(Ogre::Degree(mSpin*time));
@@ -478,20 +649,26 @@ Tank::createEnemyshell(int i)
 	//Node *node = new Node();
 	Node *node = new Node();
 	Ogre::SceneNode *eTankNode;
-	Ogre::Entity *tank = SceneManager()->createEntity("XYZ_Function.mesh");
+	Ogre::Entity *tank = SceneManager()->createEntity("Penguin.mesh");
 	
 	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode();
-	eTankNode->setPosition(mWorld->spawnPoints[i]);
+	//eTankNode->setPosition(mWorld->spawnPoints[i]);
+
+	int u=i%80;
+	float V=0.5f;
+	eTankNode->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(V),1000*sin(u)+1000*cos(u/2)*sin(u)*(V),1000*sin(u/2)*(V));
+	eTankNode->setOrientation(Orientation(Binormal(u, V),Normal(u, V),Tangent(u,V)));
+	eTankNode->translate(Normal(u, V)*30);
 	eTankNode->attachObject(tank);
-	eTankNode->scale(100, 100, 100);
+	eTankNode->scale(1, 1, 1);
 	
-	node->eTankNode = eTankNode;
-	node->eAABB = &tank->getWorldBoundingBox();
-	node->destroyed = false;
+	//node->eTankNode = eTankNode;
+	//node->eAABB = &tank->getWorldBoundingBox();
+	//node->destroyed = false;
 
 	/* DEBUGGING PURPOSES */
-	node->eTankNode->showBoundingBox(false);
-	Ogre::Real time=mWorld->t;
+	//node->eTankNode->showBoundingBox(false);
+	//Ogre::Real time=mWorld->t;
 	//Ogre::SceneNode* sceneNode = getSceneNode();
 	//eTankNode->translate((1,0,0) * getSpeed() * time *0.001);
 	//eTankNode->roll(Ogre::Degree(mSpin*time));
@@ -499,7 +676,7 @@ Tank::createEnemyshell(int i)
 
 
 	/* Push new tank node onto AI tank list */
-	mWorld->Push(node);
+	//mWorld->Push(node);
 }
 /* Creates enemy tank entity and node */
 void
@@ -547,7 +724,45 @@ Tank::createsatellite(int i)
 	mWorld->Push(node);
 
 }
+Ogre::Vector3 Tank::Normal(float u, float v){
+	float kappa = 1;
+	
+	float A=kappa*(-sin(u)+ v*((-1/2)*sin(u/2)*cos(u)-cos(u/2)*sin(u)));
+	float B=kappa*(cos(u)+ v*((-1/2)*sin(u/2)*sin(u)+cos(u/2)*cos(u)));
+	float C=kappa*((v/2)*cos(u/2));
+	float D=kappa*(cos(u/2)*cos(u));
+	float E=kappa*(cos(u/2)*sin(u));
+	float F=kappa*(sin(u/2));
 
+	float N_x = B*F-C*E;
+	float N_y = C*D-A*F;
+	float N_z = A*E-B*D;
+	Ogre::Vector3 N = Ogre::Vector3(N_x,N_y,N_z);
+	return N;
+}
+Ogre::Vector3 Tank::Tangent(float u, float v){
+	float kappa = 1;
+	
+	float A=kappa*(-sin(u)+ v*((-1/2)*sin(u/2)*cos(u)-cos(u/2)*sin(u)));
+	float B=kappa*(cos(u)+ v*((-1/2)*sin(u/2)*sin(u)+cos(u/2)*cos(u)));
+	float C=kappa*((v/2)*cos(u/2));
+	Ogre::Vector3 T = Ogre::Vector3(A,B,C);
+	return T;
+}
+Ogre::Vector3 Tank::Binormal(float u, float v){
+	float kappa = 1;
+	
+	float D=kappa*(cos(u/2)*cos(u));
+	float E=kappa*(cos(u/2)*sin(u));
+	float F=kappa*(sin(u/2));
+	Ogre::Vector3 B = Ogre::Vector3(D,E,F);
+	return B;
+}
+Ogre::Matrix3 Tank::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogre::Vector3 zBasis){
+    Ogre::Matrix3 rotate;
+    rotate.FromAxes(xBasis, yBasis, zBasis);
+	return rotate;
+}
 void
 Tank::destroyTank(Node *node)
 {

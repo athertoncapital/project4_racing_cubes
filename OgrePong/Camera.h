@@ -24,6 +24,7 @@ public:
 protected:
 
     Ogre::Camera *mRenderCamera; 
+	Ogre::Camera *mRenderCameraR;
     World *mWorld;
 	InputHandler *mInputHandler;
 };

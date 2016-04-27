@@ -56,7 +56,7 @@ public:
 	Ogre::SceneNode *mMainNode;
 	const Ogre::AxisAlignedBox *mAABB;
 	Ogre::SceneNode *oMainNode;
-	void addCamera(PongCamera *c) { mCamera = c; }
+	void addCamera(PongCamera *c,PongCamera *r) { mCamera = c, mCameraR = r; }
 	Ogre::SceneManager *SceneManager() { return mSceneManager; }
 	//Ogre::Vector3 getPosition() const;
 	Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);
@@ -68,14 +68,20 @@ public:
 	//for AI computing
 	Ogre::Vector3 vec;
 private:
+	Ogre::Vector3 Tank::Normal(float u, float v);
+	Ogre::Vector3 Tank::Tangent(float u, float v);
+	Ogre::Vector3 Tank::Binormal(float u, float v);
+	Ogre::Matrix3 Tank::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogre::Vector3 zBasis);
 	Tank *mHumanPlayer;
 	Ogre::SceneNode* mSceneNode;
 	Ogre::Real mSpin;
 protected:
 	PongCamera *mCamera;
+	PongCamera *mCameraR;
 	World *mWorld;
 	Ogre::SceneNode *mTankNode;
 	Ogre::SceneNode *mCameraNode;
+	Ogre::SceneNode *mCameraNodeR;
 	Ogre::SceneManager *mSceneManager;
 };
 

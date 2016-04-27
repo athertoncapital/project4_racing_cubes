@@ -40,7 +40,13 @@ OgrePong::~OgrePong()
         delete mRoot;
 }
 
-
+void
+OgrePong::createRearCamera()
+{
+	mRCamera = mSceneMgr->createCamera("RearCam");
+	mRCamera->setPosition(Ogre::Vector3(0, 25, 100));
+	mRCamera->lookAt(Ogre::Vector3(0,0,0));
+}
 
 void
 OgrePong::createCamera()
@@ -68,12 +74,16 @@ OgrePong::createViewports(void)
 {
 	
 	    // Create one viewport, entire window
-        Ogre::Viewport* vp = mWindow->addViewport(mCamera);
+        Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
+		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.4f, 0.75f, 0.5, 0.15);
+		rearvp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         vp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         // Alter the camera aspect ratio to match the viewport
-        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));    
+        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight())); 
+		mRCamera->setAspectRatio(Ogre::Real(rearvp->getActualWidth()) / Ogre::Real(rearvp->getActualHeight())); 
 		Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
         mWindow->getViewport(0)->setBackgroundColour(fadeColour);
+		mWindow->getViewport(1)->setBackgroundColour(fadeColour);
 
 
 
@@ -100,8 +110,9 @@ OgrePong::createScene()
 	mWorld = new World(mSceneMgr, mInputHandler, mTank);
 	mWorld->Switch=0;
 	mPongCamera = new PongCamera(mCamera, mWorld, mInputHandler);///
+	mPongCameraRear = new PongCamera(mRCamera, mWorld, mInputHandler);
 	mTank = new Tank(mSceneMgr, mWorld, pong_0_DIMENSION);
-	mTank->addCamera(mPongCamera);
+	mTank->addCamera(mPongCamera,mPongCameraRear);
 	mTank->attachCamera();
 	
 	mProjectileManager = new ProjectileManager(mSceneMgr, mInputHandler, mWorld);
@@ -170,6 +181,9 @@ OgrePong::setup(void)
     // Create the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC, "PongSMInstance");
     createCamera();
+	createRearCamera();
+	//mWorld->mCamera = mCamera;
+	//mWorld->mRCamera = mRCamera;
     createViewports();
 
     // Set default mipmap level (NB some APIs ignore this)

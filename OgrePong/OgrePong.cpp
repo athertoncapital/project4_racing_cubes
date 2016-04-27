@@ -44,7 +44,7 @@ void
 OgrePong::createRearCamera()
 {
 	mRCamera = mSceneMgr->createCamera("RearCam");
-	mRCamera->setPosition(Ogre::Vector3(0, 25, 100));
+	mRCamera->setPosition(Ogre::Vector3(0, 200, 400)); //0,25,100
 	mRCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -52,7 +52,7 @@ void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 25, -100));
+	mCamera->setPosition(Ogre::Vector3(0, 200, -400));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 

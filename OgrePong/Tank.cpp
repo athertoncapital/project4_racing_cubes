@@ -25,6 +25,34 @@ string ID = "AItank";
 Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimension) :  MotionObject(sceneManager, dimension, 
 																				   pong_0_SPEED, pong_MOVE_User_BOTTOM), mSceneManager(sceneManager), mWorld(world)
 {
+
+    
+    // Create background material
+    Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
+    material->getTechnique(0)->getPass(0)->createTextureUnitState("space.jpg");
+    material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
+    material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+    material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+ 
+    // Create background rectangle covering the whole screen
+    Ogre::Rectangle2D* rect = new Ogre::Rectangle2D(true);
+    rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+    rect->setMaterial("Background");
+ 
+    // Render the background before everything else
+    rect->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
+ 
+    // Use infinite AAB to always stay visible
+    Ogre::AxisAlignedBox aabInf;
+    aabInf.setInfinite();
+    rect->setBoundingBox(aabInf);
+ 
+    // Attach background to the scene
+    Ogre::SceneNode* New_node = SceneManager()->getRootSceneNode()->createChildSceneNode("Background");
+    New_node->attachObject(rect);
+    
+    
+    //-----------------------------------------------
 	mMainNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
 	mSpin = 1000;
 	/* Create 1 user tank */
@@ -475,6 +503,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	mObj4 = new MovingObject(mSceneManager, "MyCube.mesh", NULL);
 	//mObj5 = new MovingObject(mSceneManager, "Ground.mesh", NULL);
 	mObj5 = new MovingObject(mSceneManager, "XYZ_Function.002.mesh", NULL);
+    mObj5->ent1->getSubEntity(0)->setMaterialName("Examples/Rockwall");
 
     mCrossHair = new MovingObject(mSceneManager, "Crosshair.mesh", NULL);
     mCrossHair->setScale(Ogre::Vector3(0.5F,1,1));
@@ -815,3 +844,4 @@ void Tank::reset() {
 	setPosition(pong_0_POSITION);
 	setSpeed(pong_0_SPEED);
 }
+

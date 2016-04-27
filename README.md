@@ -2,6 +2,10 @@
 
 History:
 
+April 27,2016
+Added a background of space (space.jpg)
+For now, code is in the beginning of the Tank Constructor but will be moved to its own function
+
 April 23, 2016.
 
 Made the Mobius strip, derived and tested the Normal vectors, and attached all the racing cubes on the racing track. (William)

@@ -20,6 +20,7 @@ class Tank : public MotionObject
 {
 public:
 	//Tank(Ogre::SceneManager *sceneManager, World* world);
+    Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);
 	int ky;
 
 	~Tank(void);
@@ -32,6 +33,8 @@ public:
 	MovingObject *mObj6;
 	void Tank::Think(const Ogre::Real& mTime);
     MovingObject *mCrossHair;
+
+
 	/* Node used to hold scene node for AI tank, bounding box, and next tank */
 	typedef struct Node {
 		Ogre::SceneNode *eTankNode;
@@ -59,7 +62,7 @@ public:
 	void addCamera(PongCamera *c,PongCamera *r) { mCamera = c, mCameraR = r; }
 	Ogre::SceneManager *SceneManager() { return mSceneManager; }
 	//Ogre::Vector3 getPosition() const;
-	Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);
+	
 	void load();
 	void move(const Ogre::Real time);
 	void reverseHorizontalvelocity();

@@ -3,11 +3,17 @@
 History:
 
 April 23, 2016.
+
 Made the Mobius strip, derived and tested the Normal vectors, and attached all the racing cubes on the racing track. (William)
+
 April 27, 2016.
+
 Added moving input handlers.
+
 Added some samples on the racing track.
+
 Added a rear view mirror and connect to output image functions.
+
 Will start to work on adding AI.
 (William)
 

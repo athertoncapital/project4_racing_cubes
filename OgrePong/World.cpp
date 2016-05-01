@@ -174,6 +174,10 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
 	AI_2_u = 0.0f;
 	AI_2_v = 0.0f;
     SPEED_COEFFICIENT = 10.0;
+    SPEED_COEFFICIENT_AI_0 = 10.0;
+    SPEED_COEFFICIENT_AI_1 = 10.0;
+    SPEED_COEFFICIENT_AI_2 = 10.0;
+
 	 
 	
 	
@@ -255,18 +259,20 @@ void World::Think(const Ogre::Real& mTime)
 	Ogre::Vector3 N;
     float ftime =Ogre::ControllerManager::getSingleton().getElapsedTime();
     u=ftime;
-	U_u=-ftime/10;// ORIGINALLY -ftime/10
+	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
 	//AI_0_u=-ftime/10;// ORIGINALLY -ftime/10
 	//AI_1_u=-ftime/10;// ORIGINALLY -ftime/10
 
 	float u1 = u+U_u;
     float u2 = u+AI_0_u;
     float u3 = u+AI_1_u;
-    //For Debug use "AItank0"
-	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
-	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
+    //For Debug use:
+    //"AItank0" will make User cube Designer
+
+	mTank->SceneManager()->getSceneNode("U")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
+	mTank->SceneManager()->getSceneNode("U")->translate(Normal(u1, U_v)*10);
 	//mTank->SceneManager()->getSceneNode("U")->translate(Binormal(u1, U_v)*U_v);
-	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+	mTank->SceneManager()->getSceneNode("U")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
 	u+=5;
 	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
 	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
@@ -385,7 +391,7 @@ void World::Think(const Ogre::Real& mTime)
 		}
 		setIterator();
 	}
-    //LEFT AND RIGHT MOVE DESIGNER MODE CUBE
+    //LEFT,RIGHT,UP,DOWN MOVE DESIGNER MODE CUBE
 	if (mInputHandler->IsKeyDown(OIS::KC_LEFT) || mInputHandler->IsKeyDown(OIS::KC_RIGHT))
 		yawTank(mInputHandler, mTime);
     else if (mInputHandler->IsKeyDown(OIS::KC_UP))
@@ -448,18 +454,86 @@ void World::Think(const Ogre::Real& mTime)
 		else if (mInputHandler->IsKeyDown(OIS::KC_I))
 	{
 			//U_u+=0.01f;
-        SPEED_COEFFICIENT += 0.1f;
+        if (SPEED_COEFFICIENT < 20) {
+            SPEED_COEFFICIENT += 0.5f;
+
+        }
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_K))
 	{
 
 			//U_u-=0.01f;
-        if (SPEED_COEFFICIENT > 0) {
-            SPEED_COEFFICIENT -= 0.1f;
+        //if (SPEED_COEFFICIENT <= 1.0 && SPEED_COEFFICIENT > 0) {
+        //    SPEED_COEFFICIENT -= 0.1f;
+        //}
+        if (SPEED_COEFFICIENT > 1.0) {
+            SPEED_COEFFICIENT -= 0.5f;
         }
 
 	}
 
+
+        //T,G,F,H Move cube 2
+	else if (mInputHandler->IsKeyDown(OIS::KC_F))
+	{
+		if(AI_0_v<0.5){
+			AI_0_v+=0.01f;
+		}
+	}
+	else if (mInputHandler->IsKeyDown(OIS::KC_H))
+	{
+		if(AI_0_v>-0.5){
+			AI_0_v-=0.01f;
+		}
+	}
+		else if (mInputHandler->IsKeyDown(OIS::KC_T))
+	{
+			//U_u+=0.01f;
+        if (SPEED_COEFFICIENT_AI_0 < 20) {
+            SPEED_COEFFICIENT_AI_0 += 0.5f;
+
+        }
+	}
+	else if (mInputHandler->IsKeyDown(OIS::KC_G))
+	{
+
+			//U_u-=0.01f;
+        if (SPEED_COEFFICIENT_AI_1 > 1.0) {
+            SPEED_COEFFICIENT_AI_1 -= 0.5f;
+        }
+
+	}
+
+            //W,A,S,D Move cube 3
+	else if (mInputHandler->IsKeyDown(OIS::KC_A))
+	{
+		if(AI_1_v<0.5){
+			AI_1_v+=0.01f;
+		}
+	}
+	else if (mInputHandler->IsKeyDown(OIS::KC_D))
+	{
+		if(AI_1_v>-0.5){
+			AI_1_v-=0.01f;
+		}
+	}
+		else if (mInputHandler->IsKeyDown(OIS::KC_W))
+	{
+			//U_u+=0.01f;
+        if (SPEED_COEFFICIENT_AI_1 < 20) {
+            SPEED_COEFFICIENT_AI_1 += 0.5f;
+
+        }
+	}
+	else if (mInputHandler->IsKeyDown(OIS::KC_S))
+	{
+
+			//U_u-=0.01f;
+        if (SPEED_COEFFICIENT_AI_1 > 1.0) {
+            SPEED_COEFFICIENT_AI_1 -= 0.5f;
+        }
+
+	}
 	
 
 }

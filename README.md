@@ -23,6 +23,12 @@ For now, code is in the beginning of the Tank Constructor but will be moved to i
 Added a sun object placed at an arbitrary point in space
 (Enrique)
 
+May 1st, 2016.
+
+Added controls for AI Tank 2 and 3.
+T,F,G,H and W,A,S,D are used respectively
+NOTE: W & S were used for fly and dive of designer tank. Those have been replaced to Z and X
+
 TODO:
 We need more arts to decorate the scene!
 

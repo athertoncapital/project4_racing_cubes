@@ -181,22 +181,22 @@ ProjectileManager::setIterator(void)
 void
 ProjectileManager::Think(const Ogre::Real& mTime)
 {
-	if (mInputHandler->IsKeyDown(OIS::KC_H))
-	{
-		mWorld->PROJECTILE_SPEED_H+=5;
-	}
-	if (mInputHandler->IsKeyDown(OIS::KC_G))
-	{
-		mWorld->PROJECTILE_SPEED_H-=5;
-	}
-	if (mInputHandler->IsKeyDown(OIS::KC_V))
-	{
-		mWorld->PROJECTILE_SPEED_V+=5;
-	}
-	if (mInputHandler->IsKeyDown(OIS::KC_C))
-	{
-		mWorld->PROJECTILE_SPEED_V-=5;
-	}
+	//if (mInputHandler->IsKeyDown(OIS::KC_H))
+	//{
+	//	mWorld->PROJECTILE_SPEED_H+=5;
+	//}
+	//if (mInputHandler->IsKeyDown(OIS::KC_G))
+	//{
+	//	mWorld->PROJECTILE_SPEED_H-=5;
+	//}
+	//if (mInputHandler->IsKeyDown(OIS::KC_V))
+	//{
+	//	mWorld->PROJECTILE_SPEED_V+=5;
+	//}
+	//if (mInputHandler->IsKeyDown(OIS::KC_C))
+	//{
+	//	mWorld->PROJECTILE_SPEED_V-=5;
+	//}
 
 	/* Shoot projectile if 'space' key is pressed. Also continue translating projectile when space isn't pressed. */
 	if (mInputHandler->IsKeyDown(OIS::KC_SPACE) || shotProjectile == true)

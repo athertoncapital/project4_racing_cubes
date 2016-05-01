@@ -38,7 +38,13 @@ public:
 	float AI_1_v;
 	float AI_2_u;
 	float AI_2_v;
+
     float SPEED_COEFFICIENT;
+
+    float SPEED_COEFFICIENT_AI_0;
+    float SPEED_COEFFICIENT_AI_1;
+    float SPEED_COEFFICIENT_AI_2;
+
 	Ogre::Camera* mCamera;
 	Ogre::Camera* mRCamera;
 	Ogre::Vector3 World::Normal(float u, float v);

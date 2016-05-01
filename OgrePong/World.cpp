@@ -260,8 +260,8 @@ void World::Think(const Ogre::Real& mTime)
     float ftime =Ogre::ControllerManager::getSingleton().getElapsedTime();
     u=ftime;
 	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
-	//AI_0_u=-ftime/10;// ORIGINALLY -ftime/10
-	//AI_1_u=-ftime/10;// ORIGINALLY -ftime/10
+    AI_0_u=-ftime/SPEED_COEFFICIENT_AI_0;// ORIGINALLY -ftime/10
+    AI_1_u=-ftime/SPEED_COEFFICIENT_AI_1;// ORIGINALLY -ftime/10
 
 	float u1 = u+U_u;
     float u2 = u+AI_0_u;
@@ -269,14 +269,14 @@ void World::Think(const Ogre::Real& mTime)
     //For Debug use:
     //"AItank0" will make User cube Designer
 
-	mTank->SceneManager()->getSceneNode("U")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
-	mTank->SceneManager()->getSceneNode("U")->translate(Normal(u1, U_v)*10);
+	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
+	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
 	//mTank->SceneManager()->getSceneNode("U")->translate(Binormal(u1, U_v)*U_v);
-	mTank->SceneManager()->getSceneNode("U")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
 	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
-	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
-	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
+	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
+	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u2, AI_0_v)*11);
+	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
 	u+=5;
 	mTank->SceneManager()->getSceneNode("AItank2")->setPosition(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v));
 	mTank->SceneManager()->getSceneNode("AItank2")->translate(Normal(u3, AI_1_v)*11);
@@ -393,7 +393,9 @@ void World::Think(const Ogre::Real& mTime)
 	}
     //LEFT,RIGHT,UP,DOWN MOVE DESIGNER MODE CUBE
 	if (mInputHandler->IsKeyDown(OIS::KC_LEFT) || mInputHandler->IsKeyDown(OIS::KC_RIGHT))
+    {
 		yawTank(mInputHandler, mTime);
+    }
     else if (mInputHandler->IsKeyDown(OIS::KC_UP))
 	{
 		if (iterator != NULL && iterator->eAABB != NULL)
@@ -428,14 +430,14 @@ void World::Think(const Ogre::Real& mTime)
 		}
 		else setIterator();
 	}
-	//else if (mInputHandler->IsKeyDown(OIS::KC_W))
-	//{
-	//	fly_or_dive_Tank(mInputHandler, mTime);
-	//}
-	//else if (mInputHandler->IsKeyDown(OIS::KC_S))
-	//{
-	//	fly_or_dive_Tank(mInputHandler, mTime);
-	//}
+	else if (mInputHandler->IsKeyDown(OIS::KC_Z))
+	{
+		fly_or_dive_Tank(mInputHandler, mTime);
+	}
+	else if (mInputHandler->IsKeyDown(OIS::KC_X))
+	{
+		fly_or_dive_Tank(mInputHandler, -mTime);
+	}
 
 
     //J,L,I,K Move cube 1
@@ -498,8 +500,8 @@ void World::Think(const Ogre::Real& mTime)
 	{
 
 			//U_u-=0.01f;
-        if (SPEED_COEFFICIENT_AI_1 > 1.0) {
-            SPEED_COEFFICIENT_AI_1 -= 0.5f;
+        if (SPEED_COEFFICIENT_AI_0 > 1.0) {
+            SPEED_COEFFICIENT_AI_0 -= 0.5f;
         }
 
 	}

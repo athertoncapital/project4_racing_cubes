@@ -922,7 +922,7 @@ void WorldManager::updateScore() {
 	te = (Ogre::TextAreaOverlayElement *) om.getOverlayElement("left");
 	int v = mWorld->PROJECTILE_SPEED_V;
 	int H = mWorld->PROJECTILE_SPEED_H;
-    float cubeSpeed = mWorld->SPEED_COEFFICIENT;
+    float cubeSpeed = mWorld->SPEED_COEFFICIENT_AI_0;
 	if(v!=NULL&&H!=NULL){
 		//sprintf(score, "%i\n", v);
 		//sprintf(score, "Conutdown:\n%i\nHorizontal Velocity: %i \nVertical Velocity: %i\n", cd,H,v);

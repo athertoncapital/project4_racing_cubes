@@ -44,7 +44,7 @@ void
 OgrePong::createRearCamera()
 {
 	mRCamera = mSceneMgr->createCamera("RearCam");
-	mRCamera->setPosition(Ogre::Vector3(0, 200, 400)); //0,25,100
+	mRCamera->setPosition(Ogre::Vector3(0, 25,100)); //0,25,100 200, 400
 	mRCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -52,7 +52,7 @@ void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 200, -400));
+	mCamera->setPosition(Ogre::Vector3(0, 25, -100));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -75,7 +75,7 @@ OgrePong::createViewports(void)
 	
 	    // Create one viewport, entire window
         Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
-		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.4f, 0.75f, 0.5, 0.15);
+		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.375f, 0.75f, 0.5, 0.15);
 		rearvp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         vp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         // Alter the camera aspect ratio to match the viewport

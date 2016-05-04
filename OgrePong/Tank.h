@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 using namespace std;
+
 namespace Ogre {
 	class SceneNode;
 	class SceneManager;

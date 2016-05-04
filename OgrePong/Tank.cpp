@@ -16,7 +16,7 @@
 #include <string>
 #include <iostream>
 #include <math.h> 
-
+#include "wingdi.h"
 
 int id=0;
 string ID = "AItank";
@@ -570,30 +570,30 @@ void Tank::Think(const Ogre::Real& mTime)
          "MainRenderTarget", 
          Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
          Ogre::TextureType::TEX_TYPE_2D, 
-         680,
-         480,
+         80,
+         80,
 		 20,
 		 0,
-		 Ogre::PixelFormat::PF_R8G8B8,
+		 Ogre::PixelFormat::PF_B8G8R8,
 	     Ogre::TextureUsage::TU_RENDERTARGET);
 
    Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();
 
    renderTexture->addViewport(mCamera->getCamera(),0);
-   renderTexture->addViewport(mCameraR->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
+   //renderTexture->addViewport(mCameraR->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
    int count = renderTexture->getNumViewports();
    
    renderTexture->getViewport(0)->setClearEveryFrame(true);
    renderTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
-   renderTexture->getViewport(0)->setOverlaysEnabled(true);
+   renderTexture->getViewport(0)->setOverlaysEnabled(false);
 
-   renderTexture->getViewport(1)->setClearEveryFrame(true);
-   renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
-   renderTexture->getViewport(1)->setOverlaysEnabled(true);
+   //renderTexture->getViewport(1)->setClearEveryFrame(true);
+   //renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
+   //renderTexture->getViewport(1)->setOverlaysEnabled(true);
 
    renderTexture->update();
 	string ID = "RoomRender";
-	string exd = ".png";
+	string exd = ".bmp";
 	string Result;          // string which will contain the result  
 	ostringstream convert;
 	convert << k;      // insert the textual representation of 'Number' in the characters in the stream
@@ -603,7 +603,80 @@ void Tank::Think(const Ogre::Real& mTime)
    // Now save the contents
    renderTexture->writeContentsToFile(ID);
 	}
+	char* infile = "testing.bmp";//argv[2];
+    char* outfile = "try2.bmp";//argv[3];
+	 // open input file 
+    FILE* inptr = fopen(infile, "r");
+    /*if (inptr == NULL)
+    {
+        printf("Could not open %s.\n", infile);
 
+    }*/
+
+    // open output file
+    FILE* outptr = fopen(outfile, "w");
+    /*if (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, "Could not create %s.\n", outfile);
+
+    }*/
+
+    // read infile's BITMAPFILEHEADER
+    BITMAPFILEHEADER bf;
+    fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
+    // read infile's BITMAPINFOHEADER
+    BITMAPINFOHEADER bi;
+    fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
+
+    // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
+    /*if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
+        bi.biBitCount != 24 || bi.biCompression != 0)
+    {
+        fclose(outptr);
+        fclose(inptr);
+        fprintf(stderr, "Unsupported file format.\n");
+
+    }*/
+
+    // write outfile's BITMAPFILEHEADER
+    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+
+    // write outfile's BITMAPINFOHEADER
+    fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
+
+    // determine padding for scanlines
+    int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+
+    // iterate over infile's scanlines
+    for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi.biWidth; j++)
+        {
+            // temporary storage
+            RGBTRIPLE triple;
+
+            // read RGB triple from infile
+            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+            // write RGB triple to outfile
+            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+        }
+
+        // skip over padding, if any
+        fseek(inptr, padding, SEEK_CUR);
+
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding; k++)
+            fputc(0x00, outptr);
+    }
+
+    // close infile
+    fclose(inptr);
+
+    // close outfile
+    fclose(outptr);
 }
 
 /* Creates user tank entity and node */

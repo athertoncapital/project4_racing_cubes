@@ -42,11 +42,11 @@ PongCamera::capture(){
          "MainRenderTarget", 
          Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
          Ogre::TextureType::TEX_TYPE_2D, 
-         680,
-         480,
+         80,
+         80,
 		 20,
 		 0,
-		 Ogre::PixelFormat::PF_R8G8B8,
+		 Ogre::PixelFormat::PF_L8,
 	     Ogre::TextureUsage::TU_RENDERTARGET);
 
    Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();

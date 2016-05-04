@@ -114,6 +114,9 @@ copy resources.cfg "$(OutDir)"</Command>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="border.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="bmp.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="slideredbrick.h" />
     <ClInclude Include="RedBrick.h" />

@@ -59,6 +59,9 @@ protected:
 	void createCamera(void);
 	void createRearCamera(void);
 	void createViewports(void);
+	void createCamera_ai1(void);
+	void createCamera_ai2(void);
+	void createCamera_ai3(void);
 
     // The FrameListener is what receives callbacks from the rendering loop to handle 
     //  game logic
@@ -73,13 +76,20 @@ protected:
 	World *mWorld;
     PongCamera *mPongCamera;
 	PongCamera *mPongCameraRear;
+	PongCamera *mPongCamera_ai1;
+	PongCamera *mPongCamera_ai2;
+	PongCamera *mPongCamera_ai3;
 	PongManager *mPongMag;
 
     Ogre::Root *mRoot;
     Ogre::Camera* mCamera;
 	Ogre::Camera* mRCamera;
+	Ogre::Camera* mCamera_ai1;
+	Ogre::Camera* mCamera_ai2;
+	Ogre::Camera* mCamera_ai3;
     Ogre::SceneManager* mSceneMgr;
     Ogre::RenderWindow* mWindow;
+	Ogre::RenderWindow* mWindow_ai1;
     Ogre::String mResourcePath;
 	Ogre::OverlaySystem *mOverlaySystem;
 

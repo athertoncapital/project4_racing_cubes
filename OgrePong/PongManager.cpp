@@ -11,7 +11,7 @@
 #include "Ogre.h"
 #include <ois.h>
 
-PongManager::PongManager(Ogre::SceneManager* sceneManager, Ogre::RenderWindow *mainWindow) : mSceneManager(sceneManager), mRenderWindow(mainWindow) {
+PongManager::PongManager(Ogre::SceneManager* sceneManager, Ogre::RenderWindow *mainWindow, Ogre::RenderWindow *ai1Window) : mSceneManager(sceneManager), mRenderWindow(mainWindow),mRenderWindow_ai1(ai1Window) {
 	flag = false;
 createGameOverOverlay();
 }
@@ -54,28 +54,28 @@ void PongManager::startOver() {
 }
 
 void PongManager::createCamera() {
-	mCamera = mSceneManager->createCamera("USERCam");
+	/*mCamera = mSceneManager->createCamera("USERCam");
 	mCamera->setPosition(Ogre::Vector3(3000, 600, 1000));
 	mCamera->lookAt(Ogre::Vector3::ZERO);
-	mCamera->roll(Ogre::Degree(90.0f));
+	mCamera->roll(Ogre::Degree(90.0f));*/
 }
 
 // We will have a single viewport.  If you wanted splitscreen, or a rear-view mirror, then
 // you may want multiple viewports.
 
 
-void PongManager::createViewports() {
+void PongManager::createViewports() {/*
 	Ogre::Viewport* vpUser = mRenderWindow->addViewport(mCamera);
     vpUser->setBackgroundColour(Ogre::ColourValue(1, 1, 1));
-    mCamera->setAspectRatio(Ogre::Real(vpUser->getActualWidth()) / Ogre::Real(vpUser->getActualHeight()));
+    mCamera->setAspectRatio(Ogre::Real(vpUser->getActualWidth()) / Ogre::Real(vpUser->getActualHeight()));*/
 
 }
 
 void PongManager::setUp() {
-	mSceneManager->setAmbientLight(Ogre::ColourValue(0.65F, 0.55F, 0.25F));
-	createCamera();
-	createViewports();
-	mInputHandler = new InputHandler(mRenderWindow);
+	//mSceneManager->setAmbientLight(Ogre::ColourValue(0.65F, 0.55F, 0.25F));
+	//createCamera();
+	//createViewports();
+	//mInputHandler = new InputHandler(mRenderWindow, mRenderWindow_ai1);
 	//mWorld = new World(mSceneManager);
 	//mAIManager = new AIManager(mWorld);
 }

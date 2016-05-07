@@ -25,11 +25,18 @@ class InputHandler;
 class Tank;
 class ProjectileManager;
 class Border_;
+
 class AIManager;
 
 class World
 {
 public:
+	
+	int frame0[161];
+	int frame1[81][81];
+	int frame2[81][81];
+	int frame3[81][81];
+
 	float U_u;
 	float U_v;
 	float AI_0_u;

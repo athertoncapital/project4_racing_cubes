@@ -14,6 +14,8 @@
 #include "OgreOverlaySystem.h"
 #include "PongManager.h"
 #include <OgreRenderTexture.h>
+#include "DebugInterface.h"
+
 
 
 OgrePong::OgrePong()
@@ -102,8 +104,9 @@ void
 OgrePong::createScene() 
 {
 	// Ogre::FontManager::getSingleton().getByName("Big")->load();
+    mDebugInterface = new DebugInterface();
 
-    mInputHandler = new InputHandler(mWindow);
+    mInputHandler = new InputHandler(mWindow,mDebugInterface);
 	
     
 	mPongMag = new PongManager(mSceneMgr,mWindow);

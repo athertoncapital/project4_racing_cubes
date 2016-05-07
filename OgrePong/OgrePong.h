@@ -22,6 +22,7 @@ class World;
 class PongCamera;
 class MainListener;
 class PongManager;
+class DebugInterface;
 
 class OgrePong :  public Ogre::WindowEventListener
 {
@@ -65,7 +66,7 @@ protected:
 	void createFrameListener(void);
 
 	MainListener *mPongFrameListener;
-
+    DebugInterface *mDebugInterface;
 	Tank *mTank;
 	ProjectileManager *mProjectileManager;
 	AIManager *mAIManager;

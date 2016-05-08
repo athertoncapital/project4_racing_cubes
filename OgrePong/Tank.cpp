@@ -638,6 +638,7 @@ void Tank::Think(const Ogre::Real& mTime)
 	binID.append(binResult);
 	binID.append(exd);
 	fout.open(binID,ios::binary);
+
 	string readID = "readable";
 	exd = ".txt";
 	string readResult;          // string which will contain the result  

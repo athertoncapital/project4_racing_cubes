@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include "DebugInterface.h"
 
-InputHandler::InputHandler(Ogre::RenderWindow *renderWindow, Ogre::RenderWindow *renderWindow_ai1) : 
-	 mRenderWindow(renderWindow), mRenderWindow_ai1(renderWindow_ai1)
+InputHandler::InputHandler(Ogre::RenderWindow *renderWindow, Ogre::RenderWindow *renderWindow_ai1, DebugInterface *dbi) : 
+	 mRenderWindow(renderWindow), mRenderWindow_ai1(renderWindow_ai1), mDebugInterface(dbi)
 {
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
@@ -20,7 +20,7 @@ InputHandler::InputHandler(Ogre::RenderWindow *renderWindow, Ogre::RenderWindow 
 
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
-	mCurrentKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true /* not buffered */ ));
+	mCurrentKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true ));
     mCurrentKeyboard->setEventCallback(this);
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	/*

@@ -433,6 +433,8 @@ void World::Think(const Ogre::Real& mTime)
 	else if (mInputHandler->IsKeyDown(OIS::KC_Z))
 	{
 		fly_or_dive_Tank(mInputHandler, mTime);
+                recordMove();
+
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_X))
 	{
@@ -582,4 +584,22 @@ void World::initialStates() {
 	mUserScore = 0;
 	mUser = mUserRedBrick;
 	mAIPlayer = mAIRedBrick;
+}
+
+void World::recordMove() {
+    string readID = "moves";
+	string exd = ".txt";
+	string readResult;          // string which will contain the result  
+	ostringstream readconvert;
+	//readconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
+	//readResult = readconvert.str(); // set 'Result' to the contents of the stream
+	//readID.append(readResult);
+	readID.append(exd);
+
+    ofstream outtxt( readID, std::ios_base::app | std::ios_base::out );
+
+    outtxt << "Hello World!ed";
+    outtxt << endl; //End of Line
+
+    outtxt.close();
 }

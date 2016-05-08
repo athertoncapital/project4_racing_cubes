@@ -15,7 +15,7 @@ class InputHandler : OIS::KeyListener // : public OIS::MouseListener, public OIS
 {
 public:
 
-	InputHandler(Ogre::RenderWindow* win, Ogre::RenderWindow* win2);
+	InputHandler(Ogre::RenderWindow* win, Ogre::RenderWindow* win2, DebugInterface* dbi);
 	~InputHandler();
 	void Think(const Ogre::Real& mTime);
 

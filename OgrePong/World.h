@@ -107,6 +107,7 @@ public:
 	void addTank(Tank *t) {mTank = t; }
 	void addProjectile(ProjectileManager *pm) { mProjectileManager = pm; }
 	void setIterator();
+    void recordMove();
 
 	
 	//Tank *getHumanTank() { return mHumanPlayer; }

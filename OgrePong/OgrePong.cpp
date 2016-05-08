@@ -14,6 +14,10 @@
 #include "OgreOverlaySystem.h"
 #include "PongManager.h"
 #include <OgreRenderTexture.h>
+#include "DebugInterface.h"
+#include "LuaWrapper.h"
+
+
 
 
 OgrePong::OgrePong()
@@ -83,7 +87,7 @@ OgrePong::createCamera()
 void 
 OgrePong::createFrameListener(void)
 {
-	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank);
+	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank,mDebugInterface);
 	mRoot->addFrameListener(mPongFrameListener);
 }
 
@@ -129,10 +133,15 @@ OgrePong::createViewports(void)
 void 
 OgrePong::createScene() 
 {
+    mDebugInterface = new DebugInterface();
 	// Ogre::FontManager::getSingleton().getByName("Big")->load();
-    mInputHandler = new InputHandler(mWindow, mWindow_ai1);
+    mInputHandler = new InputHandler(mWindow, mWindow_ai1,mDebugInterface);
 	//mInputHandler = new InputHandler(mWindow_ai1);
 	
+    LuaWrapper::getSingleton()->setWorld(mWorld);
+	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+	//LuaWrapper::getSingleton()->loadLuaFile("Level1.lua");
+
     
 	mPongMag = new PongManager(mSceneMgr,mWindow, mWindow_ai1);
 	mWorld = new World(mSceneMgr, mInputHandler, mTank);
@@ -142,10 +151,20 @@ OgrePong::createScene()
 	mPongCamera_ai1 = new PongCamera(mCamera_ai1, mWorld, mInputHandler);
 	mPongCamera_ai2 = new PongCamera(mCamera_ai2, mWorld, mInputHandler);
 	mPongCamera_ai3 = new PongCamera(mCamera_ai3, mWorld, mInputHandler);
+
+    mPongCameraRear->getCamera()->getViewport()->setOverlaysEnabled(false);
+	mPongCamera_ai1->getCamera()->getViewport()->setOverlaysEnabled(false);
+	//mPongCamera_ai2->getCamera()->getViewport()->setOverlaysEnabled(false);
+	//mPongCamera_ai3->getCamera()->getViewport()->setOverlaysEnabled(false);
+
 	mTank = new Tank(mSceneMgr, mWorld, pong_0_DIMENSION);
 	mTank->addCamera(mPongCamera,mPongCameraRear, mPongCamera_ai1, mPongCamera_ai2,mPongCamera_ai3);
 	mTank->attachCamera();
 	
+    LuaWrapper::getSingleton()->setWorld(mWorld);
+	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+
+
 	mProjectileManager = new ProjectileManager(mSceneMgr, mInputHandler, mWorld);
 	mProjectileManager->addTank(mTank);
 	mProjectileManager->setIterator();

@@ -8,18 +8,23 @@
 class World;
 class PongCamera;
 class InputHandler;
+class DebugInterface;
 
 
-class InputHandler // : public OIS::MouseListener, public OIS::KeyListener
+class InputHandler : OIS::KeyListener // : public OIS::MouseListener, public OIS::KeyListener
 {
 public:
 
-	InputHandler(Ogre::RenderWindow* win, Ogre::RenderWindow* win2);
+	InputHandler(Ogre::RenderWindow* win, Ogre::RenderWindow* win2, DebugInterface* dbi);
 	~InputHandler();
 	void Think(const Ogre::Real& mTime);
 
 	bool IsKeyDown(OIS::KeyCode key);
 	bool WasKeyDown(OIS::KeyCode key);
+
+    bool keyPressed(const OIS::KeyEvent &e);
+    bool keyReleased(const OIS::KeyEvent &e);
+
 
 protected:
 	OIS::InputManager* mInputManager;
@@ -28,6 +33,10 @@ protected:
 	OIS::Keyboard *mPreviousKeyboard;
 	OIS::Keyboard *mCurrentKeyboard;
 	char mOldKeys[256];
+    bool mSpaceDown;
+    DebugInterface *mDebugInterface;
+
+
 
 };
 

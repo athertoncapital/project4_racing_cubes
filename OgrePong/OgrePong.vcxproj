@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(OGRE_HOME)/include/OGRE/Overlay;$(OGRE_HOME)/boost/;$(OGRE_HOME)/include/OIS;$(OGRE_HOME)/include/OGRE;$(OGRE_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)/include/OGRE/Overlay;$(OGRE_HOME)/boost/;$(OGRE_HOME)/include/OIS;$(OGRE_HOME)/include/OGRE;$(OGRE_HOME)/include;../Lua/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -115,7 +115,10 @@ copy resources.cfg "$(OutDir)"</Command>
     <ClInclude Include="border.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="bmp.h" />
+    <ClInclude Include="DebugInterface.h" />
+    <ClInclude Include="MenuInterface.h" />
     <ClInclude Include="tensorflow.h" />
+    <ClInclude Include="LuaWrapper.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="MovingObject.h" />
@@ -136,9 +139,12 @@ copy resources.cfg "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="AIManager.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DebugInterface.cpp" />
     <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="LuaWrapper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainListener.cpp" />
+    <ClCompile Include="MenuInterface.cpp" />
     <ClCompile Include="OgrePong.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="border.cpp" />
@@ -153,6 +159,11 @@ copy resources.cfg "$(OutDir)"</Command>
     <ClCompile Include="WorldManager.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lua\Lua.vcxproj">
+      <Project>{003380e1-6718-4fc3-acc2-69010dd87b36}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

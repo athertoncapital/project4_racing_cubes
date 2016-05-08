@@ -8,7 +8,7 @@
 
 
 InputHandler::InputHandler(Ogre::RenderWindow *renderWindow, DebugInterface *dbInterface) : 
-	 mRenderWindow(renderWindow), mDebugInterface(dbInterface)
+	 mRenderWindow(renderWindow), mSpaceDown(false) ,mDebugInterface(dbInterface)
 {
 	OIS::ParamList pl;
 	size_t windowHnd = 0;
@@ -20,7 +20,7 @@ InputHandler::InputHandler(Ogre::RenderWindow *renderWindow, DebugInterface *dbI
 
 	mInputManager = OIS::InputManager::createInputSystem( pl );
 
-	mCurrentKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, false /* not buffered */ ));
+	mCurrentKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, true /* not buffered */ ));
     mCurrentKeyboard->setEventCallback(this);
 }
 

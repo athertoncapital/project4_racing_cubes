@@ -63,7 +63,7 @@ int removeObject(lua_State *L)
     const char* nodeName = lua_tostring(L,1);
     try
     {
-		success = LuaWrapper::getSingleton()->getWorld()->removeMovingObject(nodeName);
+		//success = LuaWrapper::getSingleton()->getWorld()->removeMovingObject(nodeName);
 		if (!success)
 		{
 			 addDebugText("Object " + std::string(nodeName) + " Could not be removed.   Perhaps doesn't exist");
@@ -95,7 +95,8 @@ int createObject(lua_State *L)
     const char* nodeName = lua_tostring(L,2);
     try
     {
-		MovingObject *m = LuaWrapper::getSingleton()->getWorld()->createMovingObject(meshName, nodeName);
+        MovingObject *m = NULL;
+		//MovingObject *m = LuaWrapper::getSingleton()->getWorld()->createMovingObject(meshName, nodeName);
 		if (m == NULL)
 		{
 			addDebugText("Object " + std::string(nodeName) + " Could not be created.   Perhaps already exists?");
@@ -128,7 +129,7 @@ int setPosition(lua_State *L)
 	float z = (float) lua_tonumber(L,4);
 	try
 	{
-		LuaWrapper::getSingleton()->getWorld()->setPosition(nodeName, Ogre::Vector3(x,y,z));
+		//LuaWrapper::getSingleton()->getWorld()->setPosition(nodeName, Ogre::Vector3(x,y,z));
 	} catch (std::exception e)
 	{
 
@@ -218,7 +219,7 @@ int setOnEnter(lua_State *L)
 	const char* script =  lua_tostring(L,2);
     try
     {
-    LuaWrapper::getSingleton()->getWorld()->setTriggerAreaOnEnter(nodeName, script);
+    //LuaWrapper::getSingleton()->getWorld()->setTriggerAreaOnEnter(nodeName, script);
     } catch (std::exception e)
     {
 
@@ -243,7 +244,7 @@ int setOnExit(lua_State *L)
 	const char* script =  lua_tostring(L,2);
     try
     {
-    LuaWrapper::getSingleton()->getWorld()->setTriggerAreaOnExit(nodeName, script);
+    //LuaWrapper::getSingleton()->getWorld()->setTriggerAreaOnExit(nodeName, script);
     } catch (std::exception e)
     {
 
@@ -261,7 +262,7 @@ int createTriggerArea(lua_State *L)
     if (numArgs == 1)
     {
 		const char* nodeName = lua_tostring(L,1);
-		    LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName);
+		    //LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName);
 
         return 0;
     }
@@ -272,7 +273,7 @@ int createTriggerArea(lua_State *L)
 		float y = (float) lua_tonumber(L,3);
 		float z = (float) lua_tonumber(L,4);
 
-		    LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName, Ogre::Vector3(x,y,z), Ogre::Vector3::UNIT_SCALE);
+		    //LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName, Ogre::Vector3(x,y,z), Ogre::Vector3::UNIT_SCALE);
 
         return 0;
 
@@ -288,7 +289,7 @@ int createTriggerArea(lua_State *L)
 		float sy = (float) lua_tonumber(L,6);
 		float sz = (float) lua_tonumber(L,7);
 
-		LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName, Ogre::Vector3(x,y,z), Ogre::Vector3(sx, sy,sz));
+		//LuaWrapper::getSingleton()->getWorld()->addTriggerArea(nodeName, Ogre::Vector3(x,y,z), Ogre::Vector3(sx, sy,sz));
 
 		return 0;
 
@@ -313,7 +314,7 @@ int setTriggerPosition(lua_State *L)
     float z = (float) lua_tonumber(L,4);
     try
     {
-    LuaWrapper::getSingleton()->getWorld()->setTriggerAreaLocation(nodeName, Ogre::Vector3(x,y,z));
+    //LuaWrapper::getSingleton()->getWorld()->setTriggerAreaLocation(nodeName, Ogre::Vector3(x,y,z));
     } catch (std::exception e)
     {
 
@@ -339,7 +340,7 @@ int setTriggerSize(lua_State *L)
     float z = (float) lua_tonumber(L,4);
     try
     {
-    LuaWrapper::getSingleton()->getWorld()->setTriggerAreaSize(nodeName, Ogre::Vector3(x,y,z));
+    //LuaWrapper::getSingleton()->getWorld()->setTriggerAreaSize(nodeName, Ogre::Vector3(x,y,z));
     } catch (std::exception e)
     {
 
@@ -364,7 +365,7 @@ int setVelocity(lua_State *L)
     float z = (float) lua_tonumber(L,4);
     try
     {
-    LuaWrapper::getSingleton()->getWorld()->setVelocity(nodeName, Ogre::Vector3(x,y,z));
+    //LuaWrapper::getSingleton()->getWorld()->setVelocity(nodeName, Ogre::Vector3(x,y,z));
     } catch (std::exception e)
     {
 
@@ -408,8 +409,8 @@ int setObjectSize(lua_State *L)
 	}
      try
     {
-		MovingObject *m = 
-    LuaWrapper::getSingleton()->getWorld()->getMovingObject(nodeName);
+		MovingObject *m = NULL; 
+    //LuaWrapper::getSingleton()->getWorld()->getMovingObject(nodeName);
 		if (m != NULL)
 		{
 			m->setScale(Ogre::Vector3(scaleX, scaleY,scaleZ));
@@ -536,7 +537,7 @@ void LuaWrapper::initializeLuaFunctions()
 	lua_register(mLuaState, "setTriggerSize", setTriggerSize);
 	lua_register(mLuaState, "showFunctions", showFunctions);
 	lua_register(mLuaState, "help", showFunctions);
-	lua_register(mLuaState, "objectInsideTriggerArea", objectInsideTriggerArea);
+	//lua_register(mLuaState, "objectInsideTriggerArea", objectInsideTriggerArea);
 	lua_register(mLuaState, "setObjectSize", setObjectSize);
 
 }

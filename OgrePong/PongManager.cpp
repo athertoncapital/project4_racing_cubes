@@ -75,7 +75,7 @@ void PongManager::setUp() {
 	mSceneManager->setAmbientLight(Ogre::ColourValue(0.65F, 0.55F, 0.25F));
 	createCamera();
 	createViewports();
-	mInputHandler = new InputHandler(mRenderWindow);
+	//mInputHandler = new InputHandler(mRenderWindow);
 	//mWorld = new World(mSceneManager);
 	//mAIManager = new AIManager(mWorld);
 }

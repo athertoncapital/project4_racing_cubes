@@ -15,6 +15,8 @@
 #include "PongManager.h"
 #include <OgreRenderTexture.h>
 #include "DebugInterface.h"
+#include "LuaWrapper.h"
+
 
 
 
@@ -65,7 +67,7 @@ OgrePong::createCamera()
 void 
 OgrePong::createFrameListener(void)
 {
-	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank);
+	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank,mDebugInterface);
 	mRoot->addFrameListener(mPongFrameListener);
 }
 
@@ -108,16 +110,25 @@ OgrePong::createScene()
 
     mInputHandler = new InputHandler(mWindow,mDebugInterface);
 	
+    LuaWrapper::getSingleton()->setWorld(mWorld);
+	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+	//LuaWrapper::getSingleton()->loadLuaFile("Level1.lua");
+
     
 	mPongMag = new PongManager(mSceneMgr,mWindow);
 	mWorld = new World(mSceneMgr, mInputHandler, mTank);
 	mWorld->Switch=0;
 	mPongCamera = new PongCamera(mCamera, mWorld, mInputHandler);///
 	mPongCameraRear = new PongCamera(mRCamera, mWorld, mInputHandler);
+    mPongCameraRear->getCamera()->getViewport()->setOverlaysEnabled(false);
 	mTank = new Tank(mSceneMgr, mWorld, pong_0_DIMENSION);
 	mTank->addCamera(mPongCamera,mPongCameraRear);
 	mTank->attachCamera();
 	
+    LuaWrapper::getSingleton()->setWorld(mWorld);
+	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+
+
 	mProjectileManager = new ProjectileManager(mSceneMgr, mInputHandler, mWorld);
 	mProjectileManager->addTank(mTank);
 	mProjectileManager->setIterator();

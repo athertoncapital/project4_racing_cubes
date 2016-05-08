@@ -17,7 +17,7 @@ public:
 
     void SetDebugConsoleActive(bool activate);
     bool DebugConsoleActive() { return mIsActive; }
-    void HandleKeystroke(OIS::KeyCode key);
+    void HandleKeystroke(OIS::KeyEvent key);
 	void addDebugText(std::string message);
 	void Think(float time);
 	void setDebugMessageTime(float time) {mMessageTime = time; }

@@ -81,9 +81,9 @@ DebugInterface::DebugInterface(void)
 
 
 void 
-	DebugInterface::HandleKeystroke(OIS::KeyCode key)
+	DebugInterface::HandleKeystroke(OIS::KeyEvent e)
 {
-	if (key == OIS::KC_RETURN)
+	if (e.key == OIS::KC_RETURN)
 	{
 		LuaWrapper::getSingleton()->doString(mLuaCommand.c_str());
 		mHistory.push_back(mLuaCommand);
@@ -91,7 +91,7 @@ void
 		mLuaCommand = "";
 		mOverlayText->setCaption("Lua >" + mLuaCommand);
 	}
-	else if (key == OIS::KC_BACK || key == OIS::KC_LEFT)
+	else if (e.key == OIS::KC_BACK || e.key == OIS::KC_LEFT)
 	{
 		if (mLuaCommand.size() > 0)
 		{
@@ -99,7 +99,7 @@ void
 			mOverlayText->setCaption("Lua >" + mLuaCommand);
 		}
 	}
-	else if (key == OIS::KC_UP)
+	else if (e.key == OIS::KC_UP)
 	{
 		mHistoryIndex--;
 		mHistoryIndex = std::max<int>(mHistoryIndex,0);
@@ -109,7 +109,7 @@ void
 			mOverlayText->setCaption("Lua >" + mLuaCommand);
 		}
 	}
-	else if (key == OIS::KC_DOWN)
+	else if (e.key == OIS::KC_DOWN)
 	{
 		mHistoryIndex++;
 		mHistoryIndex = (int) std::min<size_t>(mHistoryIndex,mHistory.size()-1);
@@ -120,9 +120,9 @@ void
 		}
 	}
 
-	else if (key != OIS::KC_LSHIFT && key != OIS::KC_RSHIFT && key != OIS::KC_LCONTROL && key != OIS::KC_RCONTROL)
+	else if (e.key != OIS::KC_LSHIFT && e.key != OIS::KC_RSHIFT && e.key != OIS::KC_LCONTROL && e.key != OIS::KC_RCONTROL)
 	{
-		mLuaCommand.push_back((char) key);
+		mLuaCommand.push_back((char) e.text);
 		mOverlayText->setCaption("Lua >" + mLuaCommand);
 	}
 }

@@ -11,9 +11,12 @@
 #include "OgreOverlay.h"
 #include "OgreTextAreaOverlayElement.h"
 #include "OgreSceneManager.h"
+#include "DebugInterface.h"
+#include "LuaWrapper.h"
 
-MainListener::MainListener(Ogre::RenderWindow *mainWindow, InputHandler *inputManager, AIManager *aiManager, World *world, PongCamera *cam, ProjectileManager *pm, Tank *mT) :
-mRenderWindow(mainWindow), mInputHandler(inputManager), mAIManager(aiManager), mWorld(world), mPongCamera(cam), mProjectileManager(pm), mTank(mT)
+
+MainListener::MainListener(Ogre::RenderWindow *mainWindow, InputHandler *inputManager, AIManager *aiManager, World *world, PongCamera *cam, ProjectileManager *pm, Tank *mT, DebugInterface *dbi) :
+mRenderWindow(mainWindow), mInputHandler(inputManager), mAIManager(aiManager), mWorld(world), mPongCamera(cam), mProjectileManager(pm), mTank(mT),mDebugInterface(dbi)
 {
 	x = 0;
 }
@@ -34,6 +37,10 @@ bool
 	mTank->Think(mTime);
 	mProjectileManager->Think(mTime);
 	mAIManager->Think(mTime);
+    mDebugInterface->Think(mTime);
+
+    LuaWrapper::getSingleton()->Think(mTime);
+
 	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int cd = 185-k;
 	if (mInputHandler->IsKeyDown(OIS::KC_X)){

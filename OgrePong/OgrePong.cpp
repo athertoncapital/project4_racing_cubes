@@ -48,15 +48,35 @@ void
 OgrePong::createRearCamera()
 {
 	mRCamera = mSceneMgr->createCamera("RearCam");
-	mRCamera->setPosition(Ogre::Vector3(0, 25,100)); //0,25,100 200, 400
+	mRCamera->setPosition(Ogre::Vector3(0, 0,1)); //0,25,100 200, 400
 	mRCamera->lookAt(Ogre::Vector3(0,0,0));
 }
-
+void
+OgrePong::createCamera_ai1()
+{
+	mCamera_ai1 = mSceneMgr->createCamera("Cam_ai1");
+	mCamera_ai1->setPosition(Ogre::Vector3(0, 0,-100)); //0,25,100 200, 400
+	mCamera_ai1->lookAt(Ogre::Vector3(0,0,0));
+}
+void
+OgrePong::createCamera_ai2()
+{
+	mCamera_ai2 = mSceneMgr->createCamera("Cam_ai2");
+	mCamera_ai2->setPosition(Ogre::Vector3(0, 0,-100)); //0,25,100 200, 400
+	mCamera_ai2->lookAt(Ogre::Vector3(0,0,0));
+}
+void
+OgrePong::createCamera_ai3()
+{
+	mCamera_ai3 = mSceneMgr->createCamera("Cam_ai3");
+	mCamera_ai3->setPosition(Ogre::Vector3(0, 0,-100)); //0,25,100 200, 400
+	mCamera_ai3->lookAt(Ogre::Vector3(0,0,0));
+}
 void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 25, -100));
+	mCamera->setPosition(Ogre::Vector3(0, 0, -100));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -78,16 +98,24 @@ OgrePong::createViewports(void)
 {
 	
 	    // Create one viewport, entire window
-        Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
+        
+		Ogre::Viewport* vp_ai1= mWindow->addViewport(mCamera_ai1,2, 0.1f, 0.5f, 0.5, 0.15);
 		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.375f, 0.75f, 0.5, 0.15);
+		Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
+
 		rearvp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         vp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
+		vp_ai1->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         // Alter the camera aspect ratio to match the viewport
-        mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight())); 
+        
 		mRCamera->setAspectRatio(Ogre::Real(rearvp->getActualWidth()) / Ogre::Real(rearvp->getActualHeight())); 
+		mCamera_ai1->setAspectRatio(Ogre::Real(vp_ai1->getActualWidth()) / Ogre::Real(vp_ai1->getActualHeight()));
+		mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight())); 
 		Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
         mWindow->getViewport(0)->setBackgroundColour(fadeColour);
 		mWindow->getViewport(1)->setBackgroundColour(fadeColour);
+		//mWindow_ai1->getViewport(2)->setBackgroundColour(fadeColour);
+	
 
 
 
@@ -106,23 +134,24 @@ void
 OgrePong::createScene() 
 {
 	// Ogre::FontManager::getSingleton().getByName("Big")->load();
-    mDebugInterface = new DebugInterface();
-
-    mInputHandler = new InputHandler(mWindow,mDebugInterface);
+    mInputHandler = new InputHandler(mWindow, mWindow_ai1);
+	//mInputHandler = new InputHandler(mWindow_ai1);
 	
     LuaWrapper::getSingleton()->setWorld(mWorld);
 	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
 	//LuaWrapper::getSingleton()->loadLuaFile("Level1.lua");
 
     
-	mPongMag = new PongManager(mSceneMgr,mWindow);
+	mPongMag = new PongManager(mSceneMgr,mWindow, mWindow_ai1);
 	mWorld = new World(mSceneMgr, mInputHandler, mTank);
 	mWorld->Switch=0;
-	mPongCamera = new PongCamera(mCamera, mWorld, mInputHandler);///
+	mPongCamera = new PongCamera(mCamera, mWorld, mInputHandler);//////////////////////////////////////////
 	mPongCameraRear = new PongCamera(mRCamera, mWorld, mInputHandler);
-    mPongCameraRear->getCamera()->getViewport()->setOverlaysEnabled(false);
+	mPongCamera_ai1 = new PongCamera(mCamera_ai1, mWorld, mInputHandler);
+	mPongCamera_ai2 = new PongCamera(mCamera_ai2, mWorld, mInputHandler);
+	mPongCamera_ai3 = new PongCamera(mCamera_ai3, mWorld, mInputHandler);
 	mTank = new Tank(mSceneMgr, mWorld, pong_0_DIMENSION);
-	mTank->addCamera(mPongCamera,mPongCameraRear);
+	mTank->addCamera(mPongCamera,mPongCameraRear, mPongCamera_ai1, mPongCamera_ai2,mPongCamera_ai3);
 	mTank->attachCamera();
 	
     LuaWrapper::getSingleton()->setWorld(mWorld);
@@ -194,8 +223,13 @@ OgrePong::setup(void)
 
     // Create the SceneManager, in this case a generic one
     mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC, "PongSMInstance");
-    createCamera();
+    
+	createCamera_ai1();
+	createCamera_ai2();
+	createCamera_ai3();
 	createRearCamera();
+	createCamera();
+
 	//mWorld->mCamera = mCamera;
 	//mWorld->mRCamera = mRCamera;
     createViewports();
@@ -230,6 +264,7 @@ OgrePong::configure(void)
         // If returned true, user clicked OK so initialise
         // Here we choose to let the system create a default rendering window by passing 'true'
         mWindow = mRoot->initialise(true);
+		//mWindow_ai1 = mRoot->initialise(true);
         return true;
     }
     else
@@ -285,6 +320,10 @@ OgrePong::destroyScene()
     delete mWorld;
     delete mAIManager;
     delete mPongCamera;
+	delete mPongCameraRear;
+	delete mPongCamera_ai1;
+	delete mPongCamera_ai2;
+	delete mPongCamera_ai3;
     delete mInputHandler;
 }
 

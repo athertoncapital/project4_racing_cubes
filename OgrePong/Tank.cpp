@@ -1,4 +1,4 @@
-#include "Tank.h"
+﻿#include "Tank.h"
 #include "Camera.h"
 #include "World.h"
 #include "PongObject.h"
@@ -17,6 +17,19 @@
 #include <iostream>
 #include <math.h> 
 #include "wingdi.h"
+#include <Windows.h>
+#include <sstream>
+#include <fstream>      // std::ifstream, std::ofstream
+
+#include "tensorflow.h"
+
+ #define DBOUT( s )            \
+{                             \
+   std::wostringstream os_;    \
+   os_ << s;                   \
+   OutputDebugStringW( os_.str().c_str() );  \
+}
+
 
 int id=0;
 string ID = "AItank";
@@ -26,7 +39,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 																				   pong_0_SPEED, pong_MOVE_User_BOTTOM), mSceneManager(sceneManager), mWorld(world)
 {
 
-    
+   
     // Create background material
     Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
     material->getTechnique(0)->getPass(0)->createTextureUnitState("space.jpg");
@@ -73,20 +86,20 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	ID.append(Result);
 	Node *node = new Node();
 	Ogre::SceneNode *eTankNode;
-	Ogre::Entity *tank = SceneManager()->createEntity("AItank0","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank0");
-	eTankNode->setPosition(mWorld->spawnPoints[0]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
+	Ogre::Entity *tank = SceneManager()->createEntity("AItank1","Cube.mesh");
+	mAI1 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank1");
+	mAI1->setPosition(mWorld->spawnPoints[1]);
+	mAI1->attachObject(tank);
+	mAI1->scale(10, 10, 10);
 
 	Ogre::Vector3 XBasis = Ogre::Vector3(-1,0, 0);
     Ogre::Vector3 YBasis = Ogre::Vector3(0,-1 ,0);
     Ogre::Vector3 ZBasis = Ogre::Vector3(0,0,1);
     Ogre::Matrix3 R;
     R.FromAxes(XBasis, YBasis, ZBasis);
-	eTankNode->setOrientation(R);
+	mAI1->setOrientation(R);
 
-	node->eTankNode = eTankNode;
+	node->eTankNode = mAI1;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
 	Ogre::Real time=mWorld->t;
@@ -99,9 +112,9 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	ID.append(Result);
 	node = new Node();
 	
-	tank = SceneManager()->createEntity("AItank1","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank1");
-	eTankNode->setPosition(mWorld->spawnPoints[1]);
+	tank = SceneManager()->createEntity("AItank0","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank0");
+	eTankNode->setPosition(mWorld->spawnPoints[0]);
 	eTankNode->attachObject(tank);
 	eTankNode->scale(10, 10, 10);
 	/*XBasis = Ogre::Vector3(-1,0, 0);
@@ -122,13 +135,12 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	Result = convert.str(); // set 'Result' to the contents of the stream
 	ID.append(Result);
 	node = new Node();
-	eTankNode;
 	tank = SceneManager()->createEntity("AItank2","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank2");
-	eTankNode->setPosition(mWorld->spawnPoints[2]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
+	mAI2 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank2");
+	mAI2->setPosition(mWorld->spawnPoints[2]);
+	mAI2->attachObject(tank);
+	mAI2->scale(10, 10, 10);
+	node->eTankNode = mAI2;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
 	time=mWorld->t;
@@ -141,13 +153,12 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	Result = convert.str(); // set 'Result' to the contents of the stream
 	ID.append(Result);
 	node = new Node();
-	eTankNode;
 	tank = SceneManager()->createEntity("AItank3","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank3");
-	eTankNode->setPosition(mWorld->spawnPoints[3]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
+	mAI3 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank3");
+	mAI3->setPosition(mWorld->spawnPoints[3]);
+	mAI3->attachObject(tank);
+	mAI3->scale(10, 10, 10);
+	node->eTankNode = mAI3;
 	node->eAABB = &tank->getWorldBoundingBox();
 	node->destroyed = false;
 	time=mWorld->t;
@@ -527,11 +538,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
     mCrossHair->setPosition(Ogre::Vector3(0,-20,0));
 	Ogre::Vector3 pos;
     Ogre::Matrix3 orientation;
-
     mCrossHair->yaw(Ogre::Radian(Ogre::Math::PI / 2));
-
-			
-
 	Ogre::SceneNode *oMainNode;
 	Ogre::Entity *mObj20 = SceneManager()->createEntity("ogrehead.mesh");
 	oMainNode = SceneManager()->getRootSceneNode()->createChildSceneNode();
@@ -539,8 +546,6 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	oMainNode->attachObject(mObj20);
 	oMainNode->scale(1, 1, 1);
 	mo2ABB = &mObj20->getWorldBoundingBox();
-	
-	
 }
 
 
@@ -553,8 +558,16 @@ void
 Tank::attachCamera(void)
 {
 	mCameraNode = mMainNode->createChildSceneNode();
+	mCameraNode_AI1 = mAI1->createChildSceneNode();
+	mCameraNode_AI2 = mAI2->createChildSceneNode();
+	mCameraNode_AI3 = mAI3->createChildSceneNode();
 	mCameraNode->attachObject(mCamera->getCamera());
 	mCameraNode->attachObject(mCameraR->getCamera());
+	mCameraNode_AI1->attachObject(mCamera_ai1->getCamera());
+	mCameraNode_AI2->attachObject(mCamera_ai2->getCamera());
+	mCameraNode_AI3->attachObject(mCamera_ai3->getCamera());
+
+	//mTempNode=SceneManager()->getSceneNode("AItank0");
 }
 void Tank::Think(const Ogre::Real& mTime)
 {
@@ -562,9 +575,8 @@ void Tank::Think(const Ogre::Real& mTime)
     mObj2->pitch(Ogre::Radian(0.6f * mTime));
     mObj3->roll(Ogre::Radian(0.5f * mTime));
 	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
-
-
 	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
+	int c = k%4;//for selecting frame storages
 	if(k%10==0){
 	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().createManual(
          "MainRenderTarget", 
@@ -574,25 +586,24 @@ void Tank::Think(const Ogre::Real& mTime)
          80,
 		 20,
 		 0,
-		 Ogre::PixelFormat::PF_B8G8R8,
+		 Ogre::PixelFormat::PF_R8G8B8,
 	     Ogre::TextureUsage::TU_RENDERTARGET);
 
    Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();
 
-   renderTexture->addViewport(mCamera->getCamera(),0);
-   //renderTexture->addViewport(mCameraR->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
+   renderTexture->addViewport(mCamera_ai1->getCamera(),0);
+   //renderTexture->addViewport(mCamera_ai1->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
    int count = renderTexture->getNumViewports();
    
    renderTexture->getViewport(0)->setClearEveryFrame(true);
    renderTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
-   renderTexture->getViewport(0)->setOverlaysEnabled(false);
+   renderTexture->getViewport(0)->setOverlaysEnabled(true);
 
    //renderTexture->getViewport(1)->setClearEveryFrame(true);
    //renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
    //renderTexture->getViewport(1)->setOverlaysEnabled(true);
-
    renderTexture->update();
-	string ID = "RoomRender";
+	string ID = "ai1_Render";
 	string exd = ".bmp";
 	string Result;          // string which will contain the result  
 	ostringstream convert;
@@ -602,16 +613,49 @@ void Tank::Think(const Ogre::Real& mTime)
 	ID.append(exd);
    // Now save the contents
    renderTexture->writeContentsToFile(ID);
-	}
-	char* infile = "testing.bmp";//argv[2];
-    char* outfile = "try2.bmp";//argv[3];
+   string id=ID;
+	char *infile = new char[id.length() + 1]; //argv[2];
+	strcpy(infile, id.c_str());
+	string bintxtID = "binary_in_txt";
+	exd = ".txt";
+	string bintxtResult;          // string which will contain the result  
+	ostringstream bintxtconvert;
+	bintxtconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
+	bintxtResult = bintxtconvert.str(); // set 'Result' to the contents of the stream
+	bintxtID.append(bintxtResult);
+	bintxtID.append(exd);
+	char *outfile = new char[bintxtID.length() + 1]; //argv[3];
+	strcpy(outfile, bintxtID.c_str());
+    //char* outfile = "try2.txt";
+	ofstream fout;
+    ifstream fin;
+	string binID = "bindata";
+	exd = ".dat";
+	string binResult;          // string which will contain the result  
+	ostringstream binconvert;
+	binconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
+	binResult = binconvert.str(); // set 'Result' to the contents of the stream
+	binID.append(binResult);
+	binID.append(exd);
+	fout.open(binID,ios::binary);
+	string readID = "readable";
+	exd = ".txt";
+	string readResult;          // string which will contain the result  
+	ostringstream readconvert;
+	readconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
+	readResult = readconvert.str(); // set 'Result' to the contents of the stream
+	readID.append(readResult);
+	readID.append(exd);
+	ofstream outtxt( readID );
 	 // open input file 
     FILE* inptr = fopen(infile, "r");
-    /*if (inptr == NULL)
+    if (inptr == NULL)
     {
         printf("Could not open %s.\n", infile);
-
-    }*/
+		DBOUT("Could not open%s.\n ");
+    }
+	//create the foo array for storing the bmp image
+	int foo [81][81];
 
     // open output file
     FILE* outptr = fopen(outfile, "w");
@@ -621,62 +665,334 @@ void Tank::Think(const Ogre::Real& mTime)
         fprintf(stderr, "Could not create %s.\n", outfile);
 
     }*/
-
     // read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
     fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
     // read infile's BITMAPINFOHEADER
     BITMAPINFOHEADER bi;
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
-
-    // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
-    /*if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
-        bi.biBitCount != 24 || bi.biCompression != 0)
-    {
-        fclose(outptr);
-        fclose(inptr);
-        fprintf(stderr, "Unsupported file format.\n");
-
-    }*/
-
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
-
     // write outfile's BITMAPINFOHEADER
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
-
     // determine padding for scanlines
     int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-
+	//DBOUT("padding: " << padding);
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
         for (int j = 0; j < bi.biWidth; j++)
         {
+    //DBOUT("bi.biHeight: " << bi.biHeight);
+	//DBOUT("bi.biWidth: " << bi.biWidth);
             // temporary storage
             RGBTRIPLE triple;
-
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+	//DBOUT("triple.rgbtBlue: " << triple.rgbtBlue);
+	//DBOUT("triple.rgbtRed: " << triple.rgbtRed);
+	//DBOUT("triple.rgbtGreen: " << triple.rgbtGreen);
+	mean =(int)(triple.rgbtBlue+triple.rgbtRed+triple.rgbtGreen)/3;
+	//char b[] = {mean};
+	//write in ascii
+	//std::string buf = "";
+	//char str[20];
+	//buf += itoa(mean, str, 10);
+	//write in char
+	//ostringstream a;
+	//a << mean;
 
+	//store into foo[81][81] array
+	foo [i][j]=mean;
+	
+	store(c, mean, i, j);
+	//write in text file 
+	outtxt << mean << flush;
+	outtxt << " "<< flush;
+	//DBOUT("mean: " << mean);
             // write RGB triple to outfile
-            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+            fwrite(&mean, sizeof(int), sizeof(mean), outptr);
+			fout.write((char*)&mean,sizeof(int));
         }
-
         // skip over padding, if any
         fseek(inptr, padding, SEEK_CUR);
-
         // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
+        for (int k = 0; k < padding; k++){
+			store(c,0x00 , i, k);
+			foo[i][k];
             fputc(0x00, outptr);
+			outtxt << 0x00 << flush;
+			outtxt << " "<< flush;
+		}
+		outtxt << endl;
     }
-
     // close infile
     fclose(inptr);
-
     // close outfile
+	fout.close();
+	fin.open(binID,ios::binary);
+	for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi.biWidth; j++)
+        {
+			int my_int2;
+			fin.read((char*)&my_int2,sizeof(int));
+			//DBOUT("my_int2: " << my_int2);
+		}
+	}
+	fin.close();
     fclose(outptr);
+	outtxt.close();
+	delete [] infile;
+
+	
+    tf = new tensorflow(mWorld);
+	int num_examples = 80*80; // training set size
+    int nn_input_dim = 2; // input layer dimensionality
+    int nn_output_dim = 1; // output layer dimensionality
+	// Gradient descent parameters (I picked these by hand)
+    float epsilon = 0.01f;// learning rate for gradient descent
+    float reg_lambda = 0.01f;// regularization strength
+	float bar[161];
+	for(int i=0;i<80;i++)
+	{
+		for(int j=0; j<80;j++)
+		{
+			bar[i+j]=foo[i][j];
+		}
+	}
+
+
+
+	int SwitchMode =1;
+	/*training
+	* input: bar[161]
+	* ouput: corrected parameters
+	*/
+	if(SwitchMode==1){
+		int conv[79][79];
+
+		for (int i = 0; i<80; i++ )
+		{
+			for (int j = 0; j<80; j++ )
+			{
+					int tmp= tanh(mean);
+			        foo[i][j]=tmp;
+			}
+		}
+	}
+	/*prediction
+	* input: corrected parameters, and foo[81][81]
+	* output: control command
+	*/
+	else if(SwitchMode==2)
+	{
+		//TODO
+	}
+
+
+
+	}
+}
+
+float
+Tank::calculate_loss(float w1[][66], float w2[], float b1[], float b2[], float z_2[], float reg_lambda)
+{
+	for(int i=0;i<65;i++)
+	{
+		for(int j=0; j< 161; j++)
+		{
+			for(int k=0; k< 65; k++)
+			{
+				z_2[i] += w1[j][k]* (mWorld->frame0[j]);
+			}
+		}
+		z_2[i]+= b1[i];
+	}
+	float a_2[66];
+	for(int i=0; i<65; i++)
+	{
+		a_2[i] = tanh(z_2[i]);
+	}
+	float z_3[4];
+	for(int i=0; i<4; i++)
+	{
+		z_3[i] += w2[i] * a_2[i] +b2[i];
+	}
+	//get unnormalized probabilities
+	float exp_scores[66];
+	for(int i=0; i<65; i++)
+	{
+		exp_scores[i] = exp(z_2[i]);
+	}
+	//normalize them for each example
+	float norm=0.0f;
+	for(int i=0; i<65; i++)
+	{
+		norm += exp_scores[i];
+	}
+	float probs[66];
+	for(int i=0; i<65; i++)
+	{
+		probs[i] = exp_scores[i]/norm;
+	}
+	//Calculating the loss
+	float corect_logprobs[66];
+	for(int i=0; i<65; i++)
+	{
+		corect_logprobs[i] = -log(probs[i]);
+	}
+	//compute the loss: average cross-entropy loss and regularization
+	float data_loss =0.0f;
+	for(int i=0; i<65; i++)
+	{
+		data_loss += corect_logprobs[i];
+	}
+	// Add regulatization term to loss (optional)
+	float sum_w1=0.0f;
+	for(int j=0; j< 80; j++)
+		{
+			for(int k=0; k< 80; k++)
+			{
+				sum_w1 += w1[j][k]* w1[j][k];
+			}
+		}
+	float sum_w2=0.0f;
+	for(int i=0; i<4; i++)
+	{
+		sum_w2 += w2[i];
+	}
+    data_loss += reg_lambda*0.5f * (sum_w1) + sum_w2;
+	return 1.0f/65 * data_loss;
+}
+/*
+*This function learns parameters for the neural network and returns the model.
+* - nn_hdim: Number of nodes in the hidden layer, default = 65
+* - num_passes: Number of passes through the training data for gradient descent
+* - print_loss: If True, print the loss every 1000 iterations
+*/
+void
+	Tank::build_model(float w1[][66], float w2[], float b1[], float b2[], float z_2[], float reg_lambda, int nn_hdim, int num_passes, boolean print_loss){
+		//Initialize the parameters to random values. We need to learn these.
+		int HI = 1;
+		int LO = 0;
+		//float r = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
+		for(int j=0; j< 80; j++)
+		{
+			for(int k=0; k< 80; k++)
+			{
+				w1[j][k]= LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
+			}
+		}
+		for(int i=0; i<4; i++)
+		{
+			w2[i] = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
+		}
+		for(int j=0; j< 65; j++)
+		{
+			b1[j] = 1;
+		}
+		for(int j=0; j< 4; j++)
+		{
+			b2[j] = 1;
+		}
+		//Gradient descent. For each batch...
+		for(int i=0; i< num_passes; i++){
+			//Forward propagation
+			for(int i=0;i<66;i++)
+			{
+				for(int j=0; j< 80; j++)
+				{
+					for(int k=0; k< 80; k++)
+					{
+						z_2[i] += w1[j][k]* (mWorld->frame0[j]);
+					}
+				}
+				z_2[i]+= b1[i];
+			}
+			float a_2[66];
+			for(int i=0; i<65; i++)
+			{
+				a_2[i] = tanh(z_2[i]);
+			}
+			float z_3[4];
+			for(int i=0; i<4; i++)
+			{
+				z_3[i] += w2[i] * a_2[i] +b2[i];
+			}
+			//get unnormalized probabilities
+			float exp_scores[5];
+			for(int i=0; i<4; i++)
+			{
+				exp_scores[i] = exp(z_3[i]);
+			}
+			//normalize them for each example
+			float norm=0.0f;
+			for(int i=0; i<4; i++)
+			{
+				norm += exp_scores[i];
+			}
+			float probs[5];
+			for(int i=0; i<4; i++)
+			{
+				probs[i] = exp_scores[i]/norm;
+			}
+
+		
+			//Backpropagation: backpropate the gradient to the parameters (W,b)
+			float delta3[5];
+			for(int i=0; i<4; i++)
+			{
+				delta3[i]=probs[i]-1;
+			}
+			float dW2[5];
+			for(int i=0; i<4; i++)
+			{
+				dW2[i]=a_2[i] * delta3[i];
+			}
+			float db2 =0.0f;
+			for(int i=0; i<4; i++)
+			{
+				db2+=delta3[i];
+			}
+			// delta3.dot(W2.T)
+			float delta2[5];
+
+			for(int i=0; i<4; i++)
+			{
+				delta2[i]=delta3[i]*w2[i];
+			}
+
+			//Add regularization terms (b1 and b2 don't have regularization terms)
+			//Gradient descent parameter update (Assign new parameters to the model)
+			
+		}
+
+}
+
+
+/*Store inputs*/
+void
+Tank::store(int c, int m, int i, int j)
+{
+	if(c==0)
+	{
+		mWorld->frame0[i]=m;
+	}
+	else if(c==1)
+	{
+		mWorld->frame1[i][j]=m;
+	}
+	else if(c==2)
+	{
+		mWorld->frame2[i][j]=m;
+	}
+	else if(c==3)
+	{
+		mWorld->frame3[i][j]=m;
+	}
 }
 
 /* Creates user tank entity and node */

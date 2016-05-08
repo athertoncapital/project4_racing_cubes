@@ -79,6 +79,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DebugInterface.h">
+    <ClInclude Include="tensorflow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LuaWrapper.h">
@@ -144,6 +145,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LuaWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tensorflow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

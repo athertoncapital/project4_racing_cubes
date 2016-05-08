@@ -15,7 +15,7 @@ class InputHandler : OIS::KeyListener // : public OIS::MouseListener, public OIS
 {
 public:
 
-	InputHandler(Ogre::RenderWindow* win, DebugInterface *dbInterface);
+	InputHandler(Ogre::RenderWindow* win, Ogre::RenderWindow* win2);
 	~InputHandler();
 	void Think(const Ogre::Real& mTime);
 
@@ -29,6 +29,7 @@ public:
 protected:
 	OIS::InputManager* mInputManager;
 	Ogre::RenderWindow *mRenderWindow;
+	Ogre::RenderWindow *mRenderWindow_ai1;
 	OIS::Keyboard *mPreviousKeyboard;
 	OIS::Keyboard *mCurrentKeyboard;
 	char mOldKeys[256];

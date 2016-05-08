@@ -20,7 +20,7 @@ class PongCamera;
 class PongManager : public Ogre::FrameListener
 {
 public:
-	PongManager(Ogre::SceneManager* sceneManager, Ogre::RenderWindow *mainWindow);
+	PongManager(Ogre::SceneManager* sceneManager, Ogre::RenderWindow *mainWindow,Ogre::RenderWindow *ai1Window);
 	~PongManager();
 	bool frameStarted(const Ogre::FrameEvent &evt);
 	const InputHandler* getInputHandler() const { return mInputHandler; }
@@ -43,6 +43,7 @@ private:
 
 	Ogre::Camera *mCamera;
 	Ogre::RenderWindow *mRenderWindow;
+	Ogre::RenderWindow *mRenderWindow_ai1;
 	bool mKeepGoing;
 	
 	bool mTestPaused;

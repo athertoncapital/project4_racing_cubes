@@ -31,12 +31,22 @@ class AIManager;
 class World
 {
 public:
-	
-	int frame0[161];
-	int frame1[81][81];
-	int frame2[81][81];
-	int frame3[81][81];
-
+	//neural network
+	int ai1frame0[81][81];
+	int ai1frame1[81][81];
+	int ai1frame2[81][81];
+	int ai1frame3[81][81];
+	int ai1frame4[81][81];
+	int ai1[6][6401];
+	int ai2[6][6401];
+	int ai3[6][6401];
+	float lab[6][5];
+	float x[6][6401]; 
+	float w1[6401][66]; 
+	float w2[66][5]; 
+	float b1[66]; 
+	float b2[5];
+	//cotrol
 	float U_u;
 	float U_v;
 	float AI_0_u;

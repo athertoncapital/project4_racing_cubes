@@ -76,7 +76,7 @@ void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 0, -100));
+	mCamera->setPosition(Ogre::Vector3(0, 0, -1));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -97,19 +97,19 @@ void
 OgrePong::createViewports(void)
 {
 	
-	    // Create one viewport, entire window
+	   // Create one viewport, entire window
         
-		Ogre::Viewport* vp_ai1= mWindow->addViewport(mCamera_ai1,2, 0.1f, 0.5f, 0.5, 0.15);
+		//Ogre::Viewport* vp_ai1= mWindow->addViewport(mCamera_ai1,2, 0.1f, 0.5f, 0.5, 0.15);
 		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.375f, 0.75f, 0.5, 0.15);
 		Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
 
 		rearvp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         vp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
-		vp_ai1->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
+		//vp_ai1->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         // Alter the camera aspect ratio to match the viewport
         
 		mRCamera->setAspectRatio(Ogre::Real(rearvp->getActualWidth()) / Ogre::Real(rearvp->getActualHeight())); 
-		mCamera_ai1->setAspectRatio(Ogre::Real(vp_ai1->getActualWidth()) / Ogre::Real(vp_ai1->getActualHeight()));
+		//mCamera_ai1->setAspectRatio(Ogre::Real(vp_ai1->getActualWidth()) / Ogre::Real(vp_ai1->getActualHeight()));
 		mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight())); 
 		Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
         mWindow->getViewport(0)->setBackgroundColour(fadeColour);
@@ -153,7 +153,7 @@ OgrePong::createScene()
 	mPongCamera_ai3 = new PongCamera(mCamera_ai3, mWorld, mInputHandler);
 
     mPongCameraRear->getCamera()->getViewport()->setOverlaysEnabled(false);
-	mPongCamera_ai1->getCamera()->getViewport()->setOverlaysEnabled(false);
+	//mPongCamera_ai1->getCamera()->getViewport()->setOverlaysEnabled(false);
 	//mPongCamera_ai2->getCamera()->getViewport()->setOverlaysEnabled(false);
 	//mPongCamera_ai3->getCamera()->getViewport()->setOverlaysEnabled(false);
 

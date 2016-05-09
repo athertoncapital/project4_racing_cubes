@@ -482,7 +482,7 @@ int showFunctions(lua_State *L)
 	dbi->addDebugText("setPosition(name, x, y, z)");
 	dbi->addDebugText("getPosition(name) > x, y , z");
 	dbi->addDebugText("setVelocity(name, x, y, z)");
-	dbi->addDebugText("createObject(name, [x, y, z])");
+	dbi->addDebugText("createObject(Mesh name,name, [x, y, z])");
 	dbi->addDebugText("removeObject(name)");
 
 	dbi->addDebugText("setObjectSize(name, scaleX, scaleY, scaleZ)");

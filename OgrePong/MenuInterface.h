@@ -20,29 +20,23 @@ public:
     void HandleKeystroke(OIS::KeyEvent key);
 	void addMenuText(std::string message);
 	void Think(float time);
-    void showOverlay();
-    void hideOverlay();
-    //Ogre::Overlay* getOverlay() { return mMenuOverlay;}
-	//void setDebugMessageTime(float time) {mMessageTime = time; }
-	//void clearDebugOutput();
+	void setDebugMessageTime(float time) {mMessageTime = time; }
+	void clearDebugOutput();
 
 private:
     bool mIsActive;
-    Ogre::Overlay *mMenuOverlay;
-    //Ogre::Overlay *mDebugConsoleOverlay;
-    //Ogre::Overlay *mDebugOutputOverlay;
+    Ogre::Overlay *mDebugConsoleOverlay;
+    Ogre::Overlay *mDebugOutputOverlay;
     Ogre::TextAreaOverlayElement *mOverlayText;
-    //Ogre::String mLuaCommand;
-    Ogre::String mMenuCommand;
-
+    Ogre::String mLuaCommand;
     int mHistoryIndex;
     std::vector<Ogre::String> mHistory;
 
-	//std::vector<Ogre::String> mDebugOutput;
-	//std::vector<float> mDebugTimeRemaining;
-	//Ogre::TextAreaOverlayElement *mOverlayDebugOutputText;
+	std::vector<Ogre::String> mDebugOutput;
+	std::vector<float> mDebugTimeRemaining;
+	Ogre::TextAreaOverlayElement *mOverlayDebugOutputText;
 
-	//float mMessageTime;
-	//void resetOverlayText();
+	float mMessageTime;
+	void resetOverlayText();
 
 };

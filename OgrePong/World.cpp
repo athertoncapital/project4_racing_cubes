@@ -38,6 +38,7 @@
 
 World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank)   : mSceneManager(sceneManager), mInputHandler(input), mTank(tank)
 {
+	ailevel = 0;
 	Switch = 0;
 	PROJECTILE_SPEED_V=100;
 	PROJECTILE_SPEED_H=100;
@@ -178,7 +179,67 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank) 
     SPEED_COEFFICIENT_AI_1 = 10.0;
     SPEED_COEFFICIENT_AI_2 = 10.0;
 
-	 
+	
+	if(ailevel<1){
+		string w1ID = "w1_readable.txt";
+		ofstream outtxt_ai2( w1ID );
+		for(int j=0; j< 65; j++)
+		{
+			for(int k=0; k< 6400; k++)
+			{
+				w1[k][j]= 1.0f* ((double) rand() / (RAND_MAX));
+				//write in text file 
+			    outtxt_ai2 << w1[k][j] << flush;
+			    outtxt_ai2 << ", "<< flush;
+				
+			}
+			outtxt_ai2 << endl;
+		}
+		outtxt_ai2.close();
+
+		string w2ID = "w2_readable.txt";
+		ofstream outtxt_w2( w2ID );
+		for(int j=0; j< 4; j++)
+		{
+			for(int k=0; k< 65; k++)
+			{
+				w1[k][j]= 1.0f* ((double) rand() / (RAND_MAX));
+				outtxt_w2 << w1[k][j] << flush;
+			    outtxt_w2 << ", "<< flush;
+			}
+			outtxt_w2 << endl;
+		}
+		outtxt_w2.close();
+
+		string b1ID = "b1_readable.txt";
+		ofstream outtxt_b1( b1ID );
+		for(int k=0; k< 65; k++)
+		{
+			b1[k]= 1.0f* ((double) rand() / (RAND_MAX));
+			outtxt_b1 << b1[k] << flush;
+			outtxt_b1 << ", "<< flush;
+			
+		}
+		outtxt_b1.close();
+
+		string b2ID = "b2_readable.txt";
+		ofstream outtxt_b2( b2ID );
+		for(int k=0; k< 4; k++)
+		{
+			b2[k]= 1.0f* ((double) rand() / (RAND_MAX));
+			outtxt_b2 << b2[k] << flush;
+			outtxt_b2 << ", "<< flush;
+			outtxt_b2 << endl;
+		}		
+		outtxt_b2.close();
+
+	}
+	else if(ailevel==1){
+
+	}
+	else if(ailevel==2){
+
+	}
 	
 	
 }
@@ -254,6 +315,66 @@ Ogre::Matrix3 World::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogr
 
 void World::Think(const Ogre::Real& mTime)
 {
+	
+	FILE * pFile;
+	char buffer [100];
+   pFile = fopen ("w1.txt" , "r");
+   if (pFile == NULL) 
+   {
+
+   }
+   else
+   {
+     while ( ! feof (pFile) )
+     {
+       if ( fgets (buffer , 100 , pFile) == NULL ) break;
+       fputs (buffer , stdout);
+     }
+     fclose (pFile);
+   }
+      pFile = fopen ("w2.txt" , "r");
+   if (pFile == NULL) 
+   {
+
+   }
+   else
+   {
+     while ( ! feof (pFile) )
+     {
+       if ( fgets (buffer , 100 , pFile) == NULL ) break;
+       fputs (buffer , stdout);
+     }
+     fclose (pFile);
+   }
+      pFile = fopen ("b1.txt" , "r");
+   if (pFile == NULL) 
+   {
+
+   }
+   else
+   {
+     while ( ! feof (pFile) )
+     {
+       if ( fgets (buffer , 100 , pFile) == NULL ) break;
+       fputs (buffer , stdout);
+     }
+     fclose (pFile);
+   }
+      pFile = fopen ("b2.txt" , "r");
+   if (pFile == NULL) 
+   {
+
+   }
+   else
+   {
+     while ( ! feof (pFile) )
+     {
+       if ( fgets (buffer , 100 , pFile) == NULL ) break;
+       fputs (buffer , stdout);
+     }
+     fclose (pFile);
+   }
+
 	Ogre::Vector3 position = mTank->mMainNode->getPosition();
 	float u = 2*asin(position.z/1000);
 	Ogre::Vector3 N;
@@ -274,9 +395,9 @@ void World::Think(const Ogre::Real& mTime)
 	//mTank->SceneManager()->getSceneNode("U")->translate(Binormal(u1, U_v)*U_v);
 	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
 	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
-	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
-	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
+	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
+	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u2, AI_0_v)*11);
+	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
 	u+=5;
 	mTank->SceneManager()->getSceneNode("AItank2")->setPosition(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v));
 	mTank->SceneManager()->getSceneNode("AItank2")->translate(Normal(u3, AI_1_v)*11);

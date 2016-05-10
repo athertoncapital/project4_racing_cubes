@@ -20,7 +20,6 @@
 #include <Windows.h>
 #include <sstream>
 #include <fstream>      // std::ifstream, std::ofstream
-
 #include "tensorflow.h"
 
  #define DBOUT( s )            \
@@ -212,7 +211,6 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	node->destroyed = false;
 	time=mWorld->t;
 	mWorld->Push(node);
-  
 	//////////////////////////////////////////////////////////////////////////
 	node = new Node();
 	tank = SceneManager()->createEntity("AItank8","Cube.mesh");
@@ -777,8 +775,12 @@ void Tank::Think(const Ogre::Real& mTime)
     fclose(outptr_ai1);
 	outtxt_ai1.close();
 	delete [] infile_ai1;
+	if(k*10%5==0){
 
+				int control = prediction(mWorld->ai1, mWorld->w1, mWorld->w2, mWorld->b1, mWorld->b2);
+			}
 
+	
 
 	/*
 	* ai2
@@ -799,6 +801,7 @@ void Tank::Think(const Ogre::Real& mTime)
 		renderTexture_ai2->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
 		renderTexture_ai2->getViewport(0)->setOverlaysEnabled(true);
 		renderTexture_ai2->update();
+
 		string ID_ai2 = "ai2_Render";
 		string exd_ai2 = ".bmp";
 		string Result_ai2;          // string which will contain the result  
@@ -809,9 +812,11 @@ void Tank::Think(const Ogre::Real& mTime)
 		ID_ai2.append(exd_ai2);
 		// Now save the contents
 		renderTexture_ai2->writeContentsToFile(ID_ai2);
+
 		string id_ai2=ID_ai2;
 		char *infile_ai2 = new char[id_ai2.length() + 1]; //argv[2];
 		strcpy(infile_ai2, id_ai2.c_str());
+
 		string bintxtID_ai2 = "ai2_binary_in_txt";
 		exd_ai2 = ".txt";
 		string bintxtResult_ai2;          // string which will contain the result  
@@ -822,8 +827,8 @@ void Tank::Think(const Ogre::Real& mTime)
 		bintxtID_ai2.append(exd_ai2);
 		char *outfile_ai2 = new char[bintxtID_ai2.length() + 1]; //argv[3];
 		strcpy(outfile_ai2, bintxtID_ai2.c_str());
-		ofstream fout_ai2;
-    ifstream fin_ai2;
+
+	ofstream fout_ai2;
 	string binID_ai2 = "ai2_bindata";
 	exd_ai2 = ".dat";
 	string binResult_ai2;          // string which will contain the result  
@@ -833,6 +838,7 @@ void Tank::Think(const Ogre::Real& mTime)
 	binID_ai2.append(binResult_ai2);
 	binID_ai2.append(exd_ai2);
 	fout_ai2.open(binID_ai2,ios::binary);
+
 	string readID_ai2 = "ai2_readable";
 	exd_ai2 = ".txt";
 	string readResult_ai2;          // string which will contain the result  
@@ -843,6 +849,7 @@ void Tank::Think(const Ogre::Real& mTime)
 	readID_ai2.append(exd_ai2);
 	ofstream outtxt_ai2( readID_ai2 );
 	 // open input file 
+
     FILE* inptr_ai2 = fopen(infile_ai2, "r");
     if (inptr_ai2 == NULL)
     {
@@ -874,9 +881,7 @@ void Tank::Think(const Ogre::Real& mTime)
     int padding_ai2 =  (4 - (bi_ai2.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 	//DBOUT("padding: " << padding);
     // iterate over infile's scanlines
-
-
-		 for (int i = 0, biHeight = abs(bi_ai2.biHeight); i < biHeight; i++)
+	for (int i = 0, biHeight = abs(bi_ai2.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
         for (int j = 0; j < bi_ai2.biWidth; j++)
@@ -976,6 +981,8 @@ void Tank::Think(const Ogre::Real& mTime)
     fclose(inptr_ai2);
     // close outfile
 	fout_ai2.close();
+
+	ifstream fin_ai2;//for double check the output file (whether there are readable by the machine)
 	fin_ai2.open(binID_ai2,ios::binary);
 	for (int i = 0, biHeight = abs(bi_ai2.biHeight); i < biHeight; i++)
     {
@@ -988,6 +995,7 @@ void Tank::Think(const Ogre::Real& mTime)
 		}
 	}
 	fin_ai2.close();
+
     fclose(outptr_ai2);
 	outtxt_ai2.close();
 	delete [] infile_ai2;
@@ -1524,7 +1532,7 @@ Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 
 	return 0.0f;
 }
-int Tank::prediction(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
+int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
 {
 				//# FEEDFORWARD
 				//# reshape array in order to easily calculate dot product
@@ -1543,7 +1551,7 @@ int Tank::prediction(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 					}
 				}
 				//y_ij = sigmoid(z_1_ij)
-				tf = new tensorflow(mWorld);
+				/*tf = new tensorflow(mWorld);
 				float y[6][66];
 				for(int i=0; i<65;i++){
 					for(int j=0; j<5; j++)
@@ -1599,8 +1607,8 @@ int Tank::prediction(float lab[6][5], int x[6][6401], float w1[6401][66], float 
 					{
 						if(p[4][j]>Max)
 							tmp=j;
-					}
-	return tmp;
+					}*/
+	return 1/*tmp*/;
 }
 
 

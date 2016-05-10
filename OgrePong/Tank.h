@@ -20,8 +20,11 @@ class MovingObject;
 class Tank : public MotionObject
 {
 public:
-	int mean;
-	float Tank::calculate_loss(float w[][66] , float w2[], float b1[], float b2[], float z_2[], float reg_lambda);
+	int mean_ai1;
+	int mean_ai2;
+	int mean_ai3;
+	float Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5]);
+	int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5]);
 	void Tank::store(int c, int m, int i, int j);
 	//Tank(Ogre::SceneManager *sceneManager, World* world);
     Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);

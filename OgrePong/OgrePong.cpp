@@ -78,7 +78,7 @@ void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 0, -100));
+	mCamera->setPosition(Ogre::Vector3(0, 0, -1));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
@@ -165,7 +165,7 @@ OgrePong::createScene()
     LuaWrapper::getSingleton()->setInputHandler(mInputHandler);
     LuaWrapper::getSingleton()->setMenuInterface(mMenuInterface);
 	//LuaWrapper::getSingleton()->loadLuaFile("Level1.lua");
-    
+
     
 	mPongMag = new PongManager(mSceneMgr,mWindow, mWindow_ai1);
 	mWorld = new World(mSceneMgr, mInputHandler, mTank);
@@ -378,6 +378,7 @@ void
 OgrePong::go(void)
 {
     if (!setup())
+
         return;
 
     mRoot->startRendering();

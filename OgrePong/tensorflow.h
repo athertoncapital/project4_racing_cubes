@@ -15,7 +15,10 @@ public:
 	class Variable;
 	float tensorflow::relu(float x);
 	int tensorflow::relu(int x);
-
+	float tensorflow::sigmoid(float x);
+	float tensorflow::softmax(float a, float b);
+	float tensorflow:: cross_entropy_loss(float a, float b);
+	float tensorflow::sigmoid_derivative(float x);
 protected:
 	Tank *mTank;
 	Ogre::SceneNode *mNode;

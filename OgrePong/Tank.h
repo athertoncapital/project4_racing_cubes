@@ -69,7 +69,7 @@ public:
 	Ogre::SceneNode *mAI3;
 	const Ogre::AxisAlignedBox *mAABB;
 	Ogre::SceneNode *oMainNode;
-	void addCamera(PongCamera *c,PongCamera *r, PongCamera *ai1, PongCamera *ai2, PongCamera *ai3) { mCamera = c, mCameraR = r, mCamera_ai1=ai1, mCamera_ai2=ai2, mCamera_ai3=ai3; }
+	void addCamera(PongCamera *c,PongCamera *r, PongCamera *ai1, PongCamera *ai2, PongCamera *ai3, PongCamera *m) { mCamera = c, mCameraR = r, mCamera_ai1=ai1, mCamera_ai2=ai2, mCamera_ai3=ai3; mCameraMenu = c;}
 	Ogre::SceneManager *SceneManager() { return mSceneManager; }
 	//Ogre::Vector3 getPosition() const;
 	
@@ -94,6 +94,7 @@ protected:
 	PongCamera *mCamera_ai1;
 	PongCamera *mCamera_ai2;
 	PongCamera *mCamera_ai3;
+    PongCamera *mCameraMenu;
 	World *mWorld;
 	Ogre::SceneNode *mTankNode;
 	Ogre::SceneNode *mCameraNode;

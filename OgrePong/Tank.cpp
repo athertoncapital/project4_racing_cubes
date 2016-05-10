@@ -212,6 +212,7 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	node->destroyed = false;
 	time=mWorld->t;
 	mWorld->Push(node);
+  
 	//////////////////////////////////////////////////////////////////////////
 	node = new Node();
 	tank = SceneManager()->createEntity("AItank8","Cube.mesh");

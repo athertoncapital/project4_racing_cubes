@@ -579,7 +579,10 @@ void Tank::Think(const Ogre::Real& mTime)
 	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int c = k%4;//for selecting frame storages
 	if(k%10==0){
-	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().createManual(
+		/*
+		* ai1
+		*/
+	Ogre::TexturePtr ai1_tex = Ogre::TextureManager::getSingleton().createManual(
          "MainRenderTarget", 
          Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
          Ogre::TextureType::TEX_TYPE_2D, 
@@ -589,78 +592,67 @@ void Tank::Think(const Ogre::Real& mTime)
 		 0,
 		 Ogre::PixelFormat::PF_R8G8B8,
 	     Ogre::TextureUsage::TU_RENDERTARGET);
-
-   Ogre::RenderTexture *renderTexture = tex->getBuffer()->getRenderTarget();
-
-   renderTexture->addViewport(mCamera_ai1->getCamera(),0);
-   //renderTexture->addViewport(mCamera_ai1->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
-   int count = renderTexture->getNumViewports();
-   
-   renderTexture->getViewport(0)->setClearEveryFrame(true);
-   renderTexture->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
-   renderTexture->getViewport(0)->setOverlaysEnabled(true);
-
-   //renderTexture->getViewport(1)->setClearEveryFrame(true);
-   //renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
-   //renderTexture->getViewport(1)->setOverlaysEnabled(true);
-   renderTexture->update();
-	string ID = "ai1_Render";
-	string exd = ".bmp";
-	string Result;          // string which will contain the result  
-	ostringstream convert;
-	convert << k;      // insert the textual representation of 'Number' in the characters in the stream
-	Result = convert.str(); // set 'Result' to the contents of the stream
-	ID.append(Result);
-	ID.append(exd);
-   // Now save the contents
-   renderTexture->writeContentsToFile(ID);
-   string id=ID;
-	char *infile = new char[id.length() + 1]; //argv[2];
-	strcpy(infile, id.c_str());
-	string bintxtID = "binary_in_txt";
-	exd = ".txt";
-	string bintxtResult;          // string which will contain the result  
-	ostringstream bintxtconvert;
-	bintxtconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
-	bintxtResult = bintxtconvert.str(); // set 'Result' to the contents of the stream
-	bintxtID.append(bintxtResult);
-	bintxtID.append(exd);
-	char *outfile = new char[bintxtID.length() + 1]; //argv[3];
-	strcpy(outfile, bintxtID.c_str());
-    //char* outfile = "try2.txt";
-	ofstream fout;
-    ifstream fin;
-	string binID = "bindata";
-	exd = ".dat";
-	string binResult;          // string which will contain the result  
-	ostringstream binconvert;
-	binconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
-	binResult = binconvert.str(); // set 'Result' to the contents of the stream
-	binID.append(binResult);
-	binID.append(exd);
-	fout.open(binID,ios::binary);
-
-	string readID = "readable";
-	exd = ".txt";
-	string readResult;          // string which will contain the result  
-	ostringstream readconvert;
-	readconvert << k;      // insert the textual representation of 'Number' in the characters in the stream
-	readResult = readconvert.str(); // set 'Result' to the contents of the stream
-	readID.append(readResult);
-	readID.append(exd);
-	ofstream outtxt( readID );
+	Ogre::RenderTexture *renderTexture_ai1 = ai1_tex->getBuffer()->getRenderTarget();
+	renderTexture_ai1->addViewport(mCamera_ai1->getCamera(),0);
+	renderTexture_ai1->getViewport(0)->setClearEveryFrame(true);
+	renderTexture_ai1->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
+	renderTexture_ai1->getViewport(0)->setOverlaysEnabled(true);
+	renderTexture_ai1->update();
+	string ID_ai1 = "ai1_Render";
+	string exd_ai1 = ".bmp";
+	string Result_ai1;          // string which will contain the result  
+	ostringstream convert_ai1;
+	convert_ai1 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	Result_ai1 = convert_ai1.str(); // set 'Result' to the contents of the stream
+	ID_ai1.append(Result_ai1);
+	ID_ai1.append(exd_ai1);
+	// Now save the contents
+	renderTexture_ai1->writeContentsToFile(ID_ai1);
+	string id_ai1=ID_ai1;
+	char *infile_ai1 = new char[id_ai1.length() + 1]; //argv[2];
+	strcpy(infile_ai1, id_ai1.c_str());
+	string bintxtID_ai1 = "ai1_binary_in_txt";
+	exd_ai1 = ".txt";
+	string bintxtResult_ai1;          // string which will contain the result  
+	ostringstream bintxtconvert_ai1;
+	bintxtconvert_ai1 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	bintxtResult_ai1 = bintxtconvert_ai1.str(); // set 'Result' to the contents of the stream
+	bintxtID_ai1.append(bintxtResult_ai1);
+	bintxtID_ai1.append(exd_ai1);
+	char *outfile_ai1 = new char[bintxtID_ai1.length() + 1]; //argv[3];
+	strcpy(outfile_ai1, bintxtID_ai1.c_str());
+	ofstream fout_ai1;
+    ifstream fin_ai1;
+	string binID_ai1 = "ai1_bindata";
+	exd_ai1 = ".dat";
+	string binResult_ai1;          // string which will contain the result  
+	ostringstream binconvert_ai1;
+	binconvert_ai1 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	binResult_ai1 = binconvert_ai1.str(); // set 'Result' to the contents of the stream
+	binID_ai1.append(binResult_ai1);
+	binID_ai1.append(exd_ai1);
+	fout_ai1.open(binID_ai1,ios::binary);
+	string readID_ai1 = "ai1_readable";
+	exd_ai1 = ".txt";
+	string readResult_ai1;          // string which will contain the result  
+	ostringstream readconvert_ai1;
+	readconvert_ai1 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	readResult_ai1 = readconvert_ai1.str(); // set 'Result' to the contents of the stream
+	readID_ai1.append(readResult_ai1);
+	readID_ai1.append(exd_ai1);
+	ofstream outtxt_ai1( readID_ai1 );
 	 // open input file 
-    FILE* inptr = fopen(infile, "r");
-    if (inptr == NULL)
+    FILE* inptr_ai1 = fopen(infile_ai1, "r");
+    if (inptr_ai1 == NULL)
     {
-        printf("Could not open %s.\n", infile);
+        printf("Could not open %s.\n", infile_ai1);
 		DBOUT("Could not open%s.\n ");
     }
 	//create the foo array for storing the bmp image
-	int foo [81][81];
+	int foo_ai1 [81][81];
 
     // open output file
-    FILE* outptr = fopen(outfile, "w");
+    FILE* outptr_ai1 = fopen(outfile_ai1, "w");
     /*if (outptr == NULL)
     {
         fclose(inptr);
@@ -668,88 +660,563 @@ void Tank::Think(const Ogre::Real& mTime)
 
     }*/
     // read infile's BITMAPFILEHEADER
-    BITMAPFILEHEADER bf;
-    fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
+    BITMAPFILEHEADER bf_ai1;
+    fread(&bf_ai1, sizeof(BITMAPFILEHEADER), 1, inptr_ai1);
     // read infile's BITMAPINFOHEADER
-    BITMAPINFOHEADER bi;
-    fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
+    BITMAPINFOHEADER bi_ai1;
+    fread(&bi_ai1, sizeof(BITMAPINFOHEADER), 1, inptr_ai1);
     // write outfile's BITMAPFILEHEADER
-    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+    fwrite(&bf_ai1, sizeof(BITMAPFILEHEADER), 1, outptr_ai1);
     // write outfile's BITMAPINFOHEADER
-    fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
+    fwrite(&bi_ai1, sizeof(BITMAPINFOHEADER), 1, outptr_ai1);
     // determine padding for scanlines
-    int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    int padding_ai1 =  (4 - (bi_ai1.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 	//DBOUT("padding: " << padding);
     // iterate over infile's scanlines
-    for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+	int counter=0;
+	 for (int i = 0, biHeight = abs(bi_ai1.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
-        for (int j = 0; j < bi.biWidth; j++)
+        for (int j = 0; j < bi_ai1.biWidth; j++)
         {
-    //DBOUT("bi.biHeight: " << bi.biHeight);
-	//DBOUT("bi.biWidth: " << bi.biWidth);
             // temporary storage
-            RGBTRIPLE triple;
+            RGBTRIPLE triple_ai1;
             // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
-	//DBOUT("triple.rgbtBlue: " << triple.rgbtBlue);
-	//DBOUT("triple.rgbtRed: " << triple.rgbtRed);
-	//DBOUT("triple.rgbtGreen: " << triple.rgbtGreen);
-	mean =(int)(triple.rgbtBlue+triple.rgbtRed+triple.rgbtGreen)/3;
-	//char b[] = {mean};
-	//write in ascii
-	//std::string buf = "";
-	//char str[20];
-	//buf += itoa(mean, str, 10);
-	//write in char
-	//ostringstream a;
-	//a << mean;
-
-	//store into foo[81][81] array
-	foo [i][j]=mean;
-	
-	store(c, mean, i, j);
-	//write in text file 
-	outtxt << mean << flush;
-	outtxt << " "<< flush;
-	//DBOUT("mean: " << mean);
+            fread(&triple_ai1, sizeof(RGBTRIPLE), 1, inptr_ai1);
+			mean_ai1 =(int)(triple_ai1.rgbtBlue+triple_ai1.rgbtRed+triple_ai1.rgbtGreen)/3;
+			//store into foo[81][81] array
+			//foo_ai1[i][j]=mean_ai1;
+			//we have five batches per second, i.e., 5 fps
+			if(k*10%5==0){
+				mWorld->ai1[0][counter]=mean_ai1;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai1[1][counter]=mean_ai1;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai1[2][counter]=mean_ai1;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai1[3][counter]=mean_ai1;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai1[4][counter]=mean_ai1;
+				counter++;
+			}
+			//store(c, mean_ai1, i, j);
+			//write in text file 
+			outtxt_ai1 << mean_ai1 << flush;
+			outtxt_ai1 << " "<< flush;
+			//DBOUT("mean: " << mean);
             // write RGB triple to outfile
-            fwrite(&mean, sizeof(int), sizeof(mean), outptr);
-			fout.write((char*)&mean,sizeof(int));
-        }
-        // skip over padding, if any
-        fseek(inptr, padding, SEEK_CUR);
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++){
-			store(c,0x00 , i, k);
-			foo[i][k];
-            fputc(0x00, outptr);
-			outtxt << 0x00 << flush;
-			outtxt << " "<< flush;
+            fwrite(&mean_ai1, sizeof(int), sizeof(mean_ai1), outptr_ai1);
+			fout_ai1.write((char*)&mean_ai1,sizeof(int));
 		}
-		outtxt << endl;
+        // skip over padding, if any
+        fseek(inptr_ai1, padding_ai1, SEEK_CUR);
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding_ai1; k++){
+			store(c,0x00 , i, k);
+			foo_ai1[i][k];
+			//we have five batches per second, fill in the paddings
+			if(k*10%5==0){
+				mWorld->ai1[0][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai1[1][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai1[2][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai1[3][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai1[4][counter]=0;
+				counter++;
+			}
+            fputc(0x00, outptr_ai1);
+			outtxt_ai1 << 0x00 << flush;
+			outtxt_ai1 << " "<< flush;
+		}
+		outtxt_ai1 << endl;
+
     }
     // close infile
-    fclose(inptr);
+    fclose(inptr_ai1);
     // close outfile
-	fout.close();
-	fin.open(binID,ios::binary);
-	for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+	fout_ai1.close();
+	fin_ai1.open(binID_ai1,ios::binary);
+	for (int i = 0, biHeight = abs(bi_ai1.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
-        for (int j = 0; j < bi.biWidth; j++)
+        for (int j = 0; j < bi_ai1.biWidth; j++)
         {
 			int my_int2;
-			fin.read((char*)&my_int2,sizeof(int));
+			fin_ai1.read((char*)&my_int2,sizeof(int));
 			//DBOUT("my_int2: " << my_int2);
 		}
 	}
-	fin.close();
-    fclose(outptr);
-	outtxt.close();
-	delete [] infile;
+	fin_ai1.close();
+    fclose(outptr_ai1);
+	outtxt_ai1.close();
+	delete [] infile_ai1;
 
+
+
+	/*
+	* ai2
+	*/
+		Ogre::TexturePtr ai2_tex = Ogre::TextureManager::getSingleton().createManual(
+         "MainRenderTarget", 
+         Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+         Ogre::TextureType::TEX_TYPE_2D, 
+         80,
+         80,
+		 20,
+		 0,
+		 Ogre::PixelFormat::PF_R8G8B8,
+	     Ogre::TextureUsage::TU_RENDERTARGET);
+		Ogre::RenderTexture *renderTexture_ai2 = ai2_tex->getBuffer()->getRenderTarget();
+		renderTexture_ai2->addViewport(mCamera_ai2->getCamera(),0);
+		renderTexture_ai2->getViewport(0)->setClearEveryFrame(true);
+		renderTexture_ai2->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
+		renderTexture_ai2->getViewport(0)->setOverlaysEnabled(true);
+		renderTexture_ai2->update();
+		string ID_ai2 = "ai2_Render";
+		string exd_ai2 = ".bmp";
+		string Result_ai2;          // string which will contain the result  
+		ostringstream convert_ai2;
+		convert_ai2 << k;      // insert the textual representation of 'Number' in the characters in the stream
+		Result_ai2 = convert_ai2.str(); // set 'Result' to the contents of the stream
+		ID_ai2.append(Result_ai2);
+		ID_ai2.append(exd_ai2);
+		// Now save the contents
+		renderTexture_ai2->writeContentsToFile(ID_ai2);
+		string id_ai2=ID_ai2;
+		char *infile_ai2 = new char[id_ai2.length() + 1]; //argv[2];
+		strcpy(infile_ai2, id_ai2.c_str());
+		string bintxtID_ai2 = "ai2_binary_in_txt";
+		exd_ai2 = ".txt";
+		string bintxtResult_ai2;          // string which will contain the result  
+		ostringstream bintxtconvert_ai2;
+		bintxtconvert_ai2 << k;      // insert the textual representation of 'Number' in the characters in the stream
+		bintxtResult_ai2 = bintxtconvert_ai2.str(); // set 'Result' to the contents of the stream
+		bintxtID_ai2.append(bintxtResult_ai2);
+		bintxtID_ai2.append(exd_ai2);
+		char *outfile_ai2 = new char[bintxtID_ai2.length() + 1]; //argv[3];
+		strcpy(outfile_ai2, bintxtID_ai2.c_str());
+		ofstream fout_ai2;
+    ifstream fin_ai2;
+	string binID_ai2 = "ai2_bindata";
+	exd_ai2 = ".dat";
+	string binResult_ai2;          // string which will contain the result  
+	ostringstream binconvert_ai2;
+	binconvert_ai2 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	binResult_ai2 = binconvert_ai2.str(); // set 'Result' to the contents of the stream
+	binID_ai2.append(binResult_ai2);
+	binID_ai2.append(exd_ai2);
+	fout_ai2.open(binID_ai2,ios::binary);
+	string readID_ai2 = "ai2_readable";
+	exd_ai2 = ".txt";
+	string readResult_ai2;          // string which will contain the result  
+	ostringstream readconvert_ai2;
+	readconvert_ai2 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	readResult_ai2 = readconvert_ai2.str(); // set 'Result' to the contents of the stream
+	readID_ai2.append(readResult_ai2);
+	readID_ai2.append(exd_ai2);
+	ofstream outtxt_ai2( readID_ai2 );
+	 // open input file 
+    FILE* inptr_ai2 = fopen(infile_ai2, "r");
+    if (inptr_ai2 == NULL)
+    {
+        printf("Could not open %s.\n", infile_ai2);
+		DBOUT("Could not open%s.\n ");
+    }
+	//create the foo array for storing the bmp image
+	int foo_ai2 [81][81];
+
+    // open output file
+    FILE* outptr_ai2 = fopen(outfile_ai2, "w");
+    /*if (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, "Could not create %s.\n", outfile);
+
+    }*/
+    // read infile's BITMAPFILEHEADER
+    BITMAPFILEHEADER bf_ai2;
+    fread(&bf_ai2, sizeof(BITMAPFILEHEADER), 1, inptr_ai2);
+    // read infile's BITMAPINFOHEADER
+    BITMAPINFOHEADER bi_ai2;
+    fread(&bi_ai2, sizeof(BITMAPINFOHEADER), 1, inptr_ai2);
+    // write outfile's BITMAPFILEHEADER
+    fwrite(&bf_ai2, sizeof(BITMAPFILEHEADER), 1, outptr_ai2);
+    // write outfile's BITMAPINFOHEADER
+    fwrite(&bi_ai2, sizeof(BITMAPINFOHEADER), 1, outptr_ai2);
+    // determine padding for scanlines
+    int padding_ai2 =  (4 - (bi_ai2.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+	//DBOUT("padding: " << padding);
+    // iterate over infile's scanlines
+
+
+		 for (int i = 0, biHeight = abs(bi_ai2.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi_ai2.biWidth; j++)
+        {
+			//DBOUT("bi.biHeight: " << bi.biHeight);
+			//DBOUT("bi.biWidth: " << bi.biWidth);
+            // temporary storage
+            RGBTRIPLE triple_ai2;
+            // read RGB triple from infile
+            fread(&triple_ai2, sizeof(RGBTRIPLE), 1, inptr_ai2);
+			//DBOUT("triple.rgbtBlue: " << triple.rgbtBlue);
+			//DBOUT("triple.rgbtRed: " << triple.rgbtRed);
+			//DBOUT("triple.rgbtGreen: " << triple.rgbtGreen);
+			mean_ai2 =(int)(triple_ai2.rgbtBlue+triple_ai2.rgbtRed+triple_ai2.rgbtGreen)/3;
+			//char b[] = {mean};
+			//write in ascii
+			//std::string buf = "";
+			//char str[20];
+			//buf += itoa(mean, str, 10);
+			//write in char
+			//ostringstream a;
+			//a << mean;
+			//store into foo[81][81] array
+			//foo_ai2 [i][j]=mean_ai2;
+			//store(c, mean_ai2, i, j);
+			//we have five batches per second, i.e., 5 fps
+			if(k*10%5==0){
+				mWorld->ai2[0][counter]=mean_ai2;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai2[1][counter]=mean_ai2;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai2[2][counter]=mean_ai2;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai2[3][counter]=mean_ai2;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai2[4][counter]=mean_ai2;
+				counter++;
+			}
+			//write in text file 
+			outtxt_ai2 << mean_ai2 << flush;
+			outtxt_ai2 << " "<< flush;
+			//DBOUT("mean: " << mean);
+            // write RGB triple to outfile
+            fwrite(&mean_ai2, sizeof(int), sizeof(mean_ai2), outptr_ai2);
+			fout_ai2.write((char*)&mean_ai2,sizeof(int));
+        }
+        // skip over padding, if any
+        fseek(inptr_ai2, padding_ai2, SEEK_CUR);
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding_ai2; k++){
+			store(c,0x00 , i, k);
+			//foo_ai2[i][k];
+						//we have five batches per second, fill in the paddings
+			if(k*10%5==0){
+				mWorld->ai2[0][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai2[1][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai2[2][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai2[3][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai2[4][counter]=0;
+				counter++;
+			}
+            fputc(0x00, outptr_ai2);
+			outtxt_ai2 << 0x00 << flush;
+			outtxt_ai2 << " "<< flush;
+		}
+		outtxt_ai2 << endl;
+    }
+    // close infile
+    fclose(inptr_ai2);
+    // close outfile
+	fout_ai2.close();
+	fin_ai2.open(binID_ai2,ios::binary);
+	for (int i = 0, biHeight = abs(bi_ai2.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi_ai2.biWidth; j++)
+        {
+			int my_int2_ai2;
+			fin_ai1.read((char*)&my_int2_ai2,sizeof(int));
+			//DBOUT("my_int2: " << my_int2);
+		}
+	}
+	fin_ai2.close();
+    fclose(outptr_ai2);
+	outtxt_ai2.close();
+	delete [] infile_ai2;
+
+
+	/*
+	* ai3
+	*/
+		Ogre::TexturePtr ai3_tex = Ogre::TextureManager::getSingleton().createManual(
+         "MainRenderTarget", 
+         Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+         Ogre::TextureType::TEX_TYPE_2D, 
+         80,
+         80,
+		 20,
+		 0,
+		 Ogre::PixelFormat::PF_R8G8B8,
+	     Ogre::TextureUsage::TU_RENDERTARGET);
+		Ogre::RenderTexture *renderTexture_ai3 = ai3_tex->getBuffer()->getRenderTarget();
+		renderTexture_ai3->addViewport(mCamera_ai2->getCamera(),0);
+		renderTexture_ai3->getViewport(0)->setClearEveryFrame(true);
+		renderTexture_ai3->getViewport(0)->setBackgroundColour(Ogre::ColourValue::Black);
+		renderTexture_ai3->getViewport(0)->setOverlaysEnabled(true);
+		renderTexture_ai3->update();
+		string ID_ai3 = "ai3_Render";
+		string exd_ai3 = ".bmp";
+		string Result_ai3;          // string which will contain the result  
+		ostringstream convert_ai3;
+		convert_ai3 << k;      // insert the textual representation of 'Number' in the characters in the stream
+		Result_ai3 = convert_ai3.str(); // set 'Result' to the contents of the stream
+		ID_ai3.append(Result_ai3);
+		ID_ai3.append(exd_ai3);
+		// Now save the contents
+		renderTexture_ai3->writeContentsToFile(ID_ai3);
+		string id_ai3=ID_ai3;
+		char *infile_ai3 = new char[id_ai3.length() + 1]; //argv[2];
+		strcpy(infile_ai3, id_ai3.c_str());
+		string bintxtID_ai3 = "ai3_binary_in_txt";
+		exd_ai3 = ".txt";
+		string bintxtResult_ai3;          // string which will contain the result  
+		ostringstream bintxtconvert_ai3;
+		bintxtconvert_ai3 << k;      // insert the textual representation of 'Number' in the characters in the stream
+		bintxtResult_ai3 = bintxtconvert_ai3.str(); // set 'Result' to the contents of the stream
+		bintxtID_ai3.append(bintxtResult_ai3);
+		bintxtID_ai3.append(exd_ai3);
+		char *outfile_ai3 = new char[bintxtID_ai3.length() + 1]; //argv[3];
+		strcpy(outfile_ai3, bintxtID_ai3.c_str());
+		ofstream fout_ai3;
+    ifstream fin_ai3;
+	string binID_ai3 = "ai3_bindata";
+	exd_ai3 = ".dat";
+	string binResult_ai3;          // string which will contain the result  
+	ostringstream binconvert_ai3;
+	binconvert_ai3 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	binResult_ai3 = binconvert_ai3.str(); // set 'Result' to the contents of the stream
+	binID_ai3.append(binResult_ai3);
+	binID_ai3.append(exd_ai3);
+	fout_ai3.open(binID_ai3,ios::binary);
+	string readID_ai3 = "ai3_readable";
+	exd_ai3 = ".txt";
+	string readResult_ai3;          // string which will contain the result  
+	ostringstream readconvert_ai3;
+	readconvert_ai3 << k;      // insert the textual representation of 'Number' in the characters in the stream
+	readResult_ai3 = readconvert_ai3.str(); // set 'Result' to the contents of the stream
+	readID_ai3.append(readResult_ai3);
+	readID_ai3.append(exd_ai3);
+	ofstream outtxt_ai3( readID_ai3 );
+	 // open input file 
+    FILE* inptr_ai3 = fopen(infile_ai3, "r");
+    if (inptr_ai3 == NULL)
+    {
+        printf("Could not open %s.\n", infile_ai3);
+		DBOUT("Could not open%s.\n ");
+    }
+	//create the foo array for storing the bmp image
+	int foo_ai3 [81][81];
+
+    // open output file
+    FILE* outptr_ai3 = fopen(outfile_ai3, "w");
+    /*if (outptr == NULL)
+    {
+        fclose(inptr);
+        fprintf(stderr, "Could not create %s.\n", outfile);
+
+    }*/
+    // read infile's BITMAPFILEHEADER
+    BITMAPFILEHEADER bf_ai3;
+    fread(&bf_ai3, sizeof(BITMAPFILEHEADER), 1, inptr_ai3);
+    // read infile's BITMAPINFOHEADER
+    BITMAPINFOHEADER bi_ai3;
+    fread(&bi_ai3, sizeof(BITMAPINFOHEADER), 1, inptr_ai3);
+    // write outfile's BITMAPFILEHEADER
+    fwrite(&bf_ai3, sizeof(BITMAPFILEHEADER), 1, outptr_ai3);
+    // write outfile's BITMAPINFOHEADER
+    fwrite(&bi_ai3, sizeof(BITMAPINFOHEADER), 1, outptr_ai3);
+    // determine padding for scanlines
+    int padding_ai3 =  (4 - (bi_ai3.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+	//DBOUT("padding: " << padding);
+    // iterate over infile's scanlines
+
+
+		 for (int i = 0, biHeight = abs(bi_ai3.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi_ai3.biWidth; j++)
+        {
+			//DBOUT("bi.biHeight: " << bi.biHeight);
+			//DBOUT("bi.biWidth: " << bi.biWidth);
+            // temporary storage
+            RGBTRIPLE triple_ai3;
+            // read RGB triple from infile
+            fread(&triple_ai3, sizeof(RGBTRIPLE), 1, inptr_ai3);
+			//DBOUT("triple.rgbtBlue: " << triple.rgbtBlue);
+			//DBOUT("triple.rgbtRed: " << triple.rgbtRed);
+			//DBOUT("triple.rgbtGreen: " << triple.rgbtGreen);
+			mean_ai3 =(int)(triple_ai3.rgbtBlue+triple_ai3.rgbtRed+triple_ai3.rgbtGreen)/3;
+			//char b[] = {mean};
+			//write in ascii
+			//std::string buf = "";
+			//char str[20];
+			//buf += itoa(mean, str, 10);
+			//write in char
+			//ostringstream a;
+			//a << mean;
+			//store into foo[81][81] array
+			//foo_ai3 [i][j]=mean_ai3;
+			//we have five batches per second, i.e., 5 fps
+			if(k*10%5==0){
+				mWorld->ai3[0][counter]=mean_ai3;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai3[1][counter]=mean_ai3;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai3[2][counter]=mean_ai3;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai3[3][counter]=mean_ai3;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai3[4][counter]=mean_ai3;
+				counter++;
+			}
+			//store(c, mean_ai3, i, j);
+			//write in text file 
+			outtxt_ai3 << mean_ai3 << flush;
+			outtxt_ai3 << " "<< flush;
+			//DBOUT("mean: " << mean);
+            // write RGB triple to outfile
+            fwrite(&mean_ai3, sizeof(int), sizeof(mean_ai3), outptr_ai3);
+			fout_ai3.write((char*)&mean_ai3,sizeof(int));
+        }
+        // skip over padding, if any
+        fseek(inptr_ai3, padding_ai3, SEEK_CUR);
+        // then add it back (to demonstrate how)
+        for (int k = 0; k < padding_ai3; k++){
+			//store(c,0x00 , i, k);
+			//foo_ai3[i][k];
+						//we have five batches per second, fill in the paddings
+			if(k*10%5==0){
+				mWorld->ai3[0][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==1)
+			{
+				mWorld->ai3[1][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==2)
+			{
+				mWorld->ai3[2][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==3)
+			{
+				mWorld->ai3[3][counter]=0;
+				counter++;
+			}
+			else if(k*10%5==4)
+			{
+				mWorld->ai3[4][counter]=0;
+				counter++;
+			}
+            fputc(0x00, outptr_ai3);
+			outtxt_ai3 << 0x00 << flush;
+			outtxt_ai3 << " "<< flush;
+		}
+		outtxt_ai3 << endl;
+    }
+    // close infile
+    fclose(inptr_ai3);
+    // close outfile
+	fout_ai3.close();
+	fin_ai3.open(binID_ai3,ios::binary);
+	for (int i = 0, biHeight = abs(bi_ai3.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi_ai3.biWidth; j++)
+        {
+			int my_int2_ai3;
+			fin_ai3.read((char*)&my_int2_ai3,sizeof(int));
+			//DBOUT("my_int2: " << my_int2);
+		}
+	}
+	fin_ai3.close();
+    fclose(outptr_ai3);
+	outtxt_ai3.close();
+	delete [] infile_ai3;
+
+
+
+   //renderTexture->addViewport(mCamera_ai1->getCamera(),1,0.4f, 0.75f, 0.5, 0.15);
+   //int count = renderTexture_ai1->getNumViewports();
+   //renderTexture->getViewport(1)->setClearEveryFrame(true);
+   //renderTexture->getViewport(1)->setBackgroundColour(Ogre::ColourValue::Black);
+   //renderTexture->getViewport(1)->setOverlaysEnabled(true);
+    //char* outfile = "try2.txt";
 	
+   
+
+	/*
     tf = new tensorflow(mWorld);
 	int num_examples = 80*80; // training set size
     int nn_input_dim = 2; // input layer dimensionality
@@ -762,10 +1229,10 @@ void Tank::Think(const Ogre::Real& mTime)
 	{
 		for(int j=0; j<80;j++)
 		{
-			bar[i+j]=foo[i][j];
+			bar[i+j]=foo_ai1[i][j];
 		}
 	}
-
+	*/
 
 
 	int SwitchMode =1;
@@ -773,205 +1240,367 @@ void Tank::Think(const Ogre::Real& mTime)
 	* input: bar[161]
 	* ouput: corrected parameters
 	*/
-	if(SwitchMode==1){
+	/*if(SwitchMode==1){
+		ifstream w1, w2, b1, b2;
+			w1.open("w1.dat",ios::binary);
+			if(fin_ai3==NULL)
+			{
+				string w1 = "w1";
+				string exd_w1 = ".txt";
+				string bintxtResult_w1;          // string which will contain the result  
+				ostringstream bintxtconvert_w1;
+				bintxtconvert_w1 << k;      // insert the textual representation of 'Number' in the characters in the stream
+				bintxtResult_w1 = bintxtconvert_w1.str(); // set 'Result' to the contents of the stream
+				w1.append(bintxtResult_w1);
+				w1.append(exd_w1);
+				char *outfile_w1 = new char[w1.length() + 1]; //argv[3];
+				strcpy(outfile_w1, w1.c_str());
+				FILE* outptr_w1 = fopen(outfile_w1, "w");
+				for(int k=0; k< 65; k++)
+				{
+					for(int j=0; j< 160; j++)
+					{
+						float randw1 = 0.001*rand();
+						fwrite(&randw1, sizeof(int), sizeof(randw1), outptr_w1);
+					}
+				}
+				fclose(outptr_w1);
+			}
+			else
+			{}
+	for (int i = 0, biHeight = abs(bi_ai3.biHeight); i < biHeight; i++)
+    {
+        // iterate over pixels in scanline
+        for (int j = 0; j < bi_ai3.biWidth; j++)
+        {
+			int my_int2_ai3;
+			fin_ai3.read((char*)&my_int2_ai3,sizeof(int));
+			//DBOUT("my_int2: " << my_int2);
+		}
+	}
+	fin_ai3.close();
 		int conv[79][79];
-
 		for (int i = 0; i<80; i++ )
 		{
 			for (int j = 0; j<80; j++ )
 			{
-					int tmp= tanh(mean);
-			        foo[i][j]=tmp;
+					int tmp= tanh(mean_ai1);
+			        foo_ai1[i][j]=tmp;
 			}
 		}
-	}
+	}*/
 	/*prediction
 	* input: corrected parameters, and foo[81][81]
 	* output: control command
 	*/
-	else if(SwitchMode==2)
-	{
+	//else if(SwitchMode==2)
+	//{
 		//TODO
-	}
-
-
-
+	//}
 	}
 }
 
 float
-Tank::calculate_loss(float w1[][66], float w2[], float b1[], float b2[], float z_2[], float reg_lambda)
+Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
 {
-	for(int i=0;i<65;i++)
-	{
-		for(int j=0; j< 161; j++)
-		{
-			for(int k=0; k< 65; k++)
-			{
-				z_2[i] += w1[j][k]* (mWorld->frame0[j]);
-			}
-		}
-		z_2[i]+= b1[i];
-	}
-	float a_2[66];
-	for(int i=0; i<65; i++)
-	{
-		a_2[i] = tanh(z_2[i]);
-	}
-	float z_3[4];
-	for(int i=0; i<4; i++)
-	{
-		z_3[i] += w2[i] * a_2[i] +b2[i];
-	}
-	//get unnormalized probabilities
-	float exp_scores[66];
-	for(int i=0; i<65; i++)
-	{
-		exp_scores[i] = exp(z_2[i]);
-	}
-	//normalize them for each example
-	float norm=0.0f;
-	for(int i=0; i<65; i++)
-	{
-		norm += exp_scores[i];
-	}
-	float probs[66];
-	for(int i=0; i<65; i++)
-	{
-		probs[i] = exp_scores[i]/norm;
-	}
-	//Calculating the loss
-	float corect_logprobs[66];
-	for(int i=0; i<65; i++)
-	{
-		corect_logprobs[i] = -log(probs[i]);
-	}
-	//compute the loss: average cross-entropy loss and regularization
-	float data_loss =0.0f;
-	for(int i=0; i<65; i++)
-	{
-		data_loss += corect_logprobs[i];
-	}
-	// Add regulatization term to loss (optional)
-	float sum_w1=0.0f;
-	for(int j=0; j< 80; j++)
-		{
-			for(int k=0; k< 80; k++)
-			{
-				sum_w1 += w1[j][k]* w1[j][k];
-			}
-		}
-	float sum_w2=0.0f;
-	for(int i=0; i<4; i++)
-	{
-		sum_w2 += w2[i];
-	}
-    data_loss += reg_lambda*0.5f * (sum_w1) + sum_w2;
-	return 1.0f/65 * data_loss;
-}
-/*
-*This function learns parameters for the neural network and returns the model.
-* - nn_hdim: Number of nodes in the hidden layer, default = 65
-* - num_passes: Number of passes through the training data for gradient descent
-* - print_loss: If True, print the loss every 1000 iterations
-*/
-void
-	Tank::build_model(float w1[][66], float w2[], float b1[], float b2[], float z_2[], float reg_lambda, int nn_hdim, int num_passes, boolean print_loss){
-		//Initialize the parameters to random values. We need to learn these.
-		int HI = 1;
-		int LO = 0;
-		//float r = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
-		for(int j=0; j< 80; j++)
-		{
-			for(int k=0; k< 80; k++)
-			{
-				w1[j][k]= LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
-			}
-		}
-		for(int i=0; i<4; i++)
-		{
-			w2[i] = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
-		}
-		for(int j=0; j< 65; j++)
-		{
-			b1[j] = 1;
-		}
-		for(int j=0; j< 4; j++)
-		{
-			b2[j] = 1;
-		}
-		//Gradient descent. For each batch...
-		for(int i=0; i< num_passes; i++){
-			//Forward propagation
-			for(int i=0;i<66;i++)
-			{
-				for(int j=0; j< 80; j++)
+				//# FEEDFORWARD
+				//# reshape array in order to easily calculate dot product
+				//w1*x + b1
+				float z_1[6][66];
+				for(int i=0;i<5;i++)//for the output
 				{
-					for(int k=0; k< 80; k++)
+					for(int j=0; j< 65; j++)
 					{
-						z_2[i] += w1[j][k]* (mWorld->frame0[j]);
+						z_1[i][j]=0.0f;
+						for(int k=0; k< 6400; k++)
+						{
+							z_1[i][j] += x[i][k]*w1[k][j];
+						}
+						z_1[i][j]+= b1[j];
 					}
 				}
-				z_2[i]+= b1[i];
-			}
-			float a_2[66];
-			for(int i=0; i<65; i++)
-			{
-				a_2[i] = tanh(z_2[i]);
-			}
-			float z_3[4];
-			for(int i=0; i<4; i++)
-			{
-				z_3[i] += w2[i] * a_2[i] +b2[i];
-			}
-			//get unnormalized probabilities
-			float exp_scores[5];
-			for(int i=0; i<4; i++)
-			{
-				exp_scores[i] = exp(z_3[i]);
-			}
-			//normalize them for each example
-			float norm=0.0f;
-			for(int i=0; i<4; i++)
-			{
-				norm += exp_scores[i];
-			}
-			float probs[5];
-			for(int i=0; i<4; i++)
-			{
-				probs[i] = exp_scores[i]/norm;
-			}
+				//y_ij = sigmoid(z_1_ij)
+				tf = new tensorflow(mWorld);
+				float y[6][66];
+				for(int i=0; i<65;i++){
+					for(int j=0; j<5; j++)
+					{
+						y[i][j]=tf->sigmoid(z_1[i][j]);
+					}
+				}
+				float z[6][5];
+				//z = w2*y + b2
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						z[i][j]=0.0f;
+						for(int k=0; k< 65; k++)
+						{
+							z[i][j] += w2[k][j]*y[i][k];
+						}
+						z[i][j]+= b2[j];
+					}
+				}
+				float p[6][5];
+				float M[6];
+				for(int i=0;i<5;i++)//for the output
+				{
+					M[i]=INT_FAST16_MIN;
+					for(int j=0; j< 4; j++){
+						if(z[i][j]>M[i])
+							M[i]=z[i][j];
+					}
+					
+				}
+				float softsum[6];
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						softsum[i]+= (z[i][j]-M[i]);
+					}
+					
+				}
+				//p = apply_along_axis(softmax, 0, z)
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						p[i][j]= tf->softmax(z[i][j]-M[i],softsum[i]);
+					}
+				}
+				//# calculate loss
+				//loss = np.zeros(batch_size)
+				float loss[6];
+				for(int i=0;i<5;i++)//initialize the loss
+				{
+					loss[i]=0.0f;
+				}
+				//for j, (a, b) in enumerate(zip(p.T, label_mini_batches[i])):
+					//loss[j] = cross_entropy_loss(a, b)
+				//return -np.sum((target_vector * np.log(probability_distribution)))
+				
+				for(int i=0;i<5;i++)
+				{
+					for(int j=0; j< 4; j++)
+					{
+						loss[i] += ((-1)*log(p[i][j])*lab[i][j]);
+					}
+				}
 
-		
-			//Backpropagation: backpropate the gradient to the parameters (W,b)
-			float delta3[5];
-			for(int i=0; i<4; i++)
-			{
-				delta3[i]=probs[i]-1;
-			}
-			float dW2[5];
-			for(int i=0; i<4; i++)
-			{
-				dW2[i]=a_2[i] * delta3[i];
-			}
-			float db2 =0.0f;
-			for(int i=0; i<4; i++)
-			{
-				db2+=delta3[i];
-			}
-			// delta3.dot(W2.T)
-			float delta2[5];
+				//batch_loss = sum(loss) / batch_size
+				float batch_loss = 0.0f;
+				for(int i=0;i<5;i++)
+				{
+					batch_loss+=loss[i];	
+				}
+				batch_loss/=5;
 
-			for(int i=0; i<4; i++)
-			{
-				delta2[i]=delta3[i]*w2[i];
-			}
+				//BACKPROPAGATION
+				//output layer (z) gradient
+				//dloss_dz = p - label_mini_batches[i].T
+				float dloss_dz[6][5];
+				for(int i=0;i<5;i++)
+				{
+					for(int j=0; j< 4; j++)
+					{
+						dloss_dz[i][j] = p[i][j]-lab[i][j];
+					}
+				}
+				//dloss_dw2 = dloss_dz*y.T
+				/*float y_t[66][6];
+				for(int i=0;i<65;i++)//for the output
+				{
+					for(int j=0; j< 5; j++)
+					{
+						y_t[i][j]=y[j][i];
+					}
+				}*/
+				
+				float dloss_dw2[66][5];
+				for(int i=0;i<65;i++)
+				{
+					for(int j=0; j< 4; j++)
+					{
+						dloss_dw2[i][j]=0.0f;
+						for(int k=0; k< 5; k++)
+						{
+							dloss_dw2[i][j] += dloss_dz[k][j]*y[k][i];
+						}
+					}
+				}
+				// hidden layer (y) gradient
+				//dloss_dy = w2.T*dloss_dz
+				float dloss_dy[6][66];
+				for(int i=0;i<5;i++)
+				{
+					for(int j=0; j< 65; j++)
+					{
+						dloss_dy[i][j]=0.0f;
+						for(int k=0; k< 5; k++)
+						{
+							dloss_dw2[i][j] += dloss_dz[k][i]*w2[j][k];
+						}
+					}
+				}
+				//dy_da = sigmoid_derivative(y)
+				float dy_da[6][66];
+				for(int i=0;i<5;i++)
+				{
+					for(int j=0; j< 65; j++)
+					{
+						dy_da[i][j]=tf->sigmoid_derivative(y[i][j]);
+					}
+				}
+				//dloss_da = dloss_dy * dy_da
+				float dloss_da[66][6];
+				for(int i=0;i<65;i++)
+				{
+					for(int j=0; j< 5; j++)
+					{
+						dloss_da[j][i] = dloss_dy[j][i]*dy_da[j][i];
+					}
+				}
+				//dloss_dw1 = np.dot(dloss_da, x.T)
+				float dloss_dw1[6401][66];
+				for(int i=0;i<6400;i++)
+				{
+					for(int j=0; j< 65; j++)
+					{
+						dloss_dw1[i][j]=0.0f;
+						for(int k=0; k< 5; k++)
+						{
+							dloss_dw1[i][j] += dloss_da[j][k]*x[k][i];
+						}
+					}
+				}
+				//perform weight update
+				//w1 -= dloss_dw1 * learning_rate
+				for(int i=0;i<6400;i++)
+				{
+					for(int j=0; j< 65; j++)
+					{
+						w1[i][j]-=(dloss_dw1[i][j]*0.1);
+					}
+				}
+				//w2 -= dloss_dw2 * learning_rate
+				for(int i=0;i<65;i++)
+				{
+					for(int j=0; j< 5; j++)
+					{
+						w2[i][j]-=(dloss_dw2[i][j]*0.1);
+					}
+				}
+				// perform bias update
+				//b1 -= sum(dloss_da, axis=1).reshape(sizeof[hidden layer], 1) * learning_rate
+				float sum_dloss_da[66];
+				for(int i=0;i<65;i++)
+				{
+					for(int j=0; j< 5; j++)
+					{
+						sum_dloss_da[i]+=(dloss_da[i][j]);
+					}
+				}
+				for(int i=0;i<65;i++)
+				{
+				    b1[i]-=(sum_dloss_da[i]*0.1);
+				}
+				//b2 -= sum(dloss_dz, axis=1).reshape(sizeof[output layer], 1) * learning_rate
+				float sum_dloss_dz[5];
+				for(int i=0;i<5;i++)
+				{
+					for(int j=0; j<4; j++)
+					{
+						sum_dloss_dz[i]+=(dloss_dz[i][j]);
+					}
+				}
+				for(int i=0;i<4;i++)
+				{
+				    b1[i]-=(sum_dloss_dz[i]*0.1);
+				}
 
-			//Add regularization terms (b1 and b2 don't have regularization terms)
-			//Gradient descent parameter update (Assign new parameters to the model)
-			
-		}
+	
 
+	return 0.0f;
+}
+int Tank::prediction(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5])
+{
+				//# FEEDFORWARD
+				//# reshape array in order to easily calculate dot product
+				//w1*x + b1
+				float z_1[6][66];
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 65; j++)
+					{
+						z_1[i][j]=0.0f;
+						for(int k=0; k< 6400; k++)
+						{
+							z_1[i][j] += x[i][k]*w1[k][j];
+						}
+						z_1[i][j]+= b1[j];
+					}
+				}
+				//y_ij = sigmoid(z_1_ij)
+				tf = new tensorflow(mWorld);
+				float y[6][66];
+				for(int i=0; i<65;i++){
+					for(int j=0; j<5; j++)
+					{
+						y[i][j]=tf->sigmoid(z_1[i][j]);
+					}
+				}
+				float z[6][5];
+				//z = w2*y + b2
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						z[i][j]=0.0f;
+						for(int k=0; k< 65; k++)
+						{
+							z[i][j] += w2[k][j]*y[i][k];
+						}
+						z[i][j]+= b2[j];
+					}
+				}
+				float p[6][5];
+				float M[6];
+				for(int i=0;i<5;i++)//for the output
+				{
+					M[i]=INT_FAST16_MIN;
+					for(int j=0; j< 4; j++){
+						if(z[i][j]>M[i])
+							M[i]=z[i][j];
+					}
+					
+				}
+				float softsum[6];
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						softsum[i]+= (z[i][j]-M[i]);
+					}
+					
+				}
+				//p = apply_along_axis(softmax, 0, z)
+				for(int i=0;i<5;i++)//for the output
+				{
+					for(int j=0; j< 4; j++)
+					{
+						p[i][j]= tf->softmax(z[i][j]-M[i],softsum[i]);
+					}
+				}
+				float Max = INT_FAST16_MIN;
+				int tmp =0;
+				for(int j=0; j< 4; j++)
+					{
+						if(p[4][j]>Max)
+							tmp=j;
+					}
+	return tmp;
 }
 
 
@@ -979,22 +1608,7 @@ void
 void
 Tank::store(int c, int m, int i, int j)
 {
-	if(c==0)
-	{
-		mWorld->frame0[i]=m;
-	}
-	else if(c==1)
-	{
-		mWorld->frame1[i][j]=m;
-	}
-	else if(c==2)
-	{
-		mWorld->frame2[i][j]=m;
-	}
-	else if(c==3)
-	{
-		mWorld->frame3[i][j]=m;
-	}
+
 }
 
 /* Creates user tank entity and node */

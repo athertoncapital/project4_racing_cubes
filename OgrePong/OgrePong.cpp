@@ -78,7 +78,7 @@ void
 OgrePong::createCamera()
 {
 	mCamera = mSceneMgr->createCamera("PlayerCam");
-	mCamera->setPosition(Ogre::Vector3(0, 0, -100));
+	mCamera->setPosition(Ogre::Vector3(0, 0, -1));
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 

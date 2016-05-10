@@ -568,10 +568,11 @@ bool World::flag() {
 
 void World::createOverlay() {
 	Ogre::OverlayManager& om = Ogre::OverlayManager::getSingleton();
-	//mOverlay = om.getByName("Score");
+	mOverlay = om.getByName("Score");
 	//mOverlay = om.getByName("Horizontal_Initial_Value");
-	//mOverlay->show();
+	mOverlay->show();
 }
+
 
 void World::getEventFrom(PongManager *pongManager) {
 	mWorldManager->getEvent(pongManager);

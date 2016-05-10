@@ -836,7 +836,7 @@ void WorldManager::updateLevel() {
 	Ogre::TextAreaOverlayElement *te = (Ogre::TextAreaOverlayElement *) om.getOverlayElement("level");
 	char levelCaption[25];
 	sprintf(levelCaption, "Level : %i", level);
-	//te->setCaption(levelCaption);
+	te->setCaption(levelCaption);
 }
 
 void WorldManager::updateScore() {
@@ -910,13 +910,13 @@ void WorldManager::updateScore() {
 	Ogre::OverlayManager& om = Ogre::OverlayManager::getSingleton();
 	Ogre::TextAreaOverlayElement *te = (Ogre::TextAreaOverlayElement *) om.getOverlayElement("left");
 	char score[500];
-	//char time[25];
+	char time[25];
 	//sprintf(score, "AI\nPlayer's\nScore:\n%i", mAIScore);
 	//te->setCaption(score);
 	int k =Ogre::ControllerManager::getSingleton().getElapsedTime();
 	int cd = 180 -k;
 	sprintf(score, "Human\nUser's\nScore:\n%i", mUserScore);
-	//sprintf(time, "ElapsedTime:\n%i", k);
+	sprintf(time, "ElapsedTime:\n%i", k);
 	te = (Ogre::TextAreaOverlayElement *) om.getOverlayElement("right");
 	te->setCaption(score);
 	te = (Ogre::TextAreaOverlayElement *) om.getOverlayElement("left");
@@ -924,7 +924,7 @@ void WorldManager::updateScore() {
 	int H = mWorld->PROJECTILE_SPEED_H;
     float cubeSpeed = mWorld->SPEED_COEFFICIENT_AI_0;
 	if(v!=NULL&&H!=NULL){
-		//sprintf(score, "%i\n", v);
+		sprintf(score, "%i\n", v);
 		//sprintf(score, "Conutdown:\n%i\nHorizontal Velocity: %i \nVertical Velocity: %i\n", cd,H,v);
 		sprintf(score,"Countdown: %i\n Cube Speed: %f",cd,cubeSpeed);
         te->setCaption(score);

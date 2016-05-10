@@ -31,7 +31,9 @@ class AIManager;
 class World
 {
 public:
+
 	//neural network
+	int ailevel;
 	int ai1frame0[81][81];
 	int ai1frame1[81][81];
 	int ai1frame2[81][81];
@@ -40,7 +42,9 @@ public:
 	int ai1[6][6401];
 	int ai2[6][6401];
 	int ai3[6][6401];
-	float lab[6][5];
+	float ai1lab[6][5];
+	float ai2lab[6][5];
+	float ai3lab[6][5];
 	float x[6][6401]; 
 	float w1[6401][66]; 
 	float w2[66][5]; 

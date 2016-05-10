@@ -24,7 +24,7 @@ public:
 	int mean_ai2;
 	int mean_ai3;
 	float Tank::calculate_loss(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5]);
-	int Tank::prediction(float lab[6][5], int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5]);
+	int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float b1[66], float b2[5]);
 	void Tank::store(int c, int m, int i, int j);
 	//Tank(Ogre::SceneManager *sceneManager, World* world);
     Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);
@@ -72,7 +72,7 @@ public:
 	Ogre::SceneNode *mAI3;
 	const Ogre::AxisAlignedBox *mAABB;
 	Ogre::SceneNode *oMainNode;
-	void addCamera(PongCamera *c,PongCamera *r, PongCamera *ai1, PongCamera *ai2, PongCamera *ai3, PongCamera *m) { mCamera = c, mCameraR = r, mCamera_ai1=ai1, mCamera_ai2=ai2, mCamera_ai3=ai3; mCameraMenu = c;}
+	void addCamera(PongCamera *c,PongCamera *r, PongCamera *ai1, PongCamera *ai2, PongCamera *ai3) { mCamera = c, mCameraR = r, mCamera_ai1=ai1, mCamera_ai2=ai2, mCamera_ai3=ai3; }
 	Ogre::SceneManager *SceneManager() { return mSceneManager; }
 	//Ogre::Vector3 getPosition() const;
 	
@@ -97,7 +97,6 @@ protected:
 	PongCamera *mCamera_ai1;
 	PongCamera *mCamera_ai2;
 	PongCamera *mCamera_ai3;
-    PongCamera *mCameraMenu;
 	World *mWorld;
 	Ogre::SceneNode *mTankNode;
 	Ogre::SceneNode *mCameraNode;

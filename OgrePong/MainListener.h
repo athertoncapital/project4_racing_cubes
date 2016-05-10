@@ -19,14 +19,11 @@ class PongCamera;
 class ProjectileManager;
 class Tank;
 class DebugInterface;
-class MenuInterface;
 
 class MainListener : public Ogre::FrameListener
 {
 public:
-	MainListener(Ogre::RenderWindow *mainWindow, InputHandler *inputHandler,
-        AIManager *aiManager, World *world, PongCamera *cam, ProjectileManager *pm, 
-        Tank *mT, DebugInterface *dbi, MenuInterface *mi);
+	MainListener(Ogre::RenderWindow *mainWindow, InputHandler *inputHandler, AIManager *aiManager, World *world, PongCamera *cam, ProjectileManager *pm, Tank *mT, DebugInterface *dbi);
 
 	bool frameStarted(const Ogre::FrameEvent &evt);
 
@@ -40,7 +37,6 @@ protected:
 	ProjectileManager *mProjectileManager;
 	Ogre::RenderWindow *mRenderWindow;
     DebugInterface *mDebugInterface;
-    MenuInterface *mMenuInterface;
 
 	int x;
 private:

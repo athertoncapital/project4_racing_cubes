@@ -10,12 +10,8 @@
 
 tensorflow::tensorflow(World *world) {
 	mWorld = world;
-	
-	
 	//orientation = mWorld->SceneManager()->getSceneNode("AItank0")->getOrientation();
 
-	 
-	
 }
 
 tensorflow::~tensorflow()
@@ -43,7 +39,6 @@ float tensorflow::softmax(float a, float b){
 			 a vector of values between zero and one that sum to one.
 		*/
 		
-
 		return exp(a)/b;
 
 }

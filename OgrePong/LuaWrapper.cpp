@@ -3,8 +3,6 @@
 #include "OgreException.h"
 #include "OgreResourceGroupManager.h"
 #include "DebugInterface.h"
-#include "MenuInterface.h"
-#include "InputHandler.h"
 //#include "TriggerArea.h"
 #include "MovingObject.h"
 
@@ -37,6 +35,7 @@ LuaWrapper::getSingleton()
 //////////////////////////////////////////////
 /// C/C++ functions we are exposing to lua
 ///////////////////////////////////////////////
+
 
 
 
@@ -440,6 +439,9 @@ int setDebugTime(lua_State *L)
 	return 0;
 }
 
+
+
+
 int debugOutput(lua_State *L)
 {
     int numArgs = lua_gettop(L);
@@ -490,35 +492,6 @@ int showFunctions(lua_State *L)
 
 	return 0;
 }
-
-int continueGame(lua_State *L)
-{
-    DebugInterface *dbi = LuaWrapper::getSingleton()->getDebugInterface();
-    dbi->addDebugText("Inside Continue Game");
-    int numArgs = lua_gettop(L);
-    //Call createGameViewport
-    InputHandler *ih = LuaWrapper::getSingleton()->getInputHandler();
-    MenuInterface *mi = LuaWrapper::getSingleton()->getMenuInterface();
-    
-    
-    mi->SetMenuConsoleActive(!mi->MenuConsoleActive());
-    ih->createGameViewports();
-    
-    
-    return 0;
-}
-
-int exitGame(lua_State *L)
-{
-    LuaWrapper::getSingleton()->setDone(true);
-
-    return 0;
-}
-
-int startGame(lua_State *L)
-{
-    return 0;
-}
 ////////////////////////////////////////////////
 /// Utility function for grabbbing file path of scripts
 //////////////////////////////////////////////////
@@ -549,8 +522,6 @@ std::string getFullPath(std::string resourceName)
 
 void LuaWrapper::initializeLuaFunctions()
 {
-    lua_register(mLuaState, "Continue", continueGame);
-    lua_register(mLuaState, "Quit", exitGame);
     lua_register(mLuaState, "createObject", createObject);
     lua_register(mLuaState, "removeObject", removeObject);
     lua_register(mLuaState, "setPosition", setPosition);
@@ -568,24 +539,12 @@ void LuaWrapper::initializeLuaFunctions()
 	lua_register(mLuaState, "help", showFunctions);
 	//lua_register(mLuaState, "objectInsideTriggerArea", objectInsideTriggerArea);
 	lua_register(mLuaState, "setObjectSize", setObjectSize);
-    
-    
 
 }
 
 
-void
-LuaWrapper::showMenuOverlay(bool activate)
-{
-	MenuInterface *mi = LuaWrapper::getSingleton()->getMenuInterface();
-    if (activate == true) {
-        mi->showOverlay();
-    }
-    else {
-        mi->hideOverlay();
-    }
 
-}
+
 
 void 
 LuaWrapper::setWorld(World *world)
@@ -599,10 +558,7 @@ void  LuaWrapper::doString(const char *s)
 
 	try
 	{
-        std::string tmp = s;
-        tmp += "()";
-		luaL_dostring(mLuaState, tmp.c_str()); 
-
+		luaL_dostring(mLuaState, s); 
 	} catch (std::exception e)
 	{
 		DebugInterface *dbi = LuaWrapper::getSingleton()->getDebugInterface();
@@ -640,7 +596,6 @@ void LuaWrapper::setup()
 	luaL_dofile(mLuaState, path.c_str());
 	mDebugInterface = NULL;
 	mWorld = NULL;
-    done = false;
 }
 
 LuaWrapper::~LuaWrapper()

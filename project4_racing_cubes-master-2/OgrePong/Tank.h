@@ -2,8 +2,8 @@
 #define __Tank_h_
 #include "MotionObject.h"
 #include "Ogre.h"
-#include <string>
-#include <iostream>
+#include <vector>
+
 using namespace std;
 
 namespace Ogre {
@@ -17,6 +17,8 @@ class MotionObject;
 class PongCamera;
 class World;
 class MovingObject;
+class OBB;
+
 class Tank : public MotionObject
 {
 public:
@@ -29,7 +31,6 @@ public:
 	//Tank(Ogre::SceneManager *sceneManager, World* world);
     Tank(Ogre::SceneManager* sceneManager, World *world, Ogre::Vector3 dimension);
 	void Tank::build_model(float w1[][66], float w2[], float b1[], float b2[], float z_2[], float reg_lambda, int nn_hdim, int num_passes, boolean print_loss);
-	int ky;
 	tensorflow *tf;
 	~Tank(void);
 	MovingObject *mObj1;
@@ -48,10 +49,8 @@ public:
 	/* Node used to hold scene node for AI tank, bounding box, and next tank */
 	typedef struct Node {
 		Ogre::SceneNode *eTankNode;
-		const Ogre::AxisAlignedBox *eAABB;
-		MovingObject *ob;
 		Node *next;
-		bool destroyed;
+        OBB *obb;
 	} mNode;
 	Node *head;
 	
@@ -65,12 +64,16 @@ public:
 	void destroyTank(Node *node);
 	void respawnEnemyTank(Node *node);
 
+    void createAITank();
+
 	/* Node for user tank */
 	Ogre::SceneNode *mMainNode;
 	Ogre::SceneNode *mAI1;
 	Ogre::SceneNode *mAI2;
 	Ogre::SceneNode *mAI3;
 	const Ogre::AxisAlignedBox *mAABB;
+    OBB *mOBB;
+
 	Ogre::SceneNode *oMainNode;
 	void addCamera(PongCamera *c,PongCamera *r, PongCamera *ai1, PongCamera *ai2, PongCamera *ai3) { mCamera = c, mCameraR = r, mCamera_ai1=ai1, mCamera_ai2=ai2, mCamera_ai3=ai3; }
 	Ogre::SceneManager *SceneManager() { return mSceneManager; }
@@ -81,7 +84,14 @@ public:
 	void reverseHorizontalvelocity();
 	void reverseVerticalvelocity();
 	void reset();
-	//for AI computing
+
+    void createBackground();
+    OBB* Tank::createOBB(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene);
+    void createStaticObjects(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene);
+
+    void setMovObjs();
+
+    //for AI computing
 	Ogre::Vector3 vec;
 private:
 	Ogre::Vector3 Tank::Normal(float u, float v);
@@ -106,6 +116,9 @@ protected:
 	Ogre::SceneNode *mCameraNode_AI3;
 	Ogre::SceneManager *mSceneManager;
 	Ogre::SceneManager *mTempNode;
+
+    //NOTE: If changing number, please change in setMovObjs function
+    MovingObject *movObjs[30];
 };
 
 #endif

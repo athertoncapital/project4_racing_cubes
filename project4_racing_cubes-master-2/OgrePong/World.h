@@ -139,6 +139,8 @@ public:
 	void setIterator();
     void recordMove();
 
+    Tank::Node *getIterator() {return iterator;}
+
 	
 	//Tank *getHumanTank() { return mHumanPlayer; }
 	
@@ -171,7 +173,7 @@ private:
 
 	Ogre::Overlay *mGameOverOverlay;
 	void createGameOverOverlay();
-
+    Ogre::Vector3 mTankVelocity;
 	Border_* mBorder_2;
 	Border_* mBorder_3;
 	Border_* mBorder_4;

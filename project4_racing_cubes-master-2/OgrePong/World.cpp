@@ -15,7 +15,6 @@
 #include "MovingObject.h"
 #include <math.h> 
 
-
 // IOS (Input system) header files
 
 #include <ois/ois.h>
@@ -24,6 +23,7 @@
 #include "Camera.h"
 #include "InputHandler.h"
 #include "border.h"
+#include "CollisionManager.h"
 
 #include "OgreColourValue.h"
 #include "OgreOverlayManager.h"
@@ -44,12 +44,12 @@
 }
 World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank, VirtualClock *mVT)   : mSceneManager(sceneManager), mInputHandler(input), mTank(tank), mClock(mVT)
 {
-	
+    mTankVelocity = Ogre::Vector3(0,0,0);
 	state = 0;//pause
 	ailevel = 0;
 	Switch = 0;
 	GlblTime = mClock->report();
-	Mode = 1;//0 is prediction; 1 is training, and this value is only could be changed by designer manually 
+	Mode = 3;//0 is prediction; 1 is training, and this value is only could be changed by designer manually 
 	w1ID = "Trained_w1_binary";
 	w2ID = "Trained_w2_binary";
 	b1ID = "Trained_b1_binary";
@@ -369,19 +369,32 @@ World::World(Ogre::SceneManager *sceneManager, InputHandler *input, Tank *tank, 
 void
 World::fly_or_dive_Tank(InputHandler *mInputHandler, const Ogre::Real& mTime)
 {
-	const float RADIANS_PER_SECOND = 1;
-	if (mInputHandler->IsKeyDown(OIS::KC_W)) 
+	const float RADIANS_PER_SECOND = 1.2;
+/*	if (mInputHandler->IsKeyDown(OIS::KC_W)) 
 		mTank->mMainNode->translate(Ogre::Vector3(0,10,0)*mTime*10);
-	else mTank->mMainNode->translate(Ogre::Vector3(0,-10,0)*mTime*10);
+	else */mTank->mMainNode->translate(Ogre::Vector3(0,-10,0)*mTime*20);
+
+    mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+
+
 }
 //Rotating
 void
 World::yawTank(InputHandler *mInputHandler, const Ogre::Real& mTime)
 {
-	const float RADIANS_PER_SECOND = 1;
-	if (mInputHandler->IsKeyDown(OIS::KC_LEFT)) 
+	const float RADIANS_PER_SECOND = 1.2;
+	if (mInputHandler->IsKeyDown(OIS::KC_LEFT))
+    {
 		mTank->mMainNode->yaw(Ogre::Radian(mTime * RADIANS_PER_SECOND));
-	else mTank->mMainNode->yaw(-Ogre::Radian(mTime * RADIANS_PER_SECOND));
+        mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
+    }
+	else 
+    {
+        mTank->mMainNode->yaw(-Ogre::Radian(mTime * RADIANS_PER_SECOND));
+        mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
+    }
+    
+
 }
 void
 World::setIterator() 
@@ -394,7 +407,7 @@ World::Push(Tank::Node *node)
 	node->next = tanks->head;
 	tanks->head = node;
 }
-//void World::Think(float mTime)
+
 Ogre::Vector3 World::Normal(float u, float v){
 	float kappa = 1;
 	
@@ -520,11 +533,10 @@ void World::Think(const Ogre::Real& mTime)
     //For Debug use:
     //"AItank0" will make User cube Designer
 
-	mTank->SceneManager()->getSceneNode("U")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
-	mTank->SceneManager()->getSceneNode("U")->translate(Normal(u1, U_v)*10);
-	//mTank->SceneManager()->getSceneNode("U")->translate(Binormal(u1, U_v)*U_v);
-	mTank->SceneManager()->getSceneNode("U")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
-	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
+	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
+	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+    u+=5;
 	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
 	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
 	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
@@ -538,6 +550,9 @@ void World::Think(const Ogre::Real& mTime)
 	mTank->SceneManager()->getSceneNode("AItank3")->setOrientation(Orientation(Binormal(u, 1/-100),Normal(u, 1/-100),Tangent(u,1/-100)));
 	u+=5;
 
+    ////////////////////////////////////////////////////////
+    ////////////// START OF NOT "SMART" AI's////////////////
+    ////////////////////////////////////////////////////////
 
 	mTank->SceneManager()->getSceneNode("AItank4")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.6),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.6),1000*sin(u/2)*(-0.6));
 	mTank->SceneManager()->getSceneNode("AItank4")->translate(Normal(u, -0.6)*11);
@@ -631,55 +646,32 @@ void World::Think(const Ogre::Real& mTime)
 	const float TANK_SPEED = 50;
 	end = time(NULL);
 	diff = end - start;
-	/* Checkthe condition in each second */
-	if (diff > 1) {
-		setIterator();
-		while (iterator != NULL)
-		{
-			if (iterator->destroyed)
-				start = time(NULL);
-			iterator = iterator->next;
-		}
-		setIterator();
-	}
+
     //LEFT,RIGHT,UP,DOWN MOVE DESIGNER MODE CUBE
+
 	if (mInputHandler->IsKeyDown(OIS::KC_LEFT) || mInputHandler->IsKeyDown(OIS::KC_RIGHT))
     {
 		yawTank(mInputHandler, mTime);
     }
     else if (mInputHandler->IsKeyDown(OIS::KC_UP))
 	{
-		if (iterator != NULL && iterator->eAABB != NULL)
-		{
-			if (!mTank->mAABB->intersects(*iterator->eAABB)&&!mTank->mAABB->intersects(*mTank->mo2ABB))
-			{
-				mTank->mMainNode->translate(0, 0, mTime * TANK_SPEED *20, Ogre::Node::TS_LOCAL);
-				iterator = iterator->next;
-				
-				/*float u = 2*asin(position.z/1000);
-				int inttime =Ogre::ControllerManager::getSingleton().getElapsedTime();
-				u=inttime;
-				mTank->mMainNode->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/2),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/2),1000*sin(u/2)*(1/2));
-				*/
-			}
-			
-			else mTank->mMainNode->translate(0, 0, -mTime * 500 * TANK_SPEED, Ogre::Node::TS_LOCAL);
-		}
-		
-		else setIterator();
+        //Ogre::Vector3 mTankPosition = mTank->mMainNode->getPosition();
+        //Ogre::Vector3 mTankFacing = mTank->mMainNode->getOrientation() * Ogre::Vector3::UNIT_Z;
+
+        //mTankVelocity = mTankFacing * 50 * mTime;
+        //DBOUT("tank velocity" << Ogre::StringConverter::toString(mTankVelocity).c_str());
+        //mTank->mMainNode->setPosition(mTankPosition + mTankVelocity);
+        mTank->mMainNode->translate(0, 0, mTime * TANK_SPEED *20, Ogre::Node::TS_LOCAL);
+        mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+
+        
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_DOWN))
 	{
-		if (iterator != NULL && iterator->eAABB != NULL)
-		{
-			if (!mTank->mAABB->intersects(*iterator->eAABB))
-			{
-				mTank->mMainNode->translate(0, 0, -mTime*20 * TANK_SPEED, Ogre::Node::TS_LOCAL);
-				iterator = iterator->next;
-			}
-			else mTank->mMainNode->translate(0, 0, mTime * 100 * TANK_SPEED, Ogre::Node::TS_LOCAL);
-		}
-		else setIterator();
+
+        mTank->mMainNode->translate(0, 0, -mTime*20 * TANK_SPEED, Ogre::Node::TS_LOCAL);
+        mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_Z))
 	{

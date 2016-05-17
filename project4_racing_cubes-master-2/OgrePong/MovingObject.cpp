@@ -5,6 +5,7 @@
 #include "OgreEntity.h"
 #include "OgreQuaternion.h"
 #include "OgreMath.h"
+#include "CollisionManager.h"
 
 
 MovingObject::MovingObject(Ogre::SceneManager *sceneManager, const char *meshName, MovingObject *parent) :mParent(parent)
@@ -14,28 +15,15 @@ MovingObject::MovingObject(Ogre::SceneManager *sceneManager, const char *meshNam
     mObjectSceneNode->attachObject(ent1);
     mPosition = Ogre::Vector3::ZERO;
     mOrientation = Ogre::Matrix3::IDENTITY;
+    setOBB();
 }
 
 
 void MovingObject::setScale(Ogre::Vector3 newScale)
 {
     mObjectSceneNode->setScale(newScale);
+    mOBB->setScale(mObjectSceneNode->getScale());
 }
-
-
-void  
-MovingObject::setOrentationFromWorldOrientation(Ogre::Matrix3 worldOrientation)
-{
-   
-}
-
-void 
- MovingObject::setPositionFromWorldPosition(Ogre::Vector3 worldPosition)
-{
-    
-
-}
-
 
 void 
     MovingObject::yaw(Ogre::Radian theta)
@@ -127,4 +115,14 @@ void
     GetWorldPositionAndOrientation(pos, orientation);
     mObjectSceneNode->setOrientation(Ogre::Quaternion(orientation));
     mObjectSceneNode->setPosition(pos);
+    
+    mOBB->setOrientation(mObjectSceneNode->getOrientation());
+    mOBB->setPosition(mObjectSceneNode->getPosition());
+}
+
+void MovingObject::setOBB() {
+    mOBB = new OBB(ent1->getBoundingBox());
+    mOBB->setScale(mObjectSceneNode->getScale());
+    mOBB->setOrientation(mObjectSceneNode->getOrientation());
+    mOBB->setPosition(mObjectSceneNode->getPosition());
 }

@@ -3,6 +3,7 @@
 
 class Ogre::SceneManager;
 class Ogre::SceneNode;
+class OBB;
 
 class MovingObject
 {
@@ -26,6 +27,9 @@ public:
     void setOrentationFromWorldOrientation(Ogre::Matrix3 worldOrientation);
 
     void setScale(Ogre::Vector3 newScale);
+    void setOBB();
+
+    OBB* getOBB() { return mOBB;}
 	 Ogre::Entity *ent1;
 	 Ogre::SceneNode *mObjectSceneNode;
 
@@ -37,5 +41,6 @@ protected:
     Ogre::Matrix3 mOrientation;
     Ogre::Vector3 mPosition;
     MovingObject *mParent;
+    OBB *mOBB;
     
 };

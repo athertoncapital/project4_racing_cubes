@@ -562,6 +562,7 @@ std::string getFullPath(std::string resourceName)
 
 void LuaWrapper::initializeLuaFunctions()
 {
+    lua_register(mLuaState, "Start", startGame);
     lua_register(mLuaState, "Continue", continueGame);
     lua_register(mLuaState, "Quit", exitGame);
     lua_register(mLuaState, "createObject", createObject);

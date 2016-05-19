@@ -18,6 +18,7 @@ class PongCamera;
 class World;
 class MovingObject;
 class OBB;
+class StaticObject;
 
 class Tank : public MotionObject
 {
@@ -67,7 +68,8 @@ public:
     void createAITank();
 
 	/* Node for user tank */
-	Ogre::SceneNode *mMainNode;
+	//Ogre::SceneNode *mMainNode;
+    MovingObject *mMainNode;
 	Ogre::SceneNode *mAI1;
 	Ogre::SceneNode *mAI2;
 	Ogre::SceneNode *mAI3;
@@ -88,8 +90,18 @@ public:
     void createBackground();
     OBB* Tank::createOBB(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene);
     void createStaticObjects(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene);
+    void createStaticObjects2(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene);
+
+    void createAICubesOld();
+    void createAICubes();
 
     void setMovObjs();
+    void setStatObjs();
+
+    MovingObject* getMovingObject(std::string name);
+    StaticObject* getStaticObject(std::string name);
+    
+
 
     //for AI computing
 	Ogre::Vector3 vec;
@@ -119,6 +131,10 @@ protected:
 
     //NOTE: If changing number, please change in setMovObjs function
     MovingObject *movObjs[30];
+    StaticObject *statObjs[30];
+
+    std::map<std::string, MovingObject *> mMovingObjects;
+	std::map<std::string, StaticObject *> mStaticObjects;
 };
 
 #endif

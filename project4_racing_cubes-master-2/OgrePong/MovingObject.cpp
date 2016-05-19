@@ -8,10 +8,10 @@
 #include "CollisionManager.h"
 
 
-MovingObject::MovingObject(Ogre::SceneManager *sceneManager, const char *meshName, MovingObject *parent) :mParent(parent)
+MovingObject::MovingObject(Ogre::SceneManager *sceneManager, const char *objectName, const char *meshName,MovingObject *parent) :mParent(parent)
 {
-    ent1 = sceneManager->createEntity(meshName);
-    mObjectSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
+    ent1 = sceneManager->createEntity(objectName,meshName);
+    mObjectSceneNode = sceneManager->getRootSceneNode()->createChildSceneNode(objectName);
     mObjectSceneNode->attachObject(ent1);
     mPosition = Ogre::Vector3::ZERO;
     mOrientation = Ogre::Matrix3::IDENTITY;
@@ -125,4 +125,9 @@ void MovingObject::setOBB() {
     mOBB->setScale(mObjectSceneNode->getScale());
     mOBB->setOrientation(mObjectSceneNode->getOrientation());
     mOBB->setPosition(mObjectSceneNode->getPosition());
+}
+
+Ogre::Vector3 MovingObject::getFacing() 
+{
+	return  mObjectSceneNode->getOrientation() * Ogre::Vector3::UNIT_Z;
 }

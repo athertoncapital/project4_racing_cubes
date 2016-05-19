@@ -5,6 +5,7 @@
 #include "PongObject.h"
 #include "MotionObject.h"
 #include "MovingObject.h"
+#include "StaticObject.h"
 #include "Properties.h"
 #include "OgreVector3.h"
 #include "Ogre.h"
@@ -41,16 +42,22 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 
     //Initializing MovingObject Array
     setMovObjs();
+    setStatObjs();
 
     //Sets space background on all the 3d space
     createBackground();
     
     
     //-----------------------------------------------
-	mMainNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
-	mSpin = 1000;
-	mWorld->SceneManager()->getSceneNode("U")->setPosition(100,100,100);
-	Ogre::Vector3 vUser=mWorld->SceneManager()->getSceneNode("U")->getPosition();
+	//mMainNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
+	//mSpin = 1000;
+	//mWorld->SceneManager()->getSceneNode("U")->setPosition(100,100,100);
+	//Ogre::Vector3 vUser=mWorld->SceneManager()->getSceneNode("U")->getPosition();
+
+
+    Node *node = new Node();
+	Ogre::SceneNode *eTankNode = NULL;
+	Ogre::Entity *tank = NULL;
 
     /* Create user tank */
 	createUserTank();
@@ -59,287 +66,21 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
     //////////////  START OF NODE OBJECTS ////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
 
-	int Number = 0;       // number to be converted to a string
-	string Result;          // string which will contain the result
-	ostringstream convert;   // stream used for the conversion
-	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
-	Result = convert.str(); // set 'Result' to the contents of the stream
-	ID.append(Result);
-
-	Node *node = new Node();
-	Ogre::SceneNode *eTankNode;
-	Ogre::Entity *tank = SceneManager()->createEntity("AItank1","Cube.mesh");
-	mAI1 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank1");
-	mAI1->setPosition(mWorld->spawnPoints[1]);
-	mAI1->attachObject(tank);
-	mAI1->scale(10, 10, 10);
-
-	Ogre::Vector3 XBasis = Ogre::Vector3(-1,0, 0);
-    Ogre::Vector3 YBasis = Ogre::Vector3(0,-1 ,0);
-    Ogre::Vector3 ZBasis = Ogre::Vector3(0,0,1);
-    Ogre::Matrix3 R;
-    R.FromAxes(XBasis, YBasis, ZBasis);
-	mAI1->setOrientation(R);
-
-	node->eTankNode = mAI1;
-    mWorld->Push(node);
-
-	Ogre::Real time=mWorld->t;
-
-	//////////////////////////////////////////////////////////////////////////
-    Number = 1;       // number to be converted to a string
-	Result;          // string which will contain the result  
-	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
-	Result = convert.str(); // set 'Result' to the contents of the stream
-	ID.append(Result);
-	node = new Node();
-	
-	tank = SceneManager()->createEntity("AItank0","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank0");
-	eTankNode->setPosition(mWorld->spawnPoints[0]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	Number = 2;       // number to be converted to a string
-	Result;          // string which will contain the result
-	convert;   // stream used for the conversion
-	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
-	Result = convert.str(); // set 'Result' to the contents of the stream
-	ID.append(Result);
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank2","Cube.mesh");
-	mAI2 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank2");
-	mAI2->setPosition(mWorld->spawnPoints[2]);
-	mAI2->attachObject(tank);
-	mAI2->scale(10, 10, 10);
-	node->eTankNode = mAI2;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	Number = 3;       // number to be converted to a string
-	Result;          // string which will contain the result
-	convert;   // stream used for the conversion
-	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
-	Result = convert.str(); // set 'Result' to the contents of the stream
-	ID.append(Result);
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank3","Cube.mesh");
-	mAI3 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank3");
-	mAI3->setPosition(mWorld->spawnPoints[3]);
-	mAI3->attachObject(tank);
-	mAI3->scale(10, 10, 10);
-	node->eTankNode = mAI3;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank4","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank4");
-	eTankNode->setPosition(mWorld->spawnPoints[4]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank5","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank5");
-	eTankNode->setPosition(mWorld->spawnPoints[5]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank6","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank6");
-	eTankNode->setPosition(mWorld->spawnPoints[6]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank7","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank7");
-	eTankNode->setPosition(mWorld->spawnPoints[7]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank8","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank8");
-	eTankNode->setPosition(mWorld->spawnPoints[8]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank9","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank9");
-	eTankNode->setPosition(mWorld->spawnPoints[9]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank10","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank10");
-	eTankNode->setPosition(mWorld->spawnPoints[10]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank11","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank11");
-	eTankNode->setPosition(mWorld->spawnPoints[11]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank12","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank12");
-	eTankNode->setPosition(mWorld->spawnPoints[12]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-		//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank13","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank13");
-	eTankNode->setPosition(mWorld->spawnPoints[13]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank14","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank14");
-	eTankNode->setPosition(mWorld->spawnPoints[14]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank15","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank15");
-	eTankNode->setPosition(mWorld->spawnPoints[15]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank16","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank16");
-	eTankNode->setPosition(mWorld->spawnPoints[16]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank17","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank17");
-	eTankNode->setPosition(mWorld->spawnPoints[17]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank18","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank18");
-	eTankNode->setPosition(mWorld->spawnPoints[18]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-		//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank19","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank19");
-	eTankNode->setPosition(mWorld->spawnPoints[19]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	time=mWorld->t;
-	mWorld->Push(node);
-	//////////////////////////////////////////////////////////////////////////
-	node = new Node();
-	tank = SceneManager()->createEntity("AItank20","Cube.mesh");
-	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank20");
-	eTankNode->setPosition(mWorld->spawnPoints[20]);
-	eTankNode->attachObject(tank);
-	eTankNode->scale(10, 10, 10);
-	node->eTankNode = eTankNode;
-    node->obb = createOBB(node,tank,eTankNode);
-	mWorld->Push(node);
+    createAICubes();
 
 
 	//////////////////////////////////////////////////////////////////////////
     //////////////  START OF STATIC OBJECTS //////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
 
-	createStaticObjects(node,tank,eTankNode);
+	createStaticObjects2(node,tank,eTankNode); //Testing staticobject2 func
 
     //////////////////////////////////////////////////////////////////////////
     //////////////  START OF MOVING OBJECTS //////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////
 
     node = new Node();
-	mObj1 = new MovingObject(mSceneManager, "ogrehead.mesh", NULL);
+	mObj1 = new MovingObject(mSceneManager,"movObject1", "ogrehead.mesh", NULL);
 	mObj1->setPosition(mWorld->spawnPoints[1]);
 
 	node->eTankNode = mObj1->mObjectSceneNode;
@@ -347,19 +88,21 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	mWorld->Push(node);
 
     //movObjs.assign(movObjs.begin(), mObj1);
-    movObjs[0] = mObj1;
+    movObjs[1] = mObj1;
+
+    mMovingObjects[std::string("movObject1")] = mObj1;
     //node->obb = createOBB(node,entity,scene);
 
-	mObj2 = new MovingObject(mSceneManager, "MyCube.mesh", mObj1);
-    mObj3 = new MovingObject(mSceneManager, "MyCube.mesh", mObj2);
-	mObj4 = new MovingObject(mSceneManager, "MyCube.mesh", NULL);
-	mObj5 = new MovingObject(mSceneManager, "XYZ_Function.mesh", NULL);
+	mObj2 = new MovingObject(mSceneManager,"movObject2", "MyCube.mesh", mObj1);
+    mObj3 = new MovingObject(mSceneManager,"movObject3", "MyCube.mesh", mObj2);
+	mObj4 = new MovingObject(mSceneManager,"movObject4", "MyCube.mesh", NULL);
+	mObj5 = new MovingObject(mSceneManager,"movObject5", "XYZ_Function.mesh", NULL);
 
-    mSunObj = new MovingObject(mSceneManager,"Icosphere.mesh",NULL);
-    mSunObj->setPosition(Ogre::Vector3(1500, 2000, -700));
+    mSunObj = new MovingObject(mSceneManager,"movSun","Icosphere.mesh",NULL);
+    mSunObj->setPosition(Ogre::Vector3(1500, 2500, -700));
     mSunObj->setScale(Ogre::Vector3(1000, 1000, 1000));
 
-    mCrossHair = new MovingObject(mSceneManager, "Crosshair.mesh", NULL);
+    mCrossHair = new MovingObject(mSceneManager,"movCrossHair", "Crosshair.mesh", NULL);
     mCrossHair->setScale(Ogre::Vector3(0.5F,1,1));
 	mObj1->setScale(Ogre::Vector3(1.1F,1.1F,1.1F));
 	//mObj5->setScale(Ogre::Vector3(30000,1.1F,30000));
@@ -377,12 +120,21 @@ Tank::Tank(Ogre::SceneManager *sceneManager, World *world, Ogre::Vector3 dimensi
 	mObj5->setOrientation(rotate);
     mCrossHair->setPosition(Ogre::Vector3(0,-20,0));
 
-    movObjs[1] = mObj2;
-    movObjs[2] = mObj3;
-    movObjs[3] = mObj4;
+    movObjs[2] = mObj2;
+    movObjs[3] = mObj3;
+    movObjs[4] = mObj4;
     //movObjs[4] = mObj5; Taken off since it is the mobius strip and objects are inside it.
     movObjs[5] = mSunObj;
     movObjs[6] = mCrossHair;
+
+    mMovingObjects[std::string("movObject2")] = mObj1;
+    mMovingObjects[std::string("movObject3")] = mObj2;
+    mMovingObjects[std::string("movObject4")] = mObj3;
+    mMovingObjects[std::string("movObject5")] = mObj4;
+    mMovingObjects[std::string("movObject6")] = mSunObj;
+    mMovingObjects[std::string("movObject7")] = mCrossHair;
+
+
 
 }
 
@@ -395,10 +147,10 @@ Tank::~Tank(void)
 void
 Tank::attachCamera(void)
 {
-	mCameraNode = mMainNode->createChildSceneNode();
-	mCameraNode_AI1 = mAI1->createChildSceneNode();
-	mCameraNode_AI2 = mAI2->createChildSceneNode();
-	mCameraNode_AI3 = mAI3->createChildSceneNode();
+	mCameraNode = SceneManager()->getSceneNode("U")->createChildSceneNode();
+	mCameraNode_AI1 = SceneManager()->getSceneNode("AItank1")->createChildSceneNode();//mAI1->createChildSceneNode();
+	mCameraNode_AI2 = SceneManager()->getSceneNode("AItank2")->createChildSceneNode();//mAI2->createChildSceneNode();
+	mCameraNode_AI3 = SceneManager()->getSceneNode("AItank3")->createChildSceneNode();//mAI3->createChildSceneNode();
 	mCameraNode->attachObject(mCamera->getCamera());
 	mCameraNode->attachObject(mCameraR->getCamera());
 	mCameraNode_AI1->attachObject(mCamera_ai1->getCamera());
@@ -412,34 +164,73 @@ void Tank::Think(const Ogre::Real& mTime)
     mWorld->setIterator();
     Node *iterator = mWorld->getIterator();
     Ogre::Vector3 MTD;
-    while (iterator != NULL) {
+    //while (iterator != NULL) {
 
-        if (iterator->obb != NULL && mOBB->collides(iterator->obb,MTD))
-        {
+    //    if (iterator->obb != NULL && mOBB->collides(iterator->obb,MTD))
+    //    {
 
-            mOBB->translate(MTD);
-            mTankNode->translate(MTD);
-        }
-        iterator = iterator->next;
+    //        mOBB->translate(MTD);
+    //        mTankNode->translate(MTD);
+    //    }
+    //    iterator = iterator->next;
+    //}
+
+    for (std::map<std::string, MovingObject *>::iterator it = mMovingObjects.begin(); it != mMovingObjects.end(); it++) {
+        std::string name = it->first;
+		MovingObject *obj = it->second;
+
+        for (std::map<std::string, MovingObject *>::iterator it2 = mMovingObjects.begin(); it2 != mMovingObjects.end(); it2++)
+			{
+				if (it2->second != obj)
+				{
+					Ogre::Vector3 MTD;
+					if (obj->getOBB()->collides(it2->second->getOBB(), MTD))
+					{
+						obj->translate(MTD);
+					}
+				}
+			}
+			for (std::map<std::string, StaticObject *>::iterator it2 = mStaticObjects.begin(); it2 != mStaticObjects.end(); it2++)
+			{
+					Ogre::Vector3 MTD = Ogre::Vector3::ZERO;
+					StaticObject *colliderObj = it2->second;
+
+					OBB *collider = it2->second->getOBB();
+					OBB *mover = obj->getOBB();
+					if  (mover->collides(collider, MTD))
+					{
+						obj->translate(MTD);
+					}
+
+			}
     }
 
 
-    for (int i = 0; i < 30; i++) {
-        if (movObjs[i] != NULL) {
-            for (int j = i+1; j < 30; j++) {
-                if ( movObjs[j] != NULL && mOBB->collides(movObjs[j]->getOBB(), MTD)) {
-                    movObjs[i]->getOBB()->translate(MTD);
-                    movObjs[i]->translate(MTD);
-                    //mOBB->translate(MTD);
-                    //mTankNode->translate(MTD);
-                }
-            }
-            //TODO: Add nodes collision into here
-        }
+    //for (int i = 0; i < 30; i++) {
+    //    if (movObjs[i] != NULL) {
+    //        for (int j = i+1; j < 30; j++) {
+    //            if ( movObjs[j] != NULL && movObjs[i]->getOBB()->collides(movObjs[j]->getOBB(), MTD)) {
+    //                //movObjs[i]->getOBB()->translate(MTD);
+    //                movObjs[i]->translate(MTD);
+    //                //mOBB->translate(MTD);
+    //                //mTankNode->translate(MTD);
+    //            }
+    //        }
 
-        
+    //        for (int k = 0; k < 30; k++) {
+    //            if ( statObjs[k] != NULL && movObjs[i]->getOBB()->collides(statObjs[k]->getOBB(), MTD)) {
+    //                //movObjs[i]->getOBB()->translate(MTD);
+    //                movObjs[i]->translate(MTD);
+    //                //mOBB->translate(MTD);
+    //                //mTankNode->translate(MTD);
+    //            }
 
-    }
+    //        }
+    //    }
+
+    //    
+
+    //}
     //if (mOBB->collides(mObj5->getOBB(),MTD)) {
     //    mOBB->translate(MTD);
     //    mTankNode->translate(MTD);
@@ -1755,7 +1546,6 @@ int Tank::prediction(int x[6][6401], float w1[6401][66], float w2[66][5], float 
 	return tmp;
 }
 
-
 /*Store inputs*/
 void
 Tank::store(int c, int m, int i, int j)
@@ -1767,25 +1557,36 @@ Tank::store(int c, int m, int i, int j)
 void
 Tank::createUserTank(void)
 {
-	Ogre::Entity *tankEntity = SceneManager()->createEntity("Utank","Cube.mesh");
-	mTankNode = mMainNode;
-	//mTankNode = mMainNode->createChildSceneNode("U");
-	//mTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
-	mTankNode->attachObject(tankEntity);
-	mTankNode->scale(10,10,10);
-	mTankNode->setPosition(100,100,100);
-	 //mWorld->mHumanPlayer=mTankNode;
-	/* DEBUGGING PURPOSES */
-	mTankNode->showBoundingBox(false);
-	mAABB = &tankEntity->getWorldBoundingBox();
 
-    mOBB = new OBB(tankEntity->getBoundingBox());
-    mOBB->setScale(mTankNode->getScale());
-    mOBB->setOrientation(mTankNode->getOrientation());
-    mOBB->setPosition(mTankNode->getPosition());
+    //movObjs[0] = new MovingObject(SceneManager(),"U","Cube.mesh", NULL);
+    //movObjs[0]->setScale(Ogre::Vector3(10,10,10));
+    //movObjs[0]->setPosition(Ogre::Vector3(100,100,100));
 
-	//mWorld->SceneManager()->getSceneNode("U");
-	//->getRootSceneNode()->getChild("U");
+    mMovingObjects[std::string("U")] =  new MovingObject(SceneManager(),"U","Cube.mesh", NULL);
+    mMovingObjects[std::string("U")]->setScale(Ogre::Vector3(10,10,10));
+    mMovingObjects[std::string("U")]->setPosition(Ogre::Vector3(100,100,-100));
+   
+    mMainNode =  mMovingObjects[std::string("U")];
+ //   mMainNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
+	//Ogre::Entity *tankEntity = SceneManager()->createEntity("Utank","Cube.mesh");
+	//mTankNode = mMainNode;
+	////mTankNode = mMainNode->createChildSceneNode("U");
+	////mTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("U");
+	//mTankNode->attachObject(tankEntity);
+	//mTankNode->scale(10,10,10);
+	//mTankNode->setPosition(100,100,100);
+	// //mWorld->mHumanPlayer=mTankNode;
+	///* DEBUGGING PURPOSES */
+	//mTankNode->showBoundingBox(false);
+	//mAABB = &tankEntity->getWorldBoundingBox();
+
+ //   mOBB = new OBB(tankEntity->getBoundingBox());
+ //   mOBB->setScale(mTankNode->getScale());
+ //   mOBB->setOrientation(mTankNode->getOrientation());
+ //   mOBB->setPosition(mTankNode->getPosition());
+
+	////mWorld->SceneManager()->getSceneNode("U");
+	////->getRootSceneNode()->getChild("U");
 }
 
 
@@ -2095,10 +1896,490 @@ void Tank::createStaticObjects(Node *node, Ogre::Entity *entity, Ogre::SceneNode
 	}
 }
 
+void Tank::createStaticObjects2(Node *node, Ogre::Entity *entity, Ogre::SceneNode *scene) {
+    
+
+    mStaticObjects[std::string("StaticCube1")] = new StaticObject(mSceneManager,"StaticCube1","Penguin.mesh",NULL);
+    mStaticObjects[std::string("StaticCube1")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube1")]->setPosition(Ogre::Vector3(1000*cos(1)+1000*cos(1/2)*cos(1)*(1/3),1000*sin(1)+1000*cos(1/2)*sin(1)*(1/3),1000*sin(1/2)*(1/3)));
+    mStaticObjects[std::string("StaticCube1")]->translate(Normal(1, 1/3)*30);
+    mStaticObjects[std::string("StaticCube1")]->setOrientation(Orientation(Binormal(1, 1/3),Normal(1, 1/3),Tangent(1,1/3)));
+
+    //node->obb = createOBB(node,entity,scene);
+	//////////////////////////////////////////////////////////////////////////
+
+	//node = new Node();
+	//entity = SceneManager()->createEntity("StaticCube2","Penguin.mesh");
+	//scene = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube2");
+	//scene->attachObject(entity);
+	//scene->scale(1, 1, 1);
+	//node->eTankNode = scene;
+	//mWorld->Push(node);
+	//scene->setPosition(1000*cos(80)+1000*cos(1/2)*cos(80)*(1/3),1000*sin(80)+1000*cos(1/2)*sin(80)*(1/3),1000*sin(1/2)*(1/3));
+	//scene->translate(Normal(80, 1/3)*30);
+	//scene->setOrientation(Orientation(Binormal(80, 1/3),Normal(80, 1/3),Tangent(80,1/3)));
+
+ //   node->obb = createOBB(node,entity,scene);
+
+    mStaticObjects[std::string("StaticCube2")] = new StaticObject(mSceneManager,"StaticCube2","Penguin.mesh",NULL);
+    mStaticObjects[std::string("StaticCube2")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube2")]->setPosition(Ogre::Vector3(1000*cos(80)+1000*cos(1/2)*cos(80)*(1/3),1000*sin(80)+1000*cos(1/2)*sin(80)*(1/3),1000*sin(1/2)*(1/3)));
+    mStaticObjects[std::string("StaticCube2")]->translate(Normal(80, 1/3)*30);
+    mStaticObjects[std::string("StaticCube2")]->setOrientation(Orientation(Binormal(80, 1/3),Normal(80, 1/3),Tangent(80,1/3)));
+
+		//////////////////////////////////////////////////////////////////////////
+	//node = new Node();
+	//entity = SceneManager()->createEntity("StaticCube3","Cube.mesh");
+	//scene = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube3");
+	//scene->attachObject(entity);
+	//scene->scale(1, 1, 1);
+	//node->eTankNode = scene;
+	//mWorld->Push(node);
+	float u =40;
+	float v =0.3;
+	//scene->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	//scene->translate(Normal(u, v)*30);
+	//scene->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+ //   node->obb = createOBB(node,entity,scene);
+
+    mStaticObjects[std::string("StaticCube3")] = new StaticObject(mSceneManager,"StaticCube3","Penguin.mesh",NULL);
+    mStaticObjects[std::string("StaticCube3")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube3")]->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v)));
+    mStaticObjects[std::string("StaticCube3")]->translate(Normal(u, v)*30);
+    mStaticObjects[std::string("StaticCube3")]->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+		//////////////////////////////////////////////////////////////////////////
+	//node = new Node();
+	//entity = SceneManager()->createEntity("StaticCube4","Sphere.mesh");
+
+	//scene = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube4");
+	//scene->attachObject(entity);
+	//scene->scale(100, 100, 100);
+	//node->eTankNode = scene;
+	//mWorld->Push(node);
+	u =30;
+	v =0.2;
+	//scene->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	//scene->translate(Normal(u, v)*30);
+	//scene->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+ //   node->obb = createOBB(node,entity,scene);
+
+    mStaticObjects[std::string("StaticCube4")] = new StaticObject(mSceneManager,"StaticCube4","Sphere.mesh",NULL);
+    mStaticObjects[std::string("StaticCube4")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube4")]->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v)));
+    mStaticObjects[std::string("StaticCube4")]->translate(Normal(u, v)*30);
+    mStaticObjects[std::string("StaticCube4")]->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+		//////////////////////////////////////////////////////////////////////////
+	//node = new Node();
+	//entity = SceneManager()->createEntity("StaticCube5","ogrehead.mesh");
+	//scene = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube5");
+	////eTankNode->setPosition(mWorld->spawnPoints[20]);
+	//scene->attachObject(entity);
+	//scene->scale(1, 1, 1);
+	//node->eTankNode = scene;
+	//mWorld->Push(node);
+	u =20;
+	v =0.1;
+	//scene->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	//scene->translate(Normal(u, v)*30);
+	//scene->setOrientation(Orientation(BiCnormal(u, v),Normal(u, v),Tangent(u,v)));
+
+ //   node->obb = createOBB(node,entity,scene);
+
+    mStaticObjects[std::string("StaticCube5")] = new StaticObject(mSceneManager,"StaticCube5","ogrehead.mesh",NULL);
+    mStaticObjects[std::string("StaticCube5")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube5")]->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v)));
+    mStaticObjects[std::string("StaticCube5")]->translate(Normal(u, v)*30);
+    mStaticObjects[std::string("StaticCube5")]->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+		//////////////////////////////////////////////////////////////////////////
+	//node = new Node();
+	//entity = SceneManager()->createEntity("StaticCube6","Penguin.mesh");
+	//scene = SceneManager()->getRootSceneNode()->createChildSceneNode("StaticCube6");
+	////scene->setPosition(mWorld->spawnPoints[20]);
+	//scene->attachObject(entity);
+	//scene->scale(1, 1, 1);
+	//node->eTankNode = scene;
+	//mWorld->Push(node);
+	//scene->setPosition(1000*cos(10)+1000*cos(1/2)*cos(10)*(1/3),1000*sin(10)+1000*cos(1/2)*sin(10)*(1/3),1000*sin(1/2)*(1/3));
+	//scene->translate(Normal(10, 1/3)*30);
+	//scene->setOrientation(Orientation(Binormal(10, 1/3),Normal(10, 1/3),Tangent(10,1/3)));
+
+ //   node->obb = createOBB(node,entity,scene);
+
+    mStaticObjects[std::string("StaticCube6")] = new StaticObject(mSceneManager,"StaticCube6","Penguin.mesh",NULL);
+    mStaticObjects[std::string("StaticCube6")]->setScale(Ogre::Vector3(3,3,3));
+    mStaticObjects[std::string("StaticCube6")]->setPosition(Ogre::Vector3(1000*cos(10)+1000*cos(1/2)*cos(10)*(1/3),1000*sin(10)+1000*cos(1/2)*sin(10)*(1/3),1000*sin(1/2)*(1/3)));
+    mStaticObjects[std::string("StaticCube6")]->translate(Normal(10, 1/3)*30);
+    mStaticObjects[std::string("StaticCube6")]->setOrientation(Orientation(Binormal(10, 1/3),Normal(10, 1/3),Tangent(10,1/3)));
+
+    ///////////////////////////////////////////
+    /// Start for loop for generic static cubes
+    ///////////////////////////////////////////
+	for(int s=7;s<8;s++)
+	{
+	    string ID = "StaticCube";
+	    string Result;          // string which will contain the result  
+	    ostringstream convert;
+	    convert << s;      // insert the textual representation of 'Number' in the characters in the stream
+	    Result = convert.str(); // set 'Result' to the contents of the stream
+	    ID.append(Result);
+
+	    //node = new Node();
+
+	    //entity = SceneManager()->createEntity(ID,"ogrehead.mesh");
+
+
+	    //scene = SceneManager()->getRootSceneNode()->createChildSceneNode(ID);
+	    //scene->attachObject(entity);
+	    //scene->scale(0.3f, 0.3f, 0.3f);
+
+        mStaticObjects[std::string(ID.c_str())] = new StaticObject(mSceneManager,ID.c_str(),"ogrehead.mesh",NULL);
+        mStaticObjects[std::string(ID.c_str())]->setScale(Ogre::Vector3(3,3,3));
+
+
+    
+	    //node->eTankNode = scene;
+	    //mWorld->Push(node);
+	    //u =s%180;
+	    u=s;
+	    if(rand()%2==0)
+	    v =(rand()%10)/100.0f-0.1;
+	    else
+		    v =-(rand()%10)/100.0f-0.1;
+	    //scene->setPosition(1000*cos(u)+1000*cos(1/2)*cos(u)*(v),1000*sin(u)+1000*cos(1/2)*sin(u)*(v),1000*sin(1/2)*(v));
+	    //scene->translate(Normal(u, v)*5);
+	    //scene->setOrientation(Orientation(Binormal(u, v),Normal(u, v),Tangent(u,v)));
+
+        mStaticObjects[std::string(ID.c_str())]->setPosition(Ogre::Vector3(1000*cos(10)+1000*cos(1/2)*cos(10)*(1/3),1000*sin(10)+1000*cos(1/2)*sin(10)*(1/3),1000*sin(1/2)*(1/3)));
+        mStaticObjects[std::string(ID.c_str())]->translate(Normal(10, 1/3)*30);
+        mStaticObjects[std::string(ID.c_str())]->setOrientation(Orientation(Binormal(10, 1/3),Normal(10, 1/3),Tangent(10,1/3)));
+
+        //node->obb = createOBB(node,entity,scene);
+	}
+}
+
 void
 Tank::setMovObjs() {
 
     for (int i = 0; i < 30; i++) {
         movObjs[i] = NULL;
     }
+}
+
+void
+Tank::setStatObjs() {
+
+    for (int i = 0; i < 30; i++) {
+        statObjs[i] = NULL;
+    }
+}
+void
+Tank::createAICubesOld() {
+	int Number = 0;       // number to be converted to a string
+	string Result;          // string which will contain the result
+	ostringstream convert;   // stream used for the conversion
+	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+
+	Node *node = new Node();
+	Ogre::SceneNode *eTankNode;
+	Ogre::Entity *tank = SceneManager()->createEntity("AItank1","Cube.mesh");
+	mAI1 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank1");
+	mAI1->setPosition(mWorld->spawnPoints[1]);
+	mAI1->attachObject(tank);
+	mAI1->scale(10, 10, 10);
+
+	Ogre::Vector3 XBasis = Ogre::Vector3(-1,0, 0);
+    Ogre::Vector3 YBasis = Ogre::Vector3(0,-1 ,0);
+    Ogre::Vector3 ZBasis = Ogre::Vector3(0,0,1);
+    Ogre::Matrix3 R;
+    R.FromAxes(XBasis, YBasis, ZBasis);
+	mAI1->setOrientation(R);
+
+	node->eTankNode = mAI1;
+    mWorld->Push(node);
+
+	Ogre::Real time=mWorld->t;
+
+
+	//////////////////////////////////////////////////////////////////////////
+    Number = 1;       // number to be converted to a string
+	Result;          // string which will contain the result  
+	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+	node = new Node();
+	
+	tank = SceneManager()->createEntity("AItank0","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank0");
+	eTankNode->setPosition(mWorld->spawnPoints[0]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+
+	//////////////////////////////////////////////////////////////////////////
+	Number = 2;       // number to be converted to a string
+	Result;          // string which will contain the result
+	convert;   // stream used for the conversion
+	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank2","Cube.mesh");
+	mAI2 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank2");
+	mAI2->setPosition(mWorld->spawnPoints[2]);
+	mAI2->attachObject(tank);
+	mAI2->scale(10, 10, 10);
+	node->eTankNode = mAI2;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	Number = 3;       // number to be converted to a string
+	Result;          // string which will contain the result
+	convert;   // stream used for the conversion
+	convert << Number;      // insert the textual representation of 'Number' in the characters in the stream
+	Result = convert.str(); // set 'Result' to the contents of the stream
+	ID.append(Result);
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank3","Cube.mesh");
+	mAI3 = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank3");
+	mAI3->setPosition(mWorld->spawnPoints[3]);
+	mAI3->attachObject(tank);
+	mAI3->scale(10, 10, 10);
+	node->eTankNode = mAI3;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank4","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank4");
+	eTankNode->setPosition(mWorld->spawnPoints[4]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank5","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank5");
+	eTankNode->setPosition(mWorld->spawnPoints[5]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank6","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank6");
+	eTankNode->setPosition(mWorld->spawnPoints[6]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank7","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank7");
+	eTankNode->setPosition(mWorld->spawnPoints[7]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank8","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank8");
+	eTankNode->setPosition(mWorld->spawnPoints[8]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank9","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank9");
+	eTankNode->setPosition(mWorld->spawnPoints[9]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank10","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank10");
+	eTankNode->setPosition(mWorld->spawnPoints[10]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank11","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank11");
+	eTankNode->setPosition(mWorld->spawnPoints[11]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank12","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank12");
+	eTankNode->setPosition(mWorld->spawnPoints[12]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank13","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank13");
+	eTankNode->setPosition(mWorld->spawnPoints[13]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank14","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank14");
+	eTankNode->setPosition(mWorld->spawnPoints[14]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank15","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank15");
+	eTankNode->setPosition(mWorld->spawnPoints[15]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank16","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank16");
+	eTankNode->setPosition(mWorld->spawnPoints[16]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank17","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank17");
+	eTankNode->setPosition(mWorld->spawnPoints[17]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank18","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank18");
+	eTankNode->setPosition(mWorld->spawnPoints[18]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+		//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank19","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank19");
+	eTankNode->setPosition(mWorld->spawnPoints[19]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	time=mWorld->t;
+	mWorld->Push(node);
+	//////////////////////////////////////////////////////////////////////////
+	node = new Node();
+	tank = SceneManager()->createEntity("AItank20","Cube.mesh");
+	eTankNode = SceneManager()->getRootSceneNode()->createChildSceneNode("AItank20");
+	eTankNode->setPosition(mWorld->spawnPoints[20]);
+	eTankNode->attachObject(tank);
+	eTankNode->scale(10, 10, 10);
+	node->eTankNode = eTankNode;
+    node->obb = createOBB(node,tank,eTankNode);
+	mWorld->Push(node);
+}
+
+void
+Tank::createAICubes() {
+
+    int numCont = 7;
+    const char * base = "AItank";
+    Ogre::Real time;
+    for (int i = 0; i <= 20; i++) {
+        std::string tmp = base + std::to_string(i);
+        //movObjs[i + numCont] = 
+        //movObjs[i + numCont]->setPosition(mWorld->spawnPoints[i]);
+        //movObjs[i + numCont]->setScale(Ogre::Vector3(10,10,10));
+
+        mMovingObjects[std::string(tmp.c_str())] = new MovingObject(SceneManager(),tmp.c_str(),"Cube.mesh", NULL);
+        mMovingObjects[std::string(tmp.c_str())]->setPosition(mWorld->spawnPoints[i]);
+        mMovingObjects[std::string(tmp.c_str())]->setScale(Ogre::Vector3(10,10,10));
+    
+	    time=mWorld->t;
+    }
+}
+
+MovingObject*
+    Tank::getMovingObject(std::string name) {
+
+        return mMovingObjects[name];
+
+}
+
+StaticObject*
+    Tank::getStaticObject(std::string name) {
+
+        return mStaticObjects[name];
+
 }

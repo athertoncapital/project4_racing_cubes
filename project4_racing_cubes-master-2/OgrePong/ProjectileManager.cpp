@@ -40,16 +40,16 @@ ProjectileManager::spawnProjectile(void)
 	if (!shotProjectile) {
 		Ogre::Entity *projectile = SceneManager()->createEntity("Sphere.mesh");
 		
-		/* Projectile is child of tank, so that it spawns wherever the tank is */
-		mProjectileNode = mTank->mMainNode->createChildSceneNode(pID);
-		mProjectileNode->attachObject(projectile);
+		///* Projectile is child of tank, so that it spawns wherever the tank is */
+		//mProjectileNode = mTank->mMainNode->createChildSceneNode(pID);
+		//mProjectileNode->attachObject(projectile);
 
-		mProjectileNode->scale(2,2,4);
+		//mProjectileNode->scale(2,2,4);
 
-		// Debugging purposes 
-		mProjectileNode->showBoundingBox(false);
-		
-		mAABB = &projectile->getWorldBoundingBox();
+		//// Debugging purposes 
+		//mProjectileNode->showBoundingBox(false);
+		//
+		//mAABB = &projectile->getWorldBoundingBox();
 	}
 }
 
@@ -71,7 +71,7 @@ ProjectileManager::spawnProjectile2(void)
 		Ogre::Entity *projectile = SceneManager()->createEntity("Cube.mesh");//Missle
 		
 		/* Projectile is child of tank, so that it spawns wherever the tank is */
-		mProjectileNode = mTank->mMainNode->createChildSceneNode(cID);
+		//mProjectileNode = mTank->mMainNode->createChildSceneNode(cID);
 		mProjectileNode->attachObject(projectile);
 
 		mProjectileNode->scale(2,2,10);

@@ -30,7 +30,7 @@ AIManager::Think(const Ogre::Real& mTime)
     Ogre::Matrix3 rotate;
 	
     rotate.FromAxes(xBasis, yBasis, zBasis);
-	Ogre::Vector3 vUser=mWorld->SceneManager()->getSceneNode("U")->getPosition();
+	//Ogre::Vector3 vUser=mWorld->SceneManager()->getSceneNode("U")->getPosition();
 	/*Ogre::Vector3 pos;
 	
     Ogre::Matrix3 orientation;

@@ -374,7 +374,7 @@ World::fly_or_dive_Tank(InputHandler *mInputHandler, const Ogre::Real& mTime)
 		mTank->mMainNode->translate(Ogre::Vector3(0,10,0)*mTime*10);
 	else */mTank->mMainNode->translate(Ogre::Vector3(0,-10,0)*mTime*20);
 
-    mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+    //mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
 
 
 }
@@ -386,12 +386,12 @@ World::yawTank(InputHandler *mInputHandler, const Ogre::Real& mTime)
 	if (mInputHandler->IsKeyDown(OIS::KC_LEFT))
     {
 		mTank->mMainNode->yaw(Ogre::Radian(mTime * RADIANS_PER_SECOND));
-        mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
+        //mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
     }
 	else 
     {
         mTank->mMainNode->yaw(-Ogre::Radian(mTime * RADIANS_PER_SECOND));
-        mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
+        //mTank->mOBB->setOrientation(mTank->mMainNode->getOrientation());
     }
     
 
@@ -451,6 +451,11 @@ Ogre::Matrix3 World::Orientation(Ogre::Vector3 xBasis, Ogre::Vector3 yBasis, Ogr
 void World::Think(const Ogre::Real& mTime)
 {
 	GlblTime = mClock->report();
+
+    moveCubes2();
+
+
+
 	for(int j=0; j< 5; j++)
 	{
 		for(int k=0; k< 4; k++)
@@ -518,116 +523,6 @@ void World::Think(const Ogre::Real& mTime)
      fclose (pFile);
    }
 
-	Ogre::Vector3 position = mTank->mMainNode->getPosition();
-	float u = 2*asin(position.z/1000);
-	Ogre::Vector3 N;
-	float ftime = mClock->report(); //Ogre::ControllerManager::getSingleton().getElapsedTime();
-    u=ftime;
-	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
-    AI_0_u=-ftime/SPEED_COEFFICIENT_AI_0;// ORIGINALLY -ftime/10
-    AI_1_u=-ftime/SPEED_COEFFICIENT_AI_1;// ORIGINALLY -ftime/10
-
-	float u1 = u+U_u;
-    float u2 = u+AI_0_u;
-    float u3 = u+AI_1_u;
-    //For Debug use:
-    //"AItank0" will make User cube Designer
-
-	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
-	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
-	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
-    u+=5;
-	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
-	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
-	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank2")->setPosition(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v));
-	mTank->SceneManager()->getSceneNode("AItank2")->translate(Normal(u3, AI_1_v)*11);
-	mTank->SceneManager()->getSceneNode("AItank2")->setOrientation(Orientation(Binormal(u3, AI_1_v),Normal(u3, AI_1_v),Tangent(u3,AI_1_v)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank3")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/-100),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/-100),1000*sin(u/2)*(1/-100));
-	mTank->SceneManager()->getSceneNode("AItank3")->translate(Normal(u, 1/-100)*11);
-	mTank->SceneManager()->getSceneNode("AItank3")->setOrientation(Orientation(Binormal(u, 1/-100),Normal(u, 1/-100),Tangent(u,1/-100)));
-	u+=5;
-
-    ////////////////////////////////////////////////////////
-    ////////////// START OF NOT "SMART" AI's////////////////
-    ////////////////////////////////////////////////////////
-
-	mTank->SceneManager()->getSceneNode("AItank4")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.6),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.6),1000*sin(u/2)*(-0.6));
-	mTank->SceneManager()->getSceneNode("AItank4")->translate(Normal(u, -0.6)*11);
-	mTank->SceneManager()->getSceneNode("AItank4")->setOrientation(Orientation(Binormal(u, -0.6),Normal(u, -0.6),Tangent(u,-0.6)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank5")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.8),1000*sin(u/2)*(-0.8));
-	mTank->SceneManager()->getSceneNode("AItank5")->translate(Normal(u, -0.8)*11);
-	mTank->SceneManager()->getSceneNode("AItank5")->setOrientation(Orientation(Binormal(u, 1/7),Normal(u, -0.8),Tangent(u,-0.8)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank6")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(0.8),1000*sin(u/2)*(0.8));
-	mTank->SceneManager()->getSceneNode("AItank6")->translate(Normal(u, 0.8)*11);
-	mTank->SceneManager()->getSceneNode("AItank6")->setOrientation(Orientation(Binormal(u, 0.8),Normal(u, 0.8),Tangent(u,0.8)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank7")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
-	mTank->SceneManager()->getSceneNode("AItank7")->translate(Normal(u, 1)*11);
-	mTank->SceneManager()->getSceneNode("AItank7")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank8")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(0),1000*sin(u)+1000*cos(u/2)*sin(u)*(0),1000*sin(u/2)*(0));
-	mTank->SceneManager()->getSceneNode("AItank8")->translate(Normal(u, 0)*11);
-	mTank->SceneManager()->getSceneNode("AItank8")->setOrientation(Orientation(Binormal(u, 0),Normal(u, 0),Tangent(u,0)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank9")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1),1000*sin(u/2)*(-1));
-	mTank->SceneManager()->getSceneNode("AItank9")->translate(Normal(u, -1)*11);
-	mTank->SceneManager()->getSceneNode("AItank9")->setOrientation(Orientation(Binormal(u, -1),Normal(u, -1),Tangent(u,-1)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank10")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
-	mTank->SceneManager()->getSceneNode("AItank10")->translate(Normal(u, 1)*11);
-	mTank->SceneManager()->getSceneNode("AItank10")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank11")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
-	mTank->SceneManager()->getSceneNode("AItank11")->translate(Normal(u, 1)*11);
-	mTank->SceneManager()->getSceneNode("AItank11")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank12")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/14),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/14),1000*sin(u/2)*(1/14));
-	mTank->SceneManager()->getSceneNode("AItank12")->translate(Normal(u, 1/14)*11);
-	mTank->SceneManager()->getSceneNode("AItank12")->setOrientation(Orientation(Binormal(u, 1/14),Normal(u, 1/14),Tangent(u,1/14)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank13")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/15),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/15),1000*sin(u/2)*(1/15));
-	mTank->SceneManager()->getSceneNode("AItank13")->translate(Normal(u, 1/15)*11);
-	mTank->SceneManager()->getSceneNode("AItank13")->setOrientation(Orientation(Binormal(u, 1/15),Normal(u, 1/15),Tangent(u,1/15)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank14")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/16),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/16),1000*sin(u/2)*(1/16));
-	mTank->SceneManager()->getSceneNode("AItank14")->translate(Normal(u, 1/16)*11);
-	mTank->SceneManager()->getSceneNode("AItank14")->setOrientation(Orientation(Binormal(u, 1/16),Normal(u, 1/16),Tangent(u,1/16)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank15")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/17),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/17),1000*sin(u/2)*(1/17));
-	mTank->SceneManager()->getSceneNode("AItank15")->translate(Normal(u, 1/17)*11);
-	mTank->SceneManager()->getSceneNode("AItank15")->setOrientation(Orientation(Binormal(u, 1/17),Normal(u, 1/17),Tangent(u,1/17)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank16")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/18),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/18),1000*sin(u/2)*(1/18));
-	mTank->SceneManager()->getSceneNode("AItank16")->translate(Normal(u, 1/18)*11);
-	mTank->SceneManager()->getSceneNode("AItank16")->setOrientation(Orientation(Binormal(u, 1/18),Normal(u, 1/18),Tangent(u,1/18)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank17")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/19),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/19),1000*sin(u/2)*(1/19));
-	mTank->SceneManager()->getSceneNode("AItank17")->translate(Normal(u, 1/19)*11);
-	mTank->SceneManager()->getSceneNode("AItank17")->setOrientation(Orientation(Binormal(u, 1/19),Normal(u, 1/19),Tangent(u,1/19)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank18")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/20),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/20),1000*sin(u/2)*(1/20));
-	mTank->SceneManager()->getSceneNode("AItank18")->translate(Normal(u, 1/20)*11);
-	mTank->SceneManager()->getSceneNode("AItank18")->setOrientation(Orientation(Binormal(u, 1/20),Normal(u, 1/20),Tangent(u,1/20)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank19")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/2),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/2),1000*sin(u/2)*(-1/2));
-	mTank->SceneManager()->getSceneNode("AItank19")->translate(Normal(u, -1/2)*11);
-	mTank->SceneManager()->getSceneNode("AItank19")->setOrientation(Orientation(Binormal(u, -1/2),Normal(u, -1/2),Tangent(u,-1/2)));
-	u+=5;
-	mTank->SceneManager()->getSceneNode("AItank20")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/3),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/3),1000*sin(u/2)*(-1/3));
-	mTank->SceneManager()->getSceneNode("AItank20")->translate(Normal(u, -1/3)*11);
-	mTank->SceneManager()->getSceneNode("AItank20")->setOrientation(Orientation(Binormal(u, -1/3),Normal(u, -1/3),Tangent(u,-1/3)));
-
-
-	/*mObj1->yaw(Ogre::Radian(0.5f * mTime));
-    mObj2->pitch(Ogre::Radian(0.6f * mTime));
-    mObj3->roll(Ogre::Radian(0.5f * mTime));
-	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
-	*/
 
 	mWorldManager->doWork();
 	t=mTime;
@@ -655,22 +550,26 @@ void World::Think(const Ogre::Real& mTime)
     }
     else if (mInputHandler->IsKeyDown(OIS::KC_UP))
 	{
-        //Ogre::Vector3 mTankPosition = mTank->mMainNode->getPosition();
+        Ogre::Vector3 mTankPosition = mTank->mMainNode->getPosition();
         //Ogre::Vector3 mTankFacing = mTank->mMainNode->getOrientation() * Ogre::Vector3::UNIT_Z;
 
-        //mTankVelocity = mTankFacing * 50 * mTime;
+        mTankVelocity = mTank->mMainNode->getFacing() * 300 * mTime;
+        mTank->mMainNode->setPosition(mTankPosition + mTankVelocity);
         //DBOUT("tank velocity" << Ogre::StringConverter::toString(mTankVelocity).c_str());
         //mTank->mMainNode->setPosition(mTankPosition + mTankVelocity);
-        mTank->mMainNode->translate(0, 0, mTime * TANK_SPEED *20, Ogre::Node::TS_LOCAL);
-        mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+
+        //mTank->mMainNode->translate(Ogre::Vector3(0, 0, mTime * TANK_SPEED *20) * mTank->mMainNode->getFacing());
+        //mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
 
         
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_DOWN))
 	{
-
-        mTank->mMainNode->translate(0, 0, -mTime*20 * TANK_SPEED, Ogre::Node::TS_LOCAL);
-        mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
+        Ogre::Vector3 mTankPosition = mTank->mMainNode->getPosition();
+        mTankVelocity = mTank->mMainNode->getFacing() * 300 * -mTime;
+        mTank->mMainNode->setPosition(mTankPosition + mTankVelocity);
+        //mTank->mMainNode->translate(Ogre::Vector3(0, 0, -mTime*20 * TANK_SPEED) * mTank->mMainNode->getFacing());
+        //mTank->mOBB->setPosition(mTank->mMainNode->getPosition());
 
 	}
 	else if (mInputHandler->IsKeyDown(OIS::KC_Z))
@@ -1196,4 +1095,239 @@ void World::recordMove() {
     outtxt << endl; //End of Line
 
     outtxt.close();
+}
+
+void World::moveCubes() {
+
+	Ogre::Vector3 position = SceneManager()->getSceneNode("U")->getPosition();
+	float u = 2*asin(position.z/1000);
+	Ogre::Vector3 N;
+	float ftime = mClock->report(); //Ogre::ControllerManager::getSingleton().getElapsedTime();
+    u=ftime;
+	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
+    AI_0_u=-ftime/SPEED_COEFFICIENT_AI_0;// ORIGINALLY -ftime/10
+    AI_1_u=-ftime/SPEED_COEFFICIENT_AI_1;// ORIGINALLY -ftime/10
+
+	float u1 = u+U_u;
+    float u2 = u+AI_0_u;
+    float u3 = u+AI_1_u;
+    //For Debug use:
+    //"AItank0" will make User cube Designer
+
+	mTank->SceneManager()->getSceneNode("AItank0")->setPosition(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v));
+	mTank->SceneManager()->getSceneNode("AItank0")->translate(Normal(u1, U_v)*10);
+	mTank->SceneManager()->getSceneNode("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+    u+=5;
+	mTank->SceneManager()->getSceneNode("AItank1")->setPosition(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v));
+	mTank->SceneManager()->getSceneNode("AItank1")->translate(Normal(u2, AI_0_v)*11);
+	mTank->SceneManager()->getSceneNode("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank2")->setPosition(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v));
+	mTank->SceneManager()->getSceneNode("AItank2")->translate(Normal(u3, AI_1_v)*11);
+	mTank->SceneManager()->getSceneNode("AItank2")->setOrientation(Orientation(Binormal(u3, AI_1_v),Normal(u3, AI_1_v),Tangent(u3,AI_1_v)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank3")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/-100),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/-100),1000*sin(u/2)*(1/-100));
+	mTank->SceneManager()->getSceneNode("AItank3")->translate(Normal(u, 1/-100)*11);
+	mTank->SceneManager()->getSceneNode("AItank3")->setOrientation(Orientation(Binormal(u, 1/-100),Normal(u, 1/-100),Tangent(u,1/-100)));
+	u+=5;
+
+    ////////////////////////////////////////////////////////
+    ////////////// START OF NOT "SMART" AI's////////////////
+    ////////////////////////////////////////////////////////
+
+	mTank->SceneManager()->getSceneNode("AItank4")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.6),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.6),1000*sin(u/2)*(-0.6));
+	mTank->SceneManager()->getSceneNode("AItank4")->translate(Normal(u, -0.6)*11);
+	mTank->SceneManager()->getSceneNode("AItank4")->setOrientation(Orientation(Binormal(u, -0.6),Normal(u, -0.6),Tangent(u,-0.6)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank5")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.8),1000*sin(u/2)*(-0.8));
+	mTank->SceneManager()->getSceneNode("AItank5")->translate(Normal(u, -0.8)*11);
+	mTank->SceneManager()->getSceneNode("AItank5")->setOrientation(Orientation(Binormal(u, 1/7),Normal(u, -0.8),Tangent(u,-0.8)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank6")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(0.8),1000*sin(u/2)*(0.8));
+	mTank->SceneManager()->getSceneNode("AItank6")->translate(Normal(u, 0.8)*11);
+	mTank->SceneManager()->getSceneNode("AItank6")->setOrientation(Orientation(Binormal(u, 0.8),Normal(u, 0.8),Tangent(u,0.8)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank7")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
+	mTank->SceneManager()->getSceneNode("AItank7")->translate(Normal(u, 1)*11);
+	mTank->SceneManager()->getSceneNode("AItank7")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank8")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(0),1000*sin(u)+1000*cos(u/2)*sin(u)*(0),1000*sin(u/2)*(0));
+	mTank->SceneManager()->getSceneNode("AItank8")->translate(Normal(u, 0)*11);
+	mTank->SceneManager()->getSceneNode("AItank8")->setOrientation(Orientation(Binormal(u, 0),Normal(u, 0),Tangent(u,0)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank9")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1),1000*sin(u/2)*(-1));
+	mTank->SceneManager()->getSceneNode("AItank9")->translate(Normal(u, -1)*11);
+	mTank->SceneManager()->getSceneNode("AItank9")->setOrientation(Orientation(Binormal(u, -1),Normal(u, -1),Tangent(u,-1)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank10")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
+	mTank->SceneManager()->getSceneNode("AItank10")->translate(Normal(u, 1)*11);
+	mTank->SceneManager()->getSceneNode("AItank10")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank11")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1));
+	mTank->SceneManager()->getSceneNode("AItank11")->translate(Normal(u, 1)*11);
+	mTank->SceneManager()->getSceneNode("AItank11")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank12")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/14),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/14),1000*sin(u/2)*(1/14));
+	mTank->SceneManager()->getSceneNode("AItank12")->translate(Normal(u, 1/14)*11);
+	mTank->SceneManager()->getSceneNode("AItank12")->setOrientation(Orientation(Binormal(u, 1/14),Normal(u, 1/14),Tangent(u,1/14)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank13")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/15),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/15),1000*sin(u/2)*(1/15));
+	mTank->SceneManager()->getSceneNode("AItank13")->translate(Normal(u, 1/15)*11);
+	mTank->SceneManager()->getSceneNode("AItank13")->setOrientation(Orientation(Binormal(u, 1/15),Normal(u, 1/15),Tangent(u,1/15)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank14")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/16),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/16),1000*sin(u/2)*(1/16));
+	mTank->SceneManager()->getSceneNode("AItank14")->translate(Normal(u, 1/16)*11);
+	mTank->SceneManager()->getSceneNode("AItank14")->setOrientation(Orientation(Binormal(u, 1/16),Normal(u, 1/16),Tangent(u,1/16)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank15")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/17),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/17),1000*sin(u/2)*(1/17));
+	mTank->SceneManager()->getSceneNode("AItank15")->translate(Normal(u, 1/17)*11);
+	mTank->SceneManager()->getSceneNode("AItank15")->setOrientation(Orientation(Binormal(u, 1/17),Normal(u, 1/17),Tangent(u,1/17)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank16")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/18),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/18),1000*sin(u/2)*(1/18));
+	mTank->SceneManager()->getSceneNode("AItank16")->translate(Normal(u, 1/18)*11);
+	mTank->SceneManager()->getSceneNode("AItank16")->setOrientation(Orientation(Binormal(u, 1/18),Normal(u, 1/18),Tangent(u,1/18)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank17")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/19),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/19),1000*sin(u/2)*(1/19));
+	mTank->SceneManager()->getSceneNode("AItank17")->translate(Normal(u, 1/19)*11);
+	mTank->SceneManager()->getSceneNode("AItank17")->setOrientation(Orientation(Binormal(u, 1/19),Normal(u, 1/19),Tangent(u,1/19)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank18")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/20),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/20),1000*sin(u/2)*(1/20));
+	mTank->SceneManager()->getSceneNode("AItank18")->translate(Normal(u, 1/20)*11);
+	mTank->SceneManager()->getSceneNode("AItank18")->setOrientation(Orientation(Binormal(u, 1/20),Normal(u, 1/20),Tangent(u,1/20)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank19")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/2),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/2),1000*sin(u/2)*(-1/2));
+	mTank->SceneManager()->getSceneNode("AItank19")->translate(Normal(u, -1/2)*11);
+	mTank->SceneManager()->getSceneNode("AItank19")->setOrientation(Orientation(Binormal(u, -1/2),Normal(u, -1/2),Tangent(u,-1/2)));
+	u+=5;
+	mTank->SceneManager()->getSceneNode("AItank20")->setPosition(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/3),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/3),1000*sin(u/2)*(-1/3));
+	mTank->SceneManager()->getSceneNode("AItank20")->translate(Normal(u, -1/3)*11);
+	mTank->SceneManager()->getSceneNode("AItank20")->setOrientation(Orientation(Binormal(u, -1/3),Normal(u, -1/3),Tangent(u,-1/3)));
+
+
+	/*mObj1->yaw(Ogre::Radian(0.5f * mTime));
+    mObj2->pitch(Ogre::Radian(0.6f * mTime));
+    mObj3->roll(Ogre::Radian(0.5f * mTime));
+	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
+	*/
+
+
+}
+
+void World::moveCubes2() {
+
+	Ogre::Vector3 position = SceneManager()->getSceneNode("U")->getPosition();
+	float u = 2*asin(position.z/1000);
+	Ogre::Vector3 N;
+	float ftime = mClock->report(); //Ogre::ControllerManager::getSingleton().getElapsedTime();
+    u=ftime;
+	U_u=-ftime/SPEED_COEFFICIENT;// ORIGINALLY -ftime/10
+    AI_0_u=-ftime/SPEED_COEFFICIENT_AI_0;// ORIGINALLY -ftime/10
+    AI_1_u=-ftime/SPEED_COEFFICIENT_AI_1;// ORIGINALLY -ftime/10
+
+	float u1 = u+U_u;
+    float u2 = u+AI_0_u;
+    float u3 = u+AI_1_u;
+    //For Debug use:
+    //"AItank0" will make User cube Designer
+
+    mTank->getMovingObject("AItank0")->setPosition(Ogre::Vector3(1000*cos(u1)+1000*cos(u1/2)*cos(u1)*(U_v),1000*sin(u1)+1000*cos(u1/2)*sin(u1)*(U_v),1000*sin(u1/2)*(U_v)));
+    mTank->getMovingObject("AItank0")->translate(Normal(u1, U_v)*10);
+    mTank->getMovingObject("AItank0")->setOrientation(Orientation(Binormal(u1, U_v),Normal(u1, U_v),Tangent(u1,U_v)));
+    u+=5;
+
+    mTank->getMovingObject("AItank1")->setPosition(Ogre::Vector3(1000*cos(u2)+1000*cos(u2/2)*cos(u2)*(AI_0_v),1000*sin(u2)+1000*cos(u2/2)*sin(u2)*(AI_0_v),1000*sin(u2/2)*(AI_0_v)));
+    mTank->getMovingObject("AItank1")->translate(Normal(u2, AI_0_v)*11);
+    mTank->getMovingObject("AItank1")->setOrientation(Orientation(Binormal(u2, AI_0_v),Normal(u2, AI_0_v),Tangent(u2,AI_0_v)));
+    u+=5;
+   
+    mTank->getMovingObject("AItank2")->setPosition(Ogre::Vector3(1000*cos(u3)+1000*cos(u3/2)*cos(u3)*(AI_1_v),1000*sin(u3)+1000*cos(u3/2)*sin(u3)*(AI_1_v),1000*sin(u3/2)*(AI_1_v)));
+    mTank->getMovingObject("AItank2")->translate(Normal(u3, AI_1_v)*11);
+    mTank->getMovingObject("AItank2")->setOrientation(Orientation(Binormal(u3, AI_1_v),Normal(u3, AI_1_v),Tangent(u3,AI_1_v)));
+    u+=5;
+
+    mTank->getMovingObject("AItank3")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/-100),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/-100),1000*sin(u/2)*(1/-100)));
+    mTank->getMovingObject("AItank3")->translate((Normal(u, 1/-100)*11));
+    mTank->getMovingObject("AItank3")->setOrientation(Orientation(Binormal(u, 1/-100),Normal(u, 1/-100),Tangent(u,1/-100)));
+    u+=5;
+
+    ////////////////////////////////////////////////////////
+    ////////////// START OF NOT "SMART" AI's////////////////
+    ////////////////////////////////////////////////////////
+
+	mTank->getMovingObject("AItank4")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.6),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.6),1000*sin(u/2)*(-0.6)));
+	mTank->getMovingObject("AItank4")->translate(Normal(u, -0.6)*11);
+	mTank->getMovingObject("AItank4")->setOrientation(Orientation(Binormal(u, -0.6),Normal(u, -0.6),Tangent(u,-0.6)));
+	u+=5;
+	mTank->getMovingObject("AItank5")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(-0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(-0.8),1000*sin(u/2)*(-0.8)));
+	mTank->getMovingObject("AItank5")->translate(Normal(u, -0.8)*11);
+	mTank->getMovingObject("AItank5")->setOrientation(Orientation(Binormal(u, 1/7),Normal(u, -0.8),Tangent(u,-0.8)));
+	u+=5;
+	mTank->getMovingObject("AItank6")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(0.8),1000*sin(u)+1000*cos(u/2)*sin(u)*(0.8),1000*sin(u/2)*(0.8)));
+	mTank->getMovingObject("AItank6")->translate(Normal(u, 0.8)*11);
+	mTank->getMovingObject("AItank6")->setOrientation(Orientation(Binormal(u, 0.8),Normal(u, 0.8),Tangent(u,0.8)));
+	u+=5;
+	mTank->getMovingObject("AItank7")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1)));
+	mTank->getMovingObject("AItank7")->translate(Normal(u, 1)*11);
+	mTank->getMovingObject("AItank7")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->getMovingObject("AItank8")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(0),1000*sin(u)+1000*cos(u/2)*sin(u)*(0),1000*sin(u/2)*(0)));
+	mTank->getMovingObject("AItank8")->translate(Normal(u, 0)*11);
+	mTank->getMovingObject("AItank8")->setOrientation(Orientation(Binormal(u, 0),Normal(u, 0),Tangent(u,0)));
+	u+=5;
+	mTank->getMovingObject("AItank9")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1),1000*sin(u/2)*(-1)));
+	mTank->getMovingObject("AItank9")->translate(Normal(u, -1)*11);
+	mTank->getMovingObject("AItank9")->setOrientation(Orientation(Binormal(u, -1),Normal(u, -1),Tangent(u,-1)));
+	u+=5;
+	mTank->getMovingObject("AItank10")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1)));
+	mTank->getMovingObject("AItank10")->translate(Normal(u, 1)*11);
+	mTank->getMovingObject("AItank10")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->getMovingObject("AItank11")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1),1000*sin(u)+1000*cos(u/2)*sin(u)*(1),1000*sin(u/2)*(1)));
+	mTank->getMovingObject("AItank11")->translate(Normal(u, 1)*11);
+	mTank->getMovingObject("AItank11")->setOrientation(Orientation(Binormal(u, 1),Normal(u, 1),Tangent(u,1)));
+	u+=5;
+	mTank->getMovingObject("AItank12")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/14),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/14),1000*sin(u/2)*(1/14)));
+	mTank->getMovingObject("AItank12")->translate(Normal(u, 1/14)*11);
+	mTank->getMovingObject("AItank12")->setOrientation(Orientation(Binormal(u, 1/14),Normal(u, 1/14),Tangent(u,1/14)));
+	u+=5;
+	mTank->getMovingObject("AItank13")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/15),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/15),1000*sin(u/2)*(1/15)));
+	mTank->getMovingObject("AItank13")->translate(Normal(u, 1/15)*11);
+	mTank->getMovingObject("AItank13")->setOrientation(Orientation(Binormal(u, 1/15),Normal(u, 1/15),Tangent(u,1/15)));
+	u+=5;
+	mTank->getMovingObject("AItank14")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/16),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/16),1000*sin(u/2)*(1/16)));
+	mTank->getMovingObject("AItank14")->translate(Normal(u, 1/16)*11);
+	mTank->getMovingObject("AItank14")->setOrientation(Orientation(Binormal(u, 1/16),Normal(u, 1/16),Tangent(u,1/16)));
+	u+=5;
+	mTank->getMovingObject("AItank15")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/17),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/17),1000*sin(u/2)*(1/17)));
+	mTank->getMovingObject("AItank15")->translate(Normal(u, 1/17)*11);
+	mTank->getMovingObject("AItank15")->setOrientation(Orientation(Binormal(u, 1/17),Normal(u, 1/17),Tangent(u,1/17)));
+	u+=5;
+	mTank->getMovingObject("AItank16")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/18),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/18),1000*sin(u/2)*(1/18)));
+	mTank->getMovingObject("AItank16")->translate(Normal(u, 1/18)*11);
+	mTank->getMovingObject("AItank16")->setOrientation(Orientation(Binormal(u, 1/18),Normal(u, 1/18),Tangent(u,1/18)));
+	u+=5;
+	mTank->getMovingObject("AItank17")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/19),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/19),1000*sin(u/2)*(1/19)));
+	mTank->getMovingObject("AItank17")->translate(Normal(u, 1/19)*11);
+	mTank->getMovingObject("AItank17")->setOrientation(Orientation(Binormal(u, 1/19),Normal(u, 1/19),Tangent(u,1/19)));
+	u+=5;
+	mTank->getMovingObject("AItank18")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(1/20),1000*sin(u)+1000*cos(u/2)*sin(u)*(1/20),1000*sin(u/2)*(1/20)));
+	mTank->getMovingObject("AItank18")->translate(Normal(u, 1/20)*11);
+	mTank->getMovingObject("AItank18")->setOrientation(Orientation(Binormal(u, 1/20),Normal(u, 1/20),Tangent(u,1/20)));
+	u+=5;
+	mTank->getMovingObject("AItank19")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/2),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/2),1000*sin(u/2)*(-1/2)));
+	mTank->getMovingObject("AItank19")->translate(Normal(u, -1/2)*11);
+	mTank->getMovingObject("AItank19")->setOrientation(Orientation(Binormal(u, -1/2),Normal(u, -1/2),Tangent(u,-1/2)));
+	u+=5;
+	mTank->getMovingObject("AItank20")->setPosition(Ogre::Vector3(1000*cos(u)+1000*cos(u/2)*cos(u)*(-1/3),1000*sin(u)+1000*cos(u/2)*sin(u)*(-1/3),1000*sin(u/2)*(-1/3)));
+	mTank->getMovingObject("AItank20")->translate(Normal(u, -1/3)*11);
+	mTank->getMovingObject("AItank20")->setOrientation(Orientation(Binormal(u, -1/3),Normal(u, -1/3),Tangent(u,-1/3)));
+
+
+	/*mObj1->yaw(Ogre::Radian(0.5f * mTime));
+    mObj2->pitch(Ogre::Radian(0.6f * mTime));
+    mObj3->roll(Ogre::Radian(0.5f * mTime));
+	mObj4->translate(mTime * Ogre::Vector3(-1, 0,0));
+	*/
+
+
 }

@@ -116,6 +116,7 @@ copy resources.cfg "$(OutDir)"</Command>
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="bmp.h" />
     <ClInclude Include="DebugInterface.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="VirtualClock.h" />
     <ClInclude Include="MenuInterface.h" />
     <ClInclude Include="tensorflow.h" />
@@ -156,6 +157,7 @@ copy resources.cfg "$(OutDir)"</Command>
     <ClCompile Include="PongManager.cpp" />
     <ClCompile Include="RedBrick.cpp" />
     <ClCompile Include="MovingObject.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="VirtualClock.cpp" />
     <ClCompile Include="tensorflow.cpp" />
     <ClCompile Include="WorldManager.cpp" />

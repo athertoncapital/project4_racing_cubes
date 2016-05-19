@@ -139,6 +139,9 @@ public:
 	void setIterator();
     void recordMove();
 
+    void moveCubes();
+    void moveCubes2();
+
     Tank::Node *getIterator() {return iterator;}
 
 	

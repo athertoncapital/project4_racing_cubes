@@ -9,7 +9,7 @@ class MovingObject
 {
 
 public:
-    MovingObject(Ogre::SceneManager *sceneManager, const char *meshName, MovingObject *parent);
+    MovingObject(Ogre::SceneManager *sceneManager, const char *objectName, const char *meshName, MovingObject *parent);
 
     Ogre::Matrix3 getOrientation() {return mOrientation;}
     Ogre::Vector3 getPosition() {return mPosition;}
@@ -28,10 +28,13 @@ public:
 
     void setScale(Ogre::Vector3 newScale);
     void setOBB();
+    Ogre::SceneNode *getSceneNode() { return mObjectSceneNode;}
+    Ogre::Vector3 getFacing();
 
     OBB* getOBB() { return mOBB;}
 	 Ogre::Entity *ent1;
 	 Ogre::SceneNode *mObjectSceneNode;
+
 
 protected:
 

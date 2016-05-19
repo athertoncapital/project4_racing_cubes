@@ -23,6 +23,7 @@ class PongCamera;
 class MainListener;
 class PongManager;
 class DebugInterface;
+class MenuInterface;
 class VirtualClock;
 
 class OgrePong :  public Ogre::WindowEventListener
@@ -66,12 +67,16 @@ protected:
 	void createCamera_ai2(void);
 	void createCamera_ai3(void);
 
+    void createCameraMenu(void);
+    void setupMenuViewport();
+
     // The FrameListener is what receives callbacks from the rendering loop to handle 
     //  game logic
 	void createFrameListener(void);
 	
 	MainListener *mPongFrameListener;
     DebugInterface *mDebugInterface;
+    MenuInterface *mMenuInterface;
 	Tank *mTank;
 	ProjectileManager *mProjectileManager;
 	AIManager *mAIManager;
@@ -82,7 +87,9 @@ protected:
 	PongCamera *mPongCamera_ai1;
 	PongCamera *mPongCamera_ai2;
 	PongCamera *mPongCamera_ai3;
+    PongCamera *mPongCameraMenu;
 	PongManager *mPongMag;
+
 
     Ogre::Root *mRoot;
     Ogre::Camera* mCamera;
@@ -90,6 +97,7 @@ protected:
 	Ogre::Camera* mCamera_ai1;
 	Ogre::Camera* mCamera_ai2;
 	Ogre::Camera* mCamera_ai3;
+    Ogre::Camera* mCameraMenu;
     Ogre::SceneManager* mSceneMgr;
     Ogre::RenderWindow* mWindow;
 	Ogre::RenderWindow* mWindow_ai1;

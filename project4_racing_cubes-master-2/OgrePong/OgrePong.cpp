@@ -15,6 +15,7 @@
 #include "PongManager.h"
 #include <OgreRenderTexture.h>
 #include "DebugInterface.h"
+#include "MenuInterface.h"
 #include "LuaWrapper.h"
 #include "VirtualClock.h"
 
@@ -81,6 +82,14 @@ OgrePong::createCamera()
 	mCamera->lookAt(Ogre::Vector3(0,0,0));
 }
 
+void
+OgrePong::createCameraMenu()
+{
+	mCameraMenu = mSceneMgr->createCamera("MenuCam");
+	mCameraMenu->setPosition(Ogre::Vector3(300, 300, 300));
+	mCameraMenu->lookAt(Ogre::Vector3(0,0,0));
+}
+
 // We will create a single frame listener, to handle our main event loop.  While we could
 // add as many frame listeners as we want (and let the main rendering loop call them),
 // we would not have as much control over the order that the listeners are called --
@@ -88,7 +97,7 @@ OgrePong::createCamera()
 void 
 OgrePong::createFrameListener(void)
 {
-	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank,mDebugInterface);
+	mPongFrameListener = new MainListener(mWindow, mInputHandler, mAIManager, mWorld, mPongCamera, mProjectileManager, mTank,mDebugInterface,mMenuInterface);
 	mRoot->addFrameListener(mPongFrameListener);
 }
 
@@ -98,34 +107,36 @@ void
 OgrePong::createViewports(void)
 {
 	
-	   // Create one viewport, entire window
+	    mWindow->removeAllViewports();
+	    // Create one viewport, entire window
         
-		//Ogre::Viewport* vp_ai1= mWindow->addViewport(mCamera_ai1,2, 0.1f, 0.5f, 0.5, 0.15);
-		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 1, 0.25f, 0.85f, 0.5, 0.15);
-		Ogre::Viewport* vp = mWindow->addViewport(mCamera,0);
+		Ogre::Viewport* vp_ai1= mWindow->addViewport(mCamera_ai1,3, 0.1f, 0.5f, 0.5, 0.15);
+		Ogre::Viewport* rearvp = mWindow->addViewport(mRCamera, 2, 0.375f, 0.75f, 0.5, 0.15);
+		Ogre::Viewport* vp = mWindow->addViewport(mCamera,1);
+        
+
+        //Adding viewport for menu
+
+		Ogre::Viewport* vpMenu = mWindow->addViewport(mCameraMenu,4);
+
 
 		rearvp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         vp->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
-		//vp_ai1->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
+		vp_ai1->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
+
+        vpMenu->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
         // Alter the camera aspect ratio to match the viewport
         
 		mRCamera->setAspectRatio(Ogre::Real(rearvp->getActualWidth()) / Ogre::Real(rearvp->getActualHeight())); 
-		//mCamera_ai1->setAspectRatio(Ogre::Real(vp_ai1->getActualWidth()) / Ogre::Real(vp_ai1->getActualHeight()));
+		mCamera_ai1->setAspectRatio(Ogre::Real(vp_ai1->getActualWidth()) / Ogre::Real(vp_ai1->getActualHeight()));
 		mCamera->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight())); 
+        mCameraMenu->setAspectRatio(Ogre::Real(vpMenu->getActualWidth()) / Ogre::Real(vpMenu->getActualHeight()));
+
 		Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
         mWindow->getViewport(0)->setBackgroundColour(fadeColour);
 		mWindow->getViewport(1)->setBackgroundColour(fadeColour);
 		//mWindow_ai1->getViewport(2)->setBackgroundColour(fadeColour);
 	
-
-
-
-
-
-
-
-
-
 
 
 }
@@ -136,15 +147,25 @@ OgrePong::createScene()
 {
 	
     mDebugInterface = new DebugInterface();
+    mMenuInterface = new MenuInterface();
+
 	// Ogre::FontManager::getSingleton().getByName("Big")->load();
-    mInputHandler = new InputHandler(mWindow, mWindow_ai1,mDebugInterface);
+    //mInputHandler = new InputHandler(mWindow, mWindow_ai1,mDebugInterface,mMenuInterface);
 	//mInputHandler = new InputHandler(mWindow_ai1);
+    mGT = new VirtualClock();
+    mGT->pause(); //start at pause
+
+
+    mInputHandler = new InputHandler(mWindow, mWindow_ai1,mDebugInterface,mMenuInterface,mCamera,mRCamera
+        ,mCameraMenu,mCamera_ai1,mCamera_ai2,mCamera_ai3,mGT);
 	
     LuaWrapper::getSingleton()->setWorld(mWorld);
 	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+    LuaWrapper::getSingleton()->setInputHandler(mInputHandler);
+    LuaWrapper::getSingleton()->setMenuInterface(mMenuInterface);
 	//LuaWrapper::getSingleton()->loadLuaFile("Level1.lua");
 
-    mGT = new VirtualClock();
+    
 	mPongMag = new PongManager(mSceneMgr,mWindow, mWindow_ai1);
 	mWorld = new World(mSceneMgr, mInputHandler, mTank,mGT);
 	
@@ -162,18 +183,22 @@ OgrePong::createScene()
 	mPongCamera_ai1 = new PongCamera(mCamera_ai1, mWorld, mInputHandler);
 	mPongCamera_ai2 = new PongCamera(mCamera_ai2, mWorld, mInputHandler);
 	mPongCamera_ai3 = new PongCamera(mCamera_ai3, mWorld, mInputHandler);
+    mPongCameraMenu = new PongCamera(mCameraMenu, mWorld, mInputHandler);
 
     mPongCameraRear->getCamera()->getViewport()->setOverlaysEnabled(false);
+    mPongCamera_ai1->getCamera()->getViewport()->setOverlaysEnabled(false);
+    mPongCamera->getCamera()->getViewport()->setOverlaysEnabled(false);
 	//mPongCamera_ai1->getCamera()->getViewport()->setOverlaysEnabled(false);
 	//mPongCamera_ai2->getCamera()->getViewport()->setOverlaysEnabled(false);
 	//mPongCamera_ai3->getCamera()->getViewport()->setOverlaysEnabled(false);
+    mPongCameraMenu->getCamera()->getViewport()->setClearEveryFrame(false);
 
 	mTank = new Tank(mSceneMgr, mWorld, pong_0_DIMENSION);
-	mTank->addCamera(mPongCamera,mPongCameraRear, mPongCamera_ai1, mPongCamera_ai2,mPongCamera_ai3);
+    mTank->addCamera(mPongCamera,mPongCameraRear, mPongCamera_ai1, mPongCamera_ai2,mPongCamera_ai3,mPongCameraMenu);
 	mTank->attachCamera();
 	
-    LuaWrapper::getSingleton()->setWorld(mWorld);
-	LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
+ //   LuaWrapper::getSingleton()->setWorld(mWorld);
+	//LuaWrapper::getSingleton()->setDebugInterface(mDebugInterface);
 
 
 	mProjectileManager = new ProjectileManager(mSceneMgr, mInputHandler, mWorld);
@@ -247,6 +272,7 @@ OgrePong::setup(void)
 	createCamera_ai3();
 	createRearCamera();
 	createCamera();
+    createCameraMenu();
 
 	//mWorld->mCamera = mCamera;
 	//mWorld->mRCamera = mRCamera;
@@ -332,6 +358,16 @@ OgrePong::setupResources(void)
     }
 }
 
+
+void OgrePong::setupMenuViewport()
+{
+    mWindow->removeAllViewports();
+	Ogre::Viewport* vpMenu = mWindow->addViewport(mCameraMenu,4);
+    vpMenu->setBackgroundColour(Ogre::ColourValue(244, 164, 96));
+    mCameraMenu->setAspectRatio(Ogre::Real(vpMenu->getActualWidth()) / Ogre::Real(vpMenu->getActualHeight()));
+
+}
+
 void
 OgrePong::destroyScene()
 {
@@ -343,6 +379,8 @@ OgrePong::destroyScene()
 	delete mPongCamera_ai2;
 	delete mPongCamera_ai3;
     delete mInputHandler;
+    delete mPongCameraMenu;
+
 }
 
 void 

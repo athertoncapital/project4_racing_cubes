@@ -144,6 +144,8 @@ public:
 
     Tank::Node *getIterator() {return iterator;}
 
+    VirtualClock* getClock() {return mClock; }
+
 	
 	//Tank *getHumanTank() { return mHumanPlayer; }
 	
